@@ -1,6 +1,6 @@
 clear all; clc;
 
-num_pts = 2;
+num_pts = 2000;
 
 
 sph_pts = zeros(num_pts,3);
@@ -20,3 +20,5 @@ quat_pts(:,3) = sqrt(u1).*sin(2*pi*u3);
 quat_pts(:,4) = sqrt(u1).*cos(2*pi*u3);
 
 gbs = [quat_pts, sph_pts];
+
+save('rand_gb.mat', 'gbs');
