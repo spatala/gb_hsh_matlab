@@ -1,6 +1,27 @@
-function M_vals = mbp_funcs_vals(r1, r2, N)
-% a = 1; b = 1;
-% tot_inds = mbp_inds(N);
+function M_vals = mbp_funcs_vals(rots, N)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% Get the value of MBP functions all the way to a=b=N.
+%%%%%%%
+%%%%%%% Input
+%%%%%%% N: Integer
+%%%%%%%         The maximum order for MBP functions.
+%%%%%%%         We impose a = b = N.
+%%%%%%%
+%%%%%%% Input
+%%%%%%% rots: 3 X 6 matrix
+%%%%%%%         First three columns are the first orientation matrix (g1)
+%%%%%%%         and the second three are the second orientaiton matrix (g2)
+%%%%%%%
+%%%%%%% Output
+%%%%%%% M_vals: 1 X N row vector.
+%%%%%%%         The value of the function MBP function 
+%%%%%%%         (gamma_MBP^{a,b}_{alpha, beta})
+%%%%%%%         for different values of a, b, gamma, alpha, beta
+%%%%%%%         are calculated for the GB parameter (given by rot)
+%%%%%%%
+
+r1=rots(:,1:3); r2=rots(:,4:6);
+
 tot_num = 0;
 for ct1=0:N
     for ct2=0:N
@@ -9,7 +30,7 @@ for ct1=0:N
     end
 end
 tot_inds = zeros(tot_num,7);
-M_vals = zeros(tot_num,1);
+M_vals = zeros(1,tot_num);
 ind_start = 1;
 for ct1=0:N
     for ct2=0:N
