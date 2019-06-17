@@ -1,4 +1,23 @@
 function tot_inds = mbp_inds(N)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% Get indices for MBP functions all the way to a=b=N.
+%%%%%%%
+%%%%%%% Input
+%%%%%%% N: Integer
+%%%%%%%         The maximum order for MBP functions.
+%%%%%%%         We impose a = b = N.
+%%%%%%%
+%%%%%%% Output
+%%%%%%% mbp: N X 7 matrix.
+%%%%%%%         The columns are as follows:
+%%%%%%%         1) Index number for fixed MBP function.
+%%%%%%%         2) Index number for fixed a, b.
+%%%%%%%         3) Value of 'a'
+%%%%%%%         4) Value of 'b'
+%%%%%%%         5) Value of 'gamma' - range [-c, c], where $c = min(a,b)$
+%%%%%%%         6) Value of 'alpha' - range [-a, a]
+%%%%%%%         7) Value of 'beta'  - range [-b, b]
+%%%%%%%
 tot_num = 0;
 for ct1=0:N
     for ct2=0:N
