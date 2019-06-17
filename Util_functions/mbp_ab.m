@@ -4,7 +4,7 @@ function inds_mat = mbp_ab(a,b)
 %%%%%%%
 %%%%%%% Input
 %%%%%%% a, b: Integers
-%%%%%%%         order of MBP function (gamma_MBP^{a,b}_{alpha, beta}
+%%%%%%%         order of MBP function (gamma_MBP^{a,b}_{alpha, beta})
 %%%%%%%
 %%%%%%% Output
 %%%%%%% mbp: N X 6 matrix.
