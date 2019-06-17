@@ -1,6 +1,6 @@
-%%% Convert random grain boundary to SO(3)XSO(3) parameterization
-
+%%% Convert random grain boundaries to SO(3)XSO(3) parameterization
 clear all; clc;
+addpath(genpath('../Util_functions/'));
 s1 = load('rand_gb.mat');
 gbs = s1.gbs;
 bpn = gbs(:,5:7);
@@ -15,8 +15,8 @@ for ct1=1:num_gbs
     bpn1 = bpn(ct1,:);
     M1 = quat2mat(rot_quats(ct1,:));
     
-    [g1,g2] = gb_to_rots(M1, bpn1);
-    rot_mats(:,:,ct1) = [g1, g2];
+    rot_mats(:,:,ct1) = mbp_to_rots([M1, bpn1']);
+    
 %     %%% Check
 %     M1 = (g1^(-1))*g2;
 %     quat1 = Mat2Quat(M1);
@@ -29,5 +29,5 @@ end
 
 save('rand_gb_rots.mat','rot_mats');
 
-
+rmpath(genpath('../Util_functions/'));
 

@@ -1,9 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Generate N Random GB parameters (N = num_pts)
-%%%%% Store in 'rand_gb.mat' file.
-%%%%% The format is N X 7. The first four are quaternions and the last
-%%%%% three are the boundary-plane orientation (unit vector).
-%%%%% 
+%%%%% Generate N Random GB parameters (N = num
 
 clear all; clc;
 
