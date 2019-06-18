@@ -40,7 +40,7 @@ if (length(N) == 1)
             ind_start = ind_stop+1;
         end
     end
-elseif (length(N) == 2)
+elseif ((size(N,1) > 1) || (size(N,2) > 1))
     for ct1=N
         for ct2=N
             ct3 = min(ct1, ct2);
