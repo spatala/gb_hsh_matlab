@@ -4,8 +4,8 @@ addpath(genpath('../Util_functions/'));
 addpath(genpath('../GB_Parameters/'));
 
 
-% N = 0:1;
-N = 1;
+% N = 0:4;
+N = 0:4;
 tot_inds = mbp_inds(N);
 num_inds = size(tot_inds,1);
 
@@ -13,7 +13,7 @@ num_inds = size(tot_inds,1);
 ges_mat = zeros(num_inds, num_inds);
 
 for ct1=1:num_inds
-    ct1
+%     ct1
     a1 = tot_inds(ct1,3);
     b1 = tot_inds(ct1,4);
     gamma1 = tot_inds(ct1,5);
@@ -32,19 +32,39 @@ for ct1=1:num_inds
         (tot_inds(:,6) == alpha2) & ...
         (tot_inds(:,7) == beta2));
     
-    ges_mat(ct1,ind1) = (-1)^(a1+b1);
-    ges_mat(ct1,ct1) = 1;
+    ges_mat(ct1,ind1) = 1;
+    ges_mat(ct1,ct1) = (-1)^(a1+b1);
     
 end
 
 rmpath(genpath('../Util_functions/'));
 rmpath(genpath('../GB_Parameters/'));
 
-% r1 = rank(ges_mat);
-% [Q,R] = qr(ges_mat);
-% col1 = Q(:,1:r1);
 
-col1 = double(colspace(sym(ges_mat)));
+% col1 = double(colspace(sym(ges_mat)));
+
+rank1 = rank(ges_mat);
+[Q,R] = qr(ges_mat);
+
+st1 = 0;
+j_inds = zeros(num_inds, 1);
+ct2 = 1;
+for ct1=1:num_inds
+    ind1 = max(find(abs(R(:,ct1))));
+    if ct1 == 1
+        st1 = ind1;
+    else
+        if (ind1 > st1)
+            st1 = ind1;
+        else
+            j_inds(ct2) = ct1;
+            ct2 = ct2 + 1;
+        end
+    end
+end
+j_inds(ct2:end) =[];
+col1 = ges_mat;
+col1(:,j_inds) = [];
 
 Q_mat = col1*col1';
 [v, d] = eig(Q_mat);
