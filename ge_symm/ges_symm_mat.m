@@ -1,9 +1,15 @@
 clear all; clc;
 
+addpath(genpath('../Util_functions/'));
+addpath(genpath('../GB_Parameters/'));
+
+
+% N = 0:1;
 N = 1;
 tot_inds = mbp_inds(N);
 num_inds = size(tot_inds,1);
 
+% ges_mat = sparse(num_inds, num_inds);
 ges_mat = zeros(num_inds, num_inds);
 
 for ct1=1:num_inds
@@ -29,13 +35,16 @@ for ct1=1:num_inds
     ges_mat(ct1,ind1) = (-1)^(a1+b1);
     ges_mat(ct1,ct1) = 1;
     
-    % ind1
-    % tot_inds([ct1,ind1],3:end)
-    
 end
 
-col1 = double(colspace(sym(ges_mat)));
+rmpath(genpath('../Util_functions/'));
+rmpath(genpath('../GB_Parameters/'));
 
+% r1 = rank(ges_mat);
+% [Q,R] = qr(ges_mat);
+% col1 = Q(:,1:r1);
+
+col1 = double(colspace(sym(ges_mat)));
 
 Q_mat = col1*col1';
 [v, d] = eig(Q_mat);
