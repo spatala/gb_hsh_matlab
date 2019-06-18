@@ -31,7 +31,7 @@ if (length(N) == 1)
         end
     end
     tot_inds = zeros(tot_num,7);
-    M_vals = zeros(1,tot_num);
+    M_vals = zeros(tot_num,1);
     ind_start = 1;
     for ct1=0:N
         for ct2=0:N
@@ -44,7 +44,7 @@ if (length(N) == 1)
             ind_start = ind_stop+1;
         end
     end
-elseif (length(N) == 2)
+elseif ((size(N,1) > 1) || (size(N,2) > 1))
     for ct1=N
         for ct2=N
             ct3 = min(ct1, ct2);
@@ -52,7 +52,7 @@ elseif (length(N) == 2)
         end
     end
     tot_inds = zeros(tot_num,7);
-    M_vals = zeros(1,tot_num);
+    M_vals = zeros(tot_num,1);
     ind_start = 1;
     for ct1=N
         for ct2=N
@@ -66,6 +66,9 @@ elseif (length(N) == 2)
         end
     end
 end
+
+M_vals = M_vals';
+
 end
 
 % M = zeros(10, num_inds);
