@@ -4,8 +4,8 @@ addpath(genpath('../Util_functions/'));
 addpath(genpath('../GB_Parameters/'));
 
 
-% N = 0:4;
 N = 0:4;
+% N = 0:8;
 tot_inds = mbp_inds(N);
 num_inds = size(tot_inds,1);
 
@@ -50,6 +50,7 @@ st1 = 0;
 j_inds = zeros(num_inds, 1);
 ct2 = 1;
 for ct1=1:num_inds
+    ct1
     ind1 = max(find(abs(R(:,ct1))));
     if ct1 == 1
         st1 = ind1;
@@ -65,6 +66,8 @@ end
 j_inds(ct2:end) =[];
 col1 = ges_mat;
 col1(:,j_inds) = [];
+
+save('Y_ges.mat', 'col1');
 
 Q_mat = col1*col1';
 [v, d] = eig(Q_mat);
