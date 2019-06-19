@@ -34,3 +34,5 @@ Temporary Items
 
 ### Data Files ###
 data_files/
+./*.mat
+./ge_symm/*.mat
