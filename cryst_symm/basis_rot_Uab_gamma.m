@@ -47,8 +47,10 @@ for ct1=0:4
         b_val = ct2; Nb = 2*b_val;
         c_val = min(ct1, ct2); Nc = 2*c_val;
         
-        R1 = kron(rotation(a_ax1,a_ang1,Na),eye(Nb+1));
-        R1 = kron(R1, eye(Nc+1));
+        % R1 = kron(rotation(a_ax1,a_ang1,Na),eye(Nb+1));
+        R1 = kron(rotation(a_ax1,a_ang1,Na),rotation(b_ax1,b_ang1,Nb));
+        % R1 = kron(R1, eye(Nc+1));
+        R1 = kron(eye(Nc+1), R1);
         
         [v,d] = eig(R1);
         col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
@@ -59,8 +61,9 @@ for ct1=0:4
             col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
             if any(col)
                 X1 = orth(v(:,col)); P1 = X1*X1';
-                R2 = kron(rotation(a_ax2,a_ang2,Na),eye(Nb+1));
-                R2 = kron(R2, eye(Nc+1));
+                R2 = kron(rotation(a_ax2,a_ang2,Na),rotation(b_ax2,b_ang2,Nb));
+                % R2 = kron(R2, eye(Nc+1));
+                R2 = kron(eye(Nc+1), R2);
                 [v,d] = eig(R2);
                 col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
                 if any(col)
@@ -73,8 +76,9 @@ for ct1=0:4
                             symm_orders(ct3,:) = [ct1, ct2]; ct3 = ct3 + 1;
                         elseif num_gen == 2
                             X2 = orth(v(:,col)); P2 = X2*X2';
-                            R3 = kron(eye(Na+1),rotation(b_ax3,b_ang3,Nb));
-                            R3 = kron(R3, eye(Nc+1));
+                            R3 = kron(rotation(a_ax3,a_ang3,Na),rotation(b_ax3,b_ang3,Nb));
+                            % R3 = kron(R3, eye(Nc+1));
+                            R3 = kron(eye(Nc+1), R3);
                             [v,d] = eig(R3);
                             col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
                             if any(col)
@@ -83,8 +87,9 @@ for ct1=0:4
                                 col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
                                 if any(col)
                                     X3 = orth(v(:,col)); P3 = X3*X3';
-                                    R4 = kron(eye(Na+1),rotation(b_ax4,b_ang4,Nb));
-                                    R4 = kron(R4, eye(Nc+1));
+                                    R4 = kron(rotation(a_ax4,a_ang4,Na),rotation(b_ax4,b_ang4,Nb));
+                                    % R4 = kron(R4, eye(Nc+1));
+                                    R4 = kron(eye(Nc+1), R4);
                                     [v,d] = eig(R4);
                                     col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
                                     if any(col)

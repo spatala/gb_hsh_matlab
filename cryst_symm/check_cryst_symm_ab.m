@@ -9,8 +9,8 @@ s1 = load('rand_gb_rots.mat'); rot_mats = s1.rot_mats;
 pt_grp = 'C2';
 
 Nmax = 4;
-
-symm_mat_name = ['../data_files/ptgrp_',pt_grp,'/SymmMat_',pt_grp,'.mat'];
+fname = get_dir_name();
+symm_mat_name = [fname,'/ptgrp_',pt_grp,'/SymmMat_',pt_grp,'.mat'];
 s1 = load(symm_mat_name);
 SymmMat = s1.SymmMat;
 num_symm = length(SymmMat);
@@ -19,9 +19,11 @@ rots = rot_mats(:,:,1);
 r1 = rots(:,1:3); r2 = rots(:,4:6);
 for a_val = 0:Nmax
     for b_val = 0:Nmax
-        mat_name = ['Sarr_',num2str(a_val),'_',num2str(b_val),'.mat'];
+        
+        mat_name = [fname,'/ptgrp_',pt_grp,'/cryst_symm/Sarr_',num2str(a_val),'_',num2str(b_val),'.mat'];
         s1 = load(mat_name);
         Svec = s1.S;
+        
         
         M1 = calc_Mfunc(a_val,b_val,rots);
         
@@ -38,7 +40,7 @@ for a_val = 0:Nmax
                 ct3 = ct3 + 1;
             end
         end
-        max(diff_vec)
+        [a_val, b_val, size(Svec,2),max(diff_vec)]
     end
 end
 rmpath(genpath('../Util_functions/'));

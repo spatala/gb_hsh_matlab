@@ -1,8 +1,10 @@
 clear all; clc;
 
-s1 = load('cryst_symm/Sarr_Nmax_4_C2.mat');
+
+s1 = load('data_files/ptgrp_C2/cryst_symm/Sarr_4_4.mat');
 % X0 = sparse(s1.Sarr_nmax);
-X0 = s1.Sarr_nmax;
+% X0 = s1.Sarr_nmax;
+X0 = s1.S;
 P0 = X0*X0';
 
 s1 = load('ge_symm/Y_ges.mat');
@@ -15,5 +17,8 @@ Q1 = Y1*Y1';
 col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
             
 if any(col)
-    display(v(:,col))
+    % display(v(:,col));
+    S = orth(v(:,col));
+    mat_name = 'Sarr_C2_4_4_combined.mat';
+    save(mat_name,'S');
 end
