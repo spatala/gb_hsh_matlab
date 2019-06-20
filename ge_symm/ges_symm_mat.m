@@ -3,16 +3,26 @@ clear all; clc;
 addpath(genpath('../Util_functions/'));
 addpath(genpath('../GB_Parameters/'));
 
+Nmax = 4;
 
-N = 0:4;
-% N = 0:8;
-tot_inds = mbp_inds(N);
-num_inds = size(tot_inds,1);
+fname = get_dir_name();
 
-% ges_mat = sparse(num_inds, num_inds);
-ges_mat = zeros(num_inds, num_inds);
+% pt_grp = 'O';
+pt_grp = 'C2';
+mat_name = [fname,'/ptgrp_',pt_grp,'/cryst_symm/symm_a_b_',pt_grp,'.mat'];
+s1 = load(mat_name);
+symm_orders = s1.symm_orders;
+nsymm = size(symm_orders,1);
+a1 = symm_orders(:,1); b1 = symm_orders(:,2); c1 = min(a1, b1);
+num_rows = sum((2*a1+1).*(2*b1+1).*(2*c1+1));
 
-for ct1=1:num_inds
+tot_inds = mbp_inds_ab_array(symm_orders, num_rows);
+
+
+% ges_mat = sparse(num_rows, num_rows);
+ges_mat = zeros(num_rows, num_rows);
+
+for ct1=1:num_rows
 %     ct1
     a1 = tot_inds(ct1,3);
     b1 = tot_inds(ct1,4);
@@ -41,17 +51,15 @@ rmpath(genpath('../Util_functions/'));
 rmpath(genpath('../GB_Parameters/'));
 
 
-% col1 = double(colspace(sym(ges_mat)));
 
-rank1 = rank(ges_mat);
 [Q,R] = qr(ges_mat);
 
 st1 = 0;
-j_inds = zeros(num_inds, 1);
+j_inds = zeros(num_rows, 1);
 ct2 = 1;
-for ct1=1:num_inds
+for ct1=1:num_rows
     ct1
-    ind1 = max(find(abs(R(:,ct1))));
+    ind1 = find(abs(R(:,ct1)), 1, 'last');
     if ct1 == 1
         st1 = ind1;
     else
@@ -67,13 +75,15 @@ j_inds(ct2:end) =[];
 col1 = ges_mat;
 col1(:,j_inds) = [];
 
-save('Y_ges.mat', 'col1');
+mat_name = [fname,'/ptgrp_',pt_grp,'/ge_symm/Y_ges_Nmax_',num2str(Nmax),'.mat'];
+save(mat_name, 'col1');
 
-Q_mat = col1*col1';
-[v, d] = eig(Q_mat);
-col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
-S = orth(v(:,col));
-if any(col)
-    S = orth(v(:,col));
-end
-save('Sarr.mat','S');
+% % % % % 
+% % % % % Q_mat = col1*col1';
+% % % % % [v, d] = eig(Q_mat);
+% % % % % col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
+% % % % % S = orth(v(:,col));
+% % % % % if any(col)
+% % % % %     S = orth(v(:,col));
+% % % % % end
+% % % % % save('Sarr.mat','S');
