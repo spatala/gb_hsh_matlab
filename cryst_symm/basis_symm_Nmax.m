@@ -47,6 +47,6 @@ for tct1=1:size(symm_orders,1)
     
 end
 
-mat_name = [fname,'/ptgrp_',pt_grp,'/cryst_symm/Sarr_Nmax_',num2str(Nmax),'_',pt_grp,'.mat'];
+mat_name = [fname,'/ptgrp_',pt_grp,'/cryst_symm/Sarr_Nmax_',num2str(Nmax),'.mat'];
 save(mat_name,'Sarr_nmax');
 rmpath(genpath('../Util_functions/'));
