@@ -4,7 +4,7 @@ curr_pwd = split(pwd,'/');
 top_dir = '';
 for ct1=1:length(curr_pwd)
     top_dir = strcat(top_dir,curr_pwd{ct1},'/');
-    if (strcmp(curr_pwd{ct1},'MATLAB_Codes'))
+    if (strcmp(curr_pwd{ct1},'gb_hsh_matlab'))
         break;
     end
 end
@@ -39,11 +39,14 @@ mat_name = [fname,'/ge_symm/Sarr_ges_Nmax_',...
 s1 = load(mat_name);
 Svec = s1.S;
 
+% %%%% Doesn't work!! (as expected)
+% mat_name = [fname,'/ge_symm/orthY_ges_Nmax_',...
+%     num2str(Nmax),'.mat'];
+% s1 = load(mat_name); Svec = s1.Y1;
 % mat_name = [fname,'/ge_symm/Y_ges_Nmax_',...
 %     num2str(Nmax),'.mat'];
-% s1 = load(mat_name);
-% % Svec = s1.col1;
-% Svec = orth(s1.col1);
+% s1 = load(mat_name); Svec = s1.col1;
+
 
 g_ypi = vrrotvec2mat([0,1,0, pi]);
 r1_ges = g_ypi*r2; r2_ges = g_ypi*r1;
