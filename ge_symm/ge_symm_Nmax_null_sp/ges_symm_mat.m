@@ -51,48 +51,25 @@ for ct1=1:num_rows
         (tot_inds(:,6) == alpha2) & ...
         (tot_inds(:,7) == beta2));
     
-    ges_mat(ct1,ind1) = 1;
-    ges_mat(ct1,ct1) = (-1)^(a1+b1);
-    
+    ges_mat(ct1,ind1) = (-1)^(a1+b1);
 end
+ges_mat = ges_mat' - eye(num_rows, num_rows);
 
-[Q,R] = qr(ges_mat);
+col1 = null(ges_mat);
 
-st1 = 0;
-j_inds = zeros(num_rows, 1);
-ct2 = 1;
-for ct1=1:num_rows
-    ct1
-    ind1 = find(abs(R(:,ct1)), 1, 'last');
-    if ct1 == 1
-        st1 = ind1;
-    else
-        if (ind1 > st1)
-            st1 = ind1;
-        else
-            j_inds(ct2) = ct1;
-            ct2 = ct2 + 1;
-        end
-    end
-end
-j_inds(ct2:end) =[];
-col1 = ges_mat;
-col1(:,j_inds) = [];
-
-mat_name = [fname,'/ge_symm/Y_ges_Nmax_',...
+mat_name = [fname,'/ge_symm_null/Y_ges_Nmax_',...
     num2str(Nmax),'.mat'];
 save(mat_name, 'col1');
 
-% Y1=col1;
-Y1=orth(col1);
-Q_mat = Y1*Y1';
-[v, d] = eig(Q_mat);
+
+Q_mat = col1*col1';
+[v, d] = eig(full(Q_mat));
 col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
 S = orth(v(:,col));
 if any(col)
     S = orth(v(:,col));
 end
-mat_name = [fname,'/ge_symm/Sarr_ges_Nmax_',...
+mat_name = [fname,'/ge_symm_null/Sarr_ges_Nmax_',...
     num2str(Nmax),'.mat'];
 save(mat_name,'S');
 

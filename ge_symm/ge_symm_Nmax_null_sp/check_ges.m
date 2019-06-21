@@ -32,18 +32,23 @@ rot_mats = s1.rot_mats;
 rots = rot_mats(:,:,1);
 r1 = rots(:,1:3); r2 = rots(:,4:6);
 
-M1 = calc_Mfunc_ab_array(symm_orders, num_rows, rots);
 
-mat_name = [fname,'/ge_symm/Sarr_ges_Nmax_',...
+mat_name = [fname,'/ge_symm_null/Y_ges_Nmax_',...
+    num2str(Nmax),'.mat'];s1 = load(mat_name);
+s1 = load(mat_name);
+% Svec = s1.S;
+% Svec = orth(full(s1.col1));
+% Svec = s1.col1;
+
+% mat_name = [fname,'/ge_symm_null/Sarr_ges_Nmax_',...
+%     num2str(Nmax),'.mat'];
+mat_name = [fname,'/ge_symm_null/Sarr_ges_Nmax_',...
     num2str(Nmax),'.mat'];
 s1 = load(mat_name);
 Svec = s1.S;
 
-% mat_name = [fname,'/ge_symm/Y_ges_Nmax_',...
-%     num2str(Nmax),'.mat'];
-% s1 = load(mat_name);
-% % Svec = s1.col1;
-% Svec = orth(s1.col1);
+
+M1 = calc_Mfunc_ab_array(symm_orders, num_rows, rots);
 
 g_ypi = vrrotvec2mat([0,1,0, pi]);
 r1_ges = g_ypi*r2; r2_ges = g_ypi*r1;

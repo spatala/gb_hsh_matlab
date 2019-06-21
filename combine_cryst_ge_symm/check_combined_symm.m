@@ -1,44 +1,45 @@
 clear all; clc;
 
-addpath(genpath('../Util_functions/'));
-addpath(genpath('../GB_Parameters/'));
+curr_pwd = split(pwd,'/');
+top_dir = '';
+for ct1=1:length(curr_pwd)
+    top_dir = strcat(top_dir,curr_pwd{ct1},'/');
+    if (strcmp(curr_pwd{ct1},'MATLAB_Codes'))
+        break;
+    end
+end
+util_dir = strcat(top_dir,'Util_functions','/');
+gb_data_dir = strcat(top_dir,'GB_Parameters/');
+addpath(genpath(util_dir)); addpath(genpath(gb_data_dir));
 
-fname = get_dir_name();
+s1 = set_vars();
+Nmax = s1.Nmax; pt_grp = s1.pt_grp;
+fname = [top_dir,'data_files', '/ptgrp_',pt_grp];
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% pt_grp = 'O';
-pt_grp = 'C2';
-Nmax = 4;
-mat_name = [fname,'/ptgrp_',pt_grp,'/cryst_symm/symm_ab_',...
-    pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+
+mat_name = [fname,'/cryst_symm/symm_ab_',...
+pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name);
 symm_orders = s1.symm_orders;
 nsymm = size(symm_orders,1);
 a1 = symm_orders(:,1); b1 = symm_orders(:,2); c1 = min(a1, b1);
 num_rows = sum((2*a1+1).*(2*b1+1).*(2*c1+1));
-Nmax = max(a1);
+
 
 s1 = load('rand_gb_rots.mat');
 rot_mats = s1.rot_mats;
-
-
 rots = rot_mats(:,:,1);
 r1 = rots(:,1:3); r2 = rots(:,4:6);
 
-
-
 M1 = calc_Mfunc_ab_array(symm_orders, num_rows, rots);
 
-% a_val = 4; b_val = 4;
-% M1 = mbp_funcs_vals(rots, N);
-% M1 = calc_Mfunc(a_val,b_val,rots);
-% norm(M1*Svec - M1_ges*Svec)
-
-mat_name = [fname,'/ptgrp_',pt_grp,'/combined_symm/Sarr_combined_Nmax_',...
+mat_name = [fname,'/combined_symm/Sarr_combined_Nmax_',...
     num2str(Nmax),'.mat'];
 s1 = load(mat_name);
 Svec = s1.S;
 
-symm_mat_name = [fname,'/ptgrp_',pt_grp,'/SymmMat_',pt_grp,'.mat'];
+symm_mat_name = [fname,'/SymmMat_',pt_grp,'.mat'];
 s1 = load(symm_mat_name);
 SymmMat = s1.SymmMat;
 num_symm = length(SymmMat);
@@ -66,5 +67,4 @@ for ct1 = 1:num_symm
 end
 max(diff_vec)
 
-rmpath(genpath('../Util_functions/'));
-rmpath(genpath('../GB_Parameters/'));
+rmpath(genpath(util_dir)); rmpath(genpath(gb_data_dir));

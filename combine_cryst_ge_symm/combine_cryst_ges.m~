@@ -39,7 +39,7 @@ P0 = X0*X0';
 mat_name = [fname,'/ge_symm/Y_ges_Nmax_',...
     num2str(Nmax),'.mat'];
 s1 = load(mat_name);
-% Y1 = s1.col1;
+Y1 = orth(s1.col1;
 Y1 = orth(s1.col1);
 Q1 = Y1*Y1';
 
