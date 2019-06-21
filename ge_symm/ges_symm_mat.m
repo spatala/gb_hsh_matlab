@@ -61,11 +61,12 @@ for ct1=1:num_cols
         (tot_inds(:,6) == alpha2) & ...
         (tot_inds(:,7) == beta2));
     
-% %%%% The (a,b,?,?,?)th column contains a 1 in the (b,a,?,?,?)th row
-%     ges_mat(ind1,ct1) = 1;
-% %%%% The (a,b,?,?,?)th column contains a (?1)^{a+b} in the 
-% %%%% (a,b,?,?,?)th row
-%     ges_mat(ct1,ct1) = (-1)^(a1+b1);
+%%%% The (a,b, gamma, alpha, beta)th column contains a 1 in the 
+%%%% (b,a, gamma, beta, alpha)th row
+    ges_mat(ind1,ct1) = 1;
+%%%% The (a,b, gamma, alpha, beta)th column contains a (?1)^{a+b} in the 
+%%%% (a,b, gamma, alpha, beta)th row
+    ges_mat(ct1,ct1) = (-1)^(a1+b1);
 
 % % Set 1:
 %     ges_mat(indct1) = 1;
@@ -73,9 +74,9 @@ for ct1=1:num_cols
 % % Set 2:
 %     ges_mat(ind1,ct1) = (-1)^(a1+b1);
 %     ges_mat(ct1,ct1) = 1;
-% Set 3:
-    ges_mat(ct1,ind1) = 1;
-    ges_mat(ct1,ct1) = (-1)^(a1+b1);
+% % Set 3:
+%     ges_mat(ct1,ind1) = 1;
+%     ges_mat(ct1,ct1) = (-1)^(a1+b1);
 % % Set 4:
 %     ges_mat(ct1,ind1) = (-1)^(a1+b1);
 %     ges_mat(ct1,ct1) = 1;
@@ -127,6 +128,7 @@ Y1=orth(full(col1));
 mat_name = [fname,'/ge_symm/orthY_ges_Nmax_',...
     num2str(Nmax),'.mat']; save(mat_name, 'Y1');
 %%%% Get the eigenvectors of eigen-value one for the projection matrix
+Y1 = full(col1);
 Q_mat = Y1*Y1'; [v, d] = eig(Q_mat);
 col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
 S = orth(v(:,col));
