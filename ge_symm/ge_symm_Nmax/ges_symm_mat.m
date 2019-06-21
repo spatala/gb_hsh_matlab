@@ -1,24 +1,35 @@
 clear all; clc;
 
-fname = get_dir_name();
+curr_pwd = split(pwd,'/');
+top_dir = '';
+for ct1=1:length(curr_pwd)
+    top_dir = strcat(top_dir,curr_pwd{ct1},'/');
+    if (strcmp(curr_pwd{ct1},'MATLAB_Codes'))
+        break;
+    end
+end
+util_dir = strcat(top_dir,'Util_functions','/');
+addpath(genpath(util_dir));
 
-Nmax = 8;
-pt_grp = 'O';
-% pt_grp = 'C2';
-mat_name = [fname,'/ptgrp_',pt_grp,'/cryst_symm/symm_ab_',...
-    pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+s1 = set_vars();
+Nmax = s1.Nmax; pt_grp = s1.pt_grp;
+fname = [top_dir,'data_files', '/ptgrp_',pt_grp];
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+mat_name = [fname,'/cryst_symm/symm_ab_',...
+pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name);
 symm_orders = s1.symm_orders;
 nsymm = size(symm_orders,1);
 a1 = symm_orders(:,1); b1 = symm_orders(:,2); c1 = min(a1, b1);
 num_rows = sum((2*a1+1).*(2*b1+1).*(2*c1+1));
-% Nmax = max(a1);
 
 tot_inds = mbp_inds_ab_array(symm_orders, num_rows);
 
 
-ges_mat = sparse(num_rows, num_rows);
-% ges_mat = zeros(num_rows, num_rows);
+% ges_mat = sparse(num_rows, num_rows);
+ges_mat = zeros(num_rows, num_rows);
 
 for ct1=1:num_rows
 %     ct1
@@ -68,18 +79,21 @@ j_inds(ct2:end) =[];
 col1 = ges_mat;
 col1(:,j_inds) = [];
 
-mat_name = [fname,'/ptgrp_',pt_grp,'/ge_symm/Y_ges_Nmax_',...
+mat_name = [fname,'/ge_symm/Y_ges_Nmax_',...
     num2str(Nmax),'.mat'];
 save(mat_name, 'col1');
-% save('Y_ges.mat','col1');
 
-Q_mat = col1*col1';
-[v, d] = eig(full(Q_mat));
+% Y1=col1;
+Y1=orth(col1);
+Q_mat = Y1*Y1';
+[v, d] = eig(Q_mat);
 col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
 S = orth(v(:,col));
 if any(col)
     S = orth(v(:,col));
 end
-mat_name = [fname,'/ptgrp_',pt_grp,'/ge_symm/Sarr_ges_Nmax_',...
+mat_name = [fname,'/ge_symm/Sarr_ges_Nmax_',...
     num2str(Nmax),'.mat'];
 save(mat_name,'S');
+
+rmpath(genpath(util_dir));
