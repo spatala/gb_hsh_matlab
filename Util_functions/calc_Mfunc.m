@@ -43,15 +43,15 @@ for ct1=1:num_inds
     M(ct1) = Ua_r1(a1_ind, g1_inda)*Ub_r2(b1_ind, g1_indb);
 end
 
-if a == b
-    PI_ab = sqrt(2*a+1);
-else
-    if (a > b)
-        PI_ab = sqrt(prod(2*b+1:2*a+1));
-    else
-        PI_ab = sqrt(prod(2*a+1:2*b+1));
-    end
-end
-
-M = PI_ab*M/(2*pi*pi);
+% if a == b
+%     PI_ab = sqrt(2*a+1);
+% else
+%     if (a > b)
+%         PI_ab = sqrt(prod(2*b+1:2*a+1));
+%     else
+%         PI_ab = sqrt(prod(2*a+1:2*b+1));
+%     end
+% end
+% 
+% M = PI_ab*M/(2*pi*pi);
 end
