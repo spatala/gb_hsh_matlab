@@ -23,6 +23,7 @@ Na = 2*a_val; Nb = 2*b_val; nsz = (Na+1)*(Nb+1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 s1 = load([top_dir,'GB_Parameters/rand_gb_rots.mat']); rot_mats = s1.rot_mats;
+
 rots1 = rot_mats(:,:,floor(size(rot_mats,3)*rand())); 
 g1 = rots1(:,1:3); ax_ang_1 = vrrotmat2vec(g1);
 U1  = rotation( ax_ang_1(1:3),  ax_ang_1(4), Na);
