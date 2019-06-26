@@ -3,9 +3,9 @@
 %%%%%%%
 clear all; clc;
 
-% check_symm='ypi';
+check_symm='ypi';
 % check_symm='flip';
-check_symm='ges';
+% check_symm='ges';
 
 curr_pwd = split(pwd,'/');
 top_dir = '';
@@ -43,23 +43,18 @@ rots1 = rot_mats(:,:,floor(size(rot_mats,3)*rand()));
 g1 = rots1(:,1:3); g2 = rots1(:,4:6);
 if (strcmp(check_symm, 'ypi'))
     gypi = vrrotvec2mat([0,1,0,pi]); g1_s = gypi*g1; g2_s = gypi*g2;
-    
-    mat_name = ['Ypi_Nmax_',num2str(Nmax),'.mat']; s1=load(mat_name);
-    symm_mat = s1.Ypi_symm_mat;
+    symm_mat = generate_ypi_left(symm_orders);
 end
 if (strcmp(check_symm, 'flip'))
     g1_s = g2; g2_s = g1;
-    
-    mat_name = ['flip_Nmax_',num2str(Nmax),'.mat']; s1=load(mat_name);
-    symm_mat = s1.flip_mat;
+    symm_mat = generate_flip_mat(symm_orders);
 end
 if (strcmp(check_symm, 'ges'))
-    gypi = vrrotvec2mat([0,1,0,pi]); g1_s = gypi*g2; g2_s = gypi*g1;
-    
-    mat_name = ['Ypi_Nmax_',num2str(Nmax),'.mat']; s1=load(mat_name);
-    Ypi_symm_mat = s1.Ypi_symm_mat;
-    mat_name = ['flip_Nmax_',num2str(Nmax),'.mat']; s1=load(mat_name);
-    flip_mat = s1.flip_mat;
+    gypi = vrrotvec2mat([0,1,0,pi]); 
+    g1_s = gypi*g2; g2_s = gypi*g1;
+
+    Ypi_symm_mat = generate_ypi_left(symm_orders);
+    flip_mat = generate_flip_mat(symm_orders);
     symm_mat = Ypi_symm_mat*flip_mat;
 end
 
@@ -92,6 +87,12 @@ norm(Mvec_12_nmax*symm_mat - SMvec_12_nmax)
 [v, d] = eig(full(symm_mat));
 col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
 S = orth(v(:,col));
+mat_name = [data_fname0,'ges_nmax_',num2str(Nmax),'.mat'];
+save(mat_name, 'S');
+
+% s1 = load(mat_name); S = s1.S;
+% size(orth(S))
+
 norm(Mvec_12_nmax*S - SMvec_12_nmax*S)
 
 rmpath(genpath(util_dir));
