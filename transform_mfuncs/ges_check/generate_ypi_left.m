@@ -9,7 +9,7 @@ nsymm_ab = size(symm_orders,1);
 Ypi_symm_mat = sparse(num_cols, num_cols);
 
 ind_start = 1;
-for ct1 = nsymm_ab
+for ct1 = 1:nsymm_ab
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     a_val = symm_orders(ct1,1); b_val = symm_orders(ct1,2);
