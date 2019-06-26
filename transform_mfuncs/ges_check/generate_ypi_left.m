@@ -22,7 +22,7 @@ for ct1 = nsymm_ab
     Ypi = [0,1,0,pi]; gl1 = vrrotvec2mat(Ypi); gl2 = vrrotvec2mat(Ypi);
     % Zth = [0,0,1,rand()]; gl1 = vrrotvec2mat(Zth); gl2 = vrrotvec2mat(Zth);
     
-    gr1 = eye(3,3); gr2 = eye(3,3);
+    gr1 = eye(3); gr2 = eye(3);
     Rr_ab_12 = so4_irrep(gr1,gr2,Na,Nb);
     Rl_ab_12 = so4_irrep(gl1,gl2,Na,Nb);
     trRr_ab_12 = transpose(Rr_ab_12);
