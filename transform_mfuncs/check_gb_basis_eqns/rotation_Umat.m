@@ -9,7 +9,7 @@ for ct1=1:length(curr_pwd)
     end
 end
 util_dir = strcat(top_dir,'Util_functions','/');
-addpath(genpath(top_dir));
+addpath(genpath(util_dir));
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,3 +33,5 @@ tmat = tl*r1*tr;
 ax_ang_t = vrrotmat2vec(tmat);
 tU = rotation(ax_ang_t(1:3), ax_ang_t(4), Na);
 norm(Ul*U_a*Ur - tU)
+
+rmpath(genpath(util_dir));

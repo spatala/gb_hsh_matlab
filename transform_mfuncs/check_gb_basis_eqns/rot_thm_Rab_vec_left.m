@@ -13,7 +13,7 @@ for ct1=1:length(curr_pwd)
     end
 end
 util_dir = strcat(top_dir,'Util_functions','/');
-addpath(genpath(top_dir));
+addpath(genpath(util_dir));
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,3 +39,16 @@ Rmult_v1 = reshape(transpose(Rmult),[1,nsz*nsz]);
 Rmult_v2 = Rv_ab_12*kron(eye(nsz,nsz),Rl_ab_12);
 
 norm(Rmult_v1 - Rmult_v2)
+
+%%%%% Check the tranpose rotations as well!
+trR_ab_12 = transpose(R_ab_12);
+trRv_ab_12 = transpose(R_ab_12(:));
+trRl_ab_12 = transpose(Rl_ab_12);
+tr_Rmult = trRl_ab_12*trR_ab_12;
+tr_Rmult_v1 = transpose(Rmult(:));
+tr_Rmult_v2 = trRv_ab_12*kron(Rl_ab_12,eye(nsz,nsz));
+
+norm(tr_Rmult_v1 - tr_Rmult_v2)
+
+
+rmpath(genpath(util_dir));

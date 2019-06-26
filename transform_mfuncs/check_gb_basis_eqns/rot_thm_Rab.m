@@ -34,10 +34,16 @@ R_ab_12  = so4_irrep(g1 ,g2 ,Na,Nb);
 Rr_ab_12 = so4_irrep(gr1,gr2,Na,Nb);
 Rl_ab_12 = so4_irrep(gl1,gl2,Na,Nb);
 
-% rot1 = Rl_ab_12*R_ab_12*Rr_ab_12;
-rot1 = Rr_ab_12*R_ab_12*Rl_ab_12;
 
+rot1 = Rr_ab_12*R_ab_12*Rl_ab_12;
 tmat1 = gl1*g1*gr1; tmat2 = gl2*g2*gr2;
 R_ab_t1t2 = so4_irrep(tmat1,tmat2,Na,Nb);
-
 norm(R_ab_t1t2 - rot1)
+
+%%%%% Check the tranpose rotations as well!
+trR_ab_12  = transpose(R_ab_12);
+trRr_ab_12 = transpose(Rr_ab_12);
+trRl_ab_12 = transpose(Rl_ab_12);
+tr_rot1 = trRl_ab_12*trR_ab_12*trRr_ab_12;
+trR_ab_t1t2 = transpose(R_ab_t1t2);
+norm(trR_ab_t1t2 - tr_rot1)
