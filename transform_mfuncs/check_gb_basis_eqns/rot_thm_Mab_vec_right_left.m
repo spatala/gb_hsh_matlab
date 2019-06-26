@@ -18,7 +18,7 @@ addpath(genpath(util_dir));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % a_val = floor(rand()*6); b_val = floor(rand()*6); c_val = min(a_val, b_val);
-a_val = 4; b_val = 3; c_val = min(a_val, b_val);
+a_val = 0; b_val = 1; c_val = min(a_val, b_val);
 Na = 2*a_val; Nb = 2*b_val; Nc = 2*c_val; nsz = (Na+1)*(Nb+1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
