@@ -23,24 +23,18 @@ Na = 2*a_val; Nb = 2*b_val; nsz = (Na+1)*(Nb+1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 s1 = load([top_dir,'GB_Parameters/rand_gb_rots.mat']); rot_mats = s1.rot_mats;
-rots1 = rot_mats(:,:,floor(size(rot_mats,3)*rand())); 
-g1 = rots1(:,1:3); ax_ang_1 = vrrotmat2vec(g1);
-U1  = rotation( ax_ang_1(1:3),  ax_ang_1(4), Na);
-g2 = rots1(:,4:6); ax_ang_2 = vrrotmat2vec(g2);
-U2  = rotation( ax_ang_2(1:3),  ax_ang_2(4), Nb);
+rots1  = rot_mats(:,:,floor(size(rot_mats,3)*rand()));
+rots_r = rot_mats(:,:,floor(size(rot_mats,3)*rand()));
 
-rots_r = rot_mats(:,:,floor(size(rot_mats,3)*rand())); 
-gr1 = rots_r(:,1:3); ax_ang_r1 = vrrotmat2vec(gr1);
-Ur1 = rotation(ax_ang_r1(1:3), ax_ang_r1(4), Na);
-gr2 = rots_r(:,4:6); ax_ang_r2 = vrrotmat2vec(gr2);
-Ur2 = rotation(ax_ang_r2(1:3), ax_ang_r2(4), Nb);
+g1  = rots1(:,1:3);  g2  = rots1(:,4:6); 
+gr1 = rots_r(:,1:3); gr2 = rots_r(:,4:6);
 
-R_ab_12 = kron(U1, U2);
+R_ab_12  = so4_irrep(g1 ,g2 ,Na,Nb);
 Rv_ab_12 = reshape(transpose(R_ab_12), [1,nsz*nsz]);
-Rr_ab_12 = kron(Ur1, Ur2);
 
-Rmult = R_ab_12*Rr_ab_12;
+Rr_ab_12 = so4_irrep(gr1,gr2,Na,Nb);
+Rmult = Rr_ab_12*R_ab_12;
 Rmult_v1 = reshape(transpose(Rmult),[1,nsz*nsz]);
-Rmult_v2 = Rv_ab_12*kron(eye(nsz,nsz),Rr_ab_12);
+Rmult_v2 = Rv_ab_12*kron(transpose(Rr_ab_12),eye(nsz,nsz));
 
 norm(Rmult_v1 - Rmult_v2)
