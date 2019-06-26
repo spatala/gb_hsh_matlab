@@ -18,7 +18,7 @@ s1 = load([top_dir,'GB_Parameters/rand_gb_rots.mat']); rot_mats = s1.rot_mats;
 rots1 = rot_mats(:,:,floor(size(rot_mats,3)*rand())); r1 = rots1(:,1:3);
 
 
-a_val = 5; Na = 2*a_val;
+a_val = floor(rand()*6); Na = 2*a_val;
 ax_ang = vrrotmat2vec(r1);
 U_a = rotation(ax_ang(1:3), ax_ang(4), Na);
 
