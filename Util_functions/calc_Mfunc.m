@@ -20,8 +20,11 @@ function M = calc_Mfunc(a,b, rots)
 r1=rots(:,1:3);r2=rots(:,4:6);
 
 c = min(a, b);
-ax_ang1 = vrrotmat2vec(r1');
-ax_ang2 = vrrotmat2vec(r2');
+% ax_ang1 = vrrotmat2vec(r1');
+% ax_ang2 = vrrotmat2vec(r2');
+
+ax_ang1 = vrrotmat2vec(r1^(-1));
+ax_ang2 = vrrotmat2vec(r2^(-1));
 
 inds_mat = mbp_ab(a,b);
 num_inds = size(inds_mat,1);
@@ -34,13 +37,16 @@ Ub_r2 = rotation(ax_ang2(1:3), ax_ang2(4), Nb);
 M = zeros(1, num_inds);
 for ct1=1:num_inds
     g1 = inds_mat(ct1, 4);
-    a1 = inds_mat(ct1, 5);
-    b1 = inds_mat(ct1, 6);
-    g1_inda =  g1 + c + 1;
-    g1_indb = -g1 + c + 1;
-    a1_ind = a1 + a + 1;
-    b1_ind = b1 + b + 1;
-    M(ct1) = Ua_r1(a1_ind, g1_inda)*Ub_r2(b1_ind, g1_indb);
+    al_i = inds_mat(ct1, 5);
+    be_i = inds_mat(ct1, 6);
+    al_j =  g1; be_j = -g1;
+    
+    ai = al_i + a + 1;
+    aj = al_j + a + 1;
+    bi = be_i + b + 1;
+    bj = be_j + b + 1;
+    
+    M(ct1) = Ua_r1(ai, aj)*Ub_r2(bi, bj);
 end
 
 % if a == b
