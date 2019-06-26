@@ -3,10 +3,6 @@
 %%%%%%%
 clear all; clc;
 
-% check_symm='ypi';
-% check_symm='flip';
-check_symm='ges';
-
 curr_pwd = split(pwd,'/');
 top_dir = '';
 for ct1=1:length(curr_pwd)
