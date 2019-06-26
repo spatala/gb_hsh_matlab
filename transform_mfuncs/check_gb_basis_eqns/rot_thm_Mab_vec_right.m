@@ -17,19 +17,22 @@ addpath(genpath(util_dir));
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-a_val = floor(rand()*6); b_val = floor(rand()*6); c_val = min(a_val, b_val);
-% a_val = 0; b_val = 1; c_val = min(a_val, b_val);
+% a_val = floor(rand()*6); b_val = floor(rand()*6); 
+a_val = 4; b_val = 3;
+c_val = min(a_val, b_val);
 Na = 2*a_val; Nb = 2*b_val; Nc = 2*c_val; nsz = (Na+1)*(Nb+1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 s1 = load([top_dir,'GB_Parameters/rand_gb_rots.mat']); rot_mats = s1.rot_mats;
 
-rots1  = rot_mats(:,:,floor(size(rot_mats,3)*rand()));
+% rots1  = rot_mats(:,:,floor(size(rot_mats,3)*rand()));
+rots1 = rot_mats(:,:,1);
 rots_r = rot_mats(:,:,floor(size(rot_mats,3)*rand()));
 
 
 g1 = rots1(:,1:3); g2 = rots1(:,4:6); 
-gr1 = rots_r(:,1:3); gr2 = rots_r(:,4:6); 
+% gr1 = rots_r(:,1:3); gr2 = rots_r(:,4:6); 
+gr1 = vrrotvec2mat([0,0,1,pi]); gr2 = eye(3); 
 % gr1 = eye(3,3); gr2 = eye(3,3);
 
 R_ab_12  = so4_irrep(g1 ,g2 ,Na,Nb);
@@ -59,11 +62,11 @@ Mrot = calc_Mrot_mat_Rab(tr_Rrot, a_val, b_val);
 Mrot1 = kron(eye(Nc+1), trRr_ab_12);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-norm(Mrot - Mrot1)
+% norm(Mrot - Mrot1)
 
-% Mvec2_ab_12 = Mvec_ab_12*Mrot;
+Mvec2_ab_12 = Mvec_ab_12*Mrot1;
 % norm(tr_Rmult_v1 - tr_Rmult_v2)
-% norm(Mvec1_ab_12-Mvec2_ab_12)
+norm(Mvec1_ab_12-Mvec2_ab_12)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

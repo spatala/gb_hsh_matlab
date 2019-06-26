@@ -19,9 +19,7 @@ util_dir = strcat(top_dir,'Util_functions','/');
 addpath(genpath(util_dir));
 
 s1 = set_vars();
-Nmax = s1.Nmax;
-% Nmax = 1;
-pt_grp = s1.pt_grp;
+Nmax = s1.Nmax; pt_grp = s1.pt_grp;
 
 data_fname0 = [top_dir,'data_files/ptgrp_',pt_grp,'/cryst_symm/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
