@@ -3,9 +3,9 @@
 %%%%%%%
 clear all; clc;
 
-check_symm='ypi';
+% check_symm='ypi';
 % check_symm='flip';
-% check_symm='ges';
+check_symm='ges';
 
 curr_pwd = split(pwd,'/');
 top_dir = '';
@@ -25,6 +25,7 @@ data_fname0 = [top_dir,'data_files/ptgrp_',pt_grp,'/cryst_symm/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Nmax = 1;
 symm_orders = zeros(Nmax^2,2);
 ct3 = 1;
 for ct1=0:Nmax
