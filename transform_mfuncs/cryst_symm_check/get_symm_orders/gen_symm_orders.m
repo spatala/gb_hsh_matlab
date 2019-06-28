@@ -1,4 +1,4 @@
-function [] = csymm_gen_ab()
+function [] = gen_symm_orders()
 clear all; clc;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -15,7 +15,7 @@ addpath(genpath(util_dir));
 
 s1 = set_vars(); Nmax = s1.Nmax; pt_grp = s1.pt_grp;
 
-data_fname0 = [top_dir,'data_files/ptgrp_',pt_grp,'/cryst_symm/'];
+data_fname0 = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [ga_s, gb_s, num_gen] = get_symmgen_mats(pt_grp);
@@ -43,7 +43,6 @@ for ct1=0:Nmax
             end
         end
         if any(col1)
-%             save_symm_arr(a_val, b_val, v1, col1, data_fname0);
             symm_orders(ct3,:) = [ct1, ct2]; ct3 = ct3 + 1;
         end
     end
@@ -51,13 +50,13 @@ end
 
 symm_orders(ct3:end,:) = [];
 mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
-% save(mat_name,'symm_orders');
+save(mat_name,'symm_orders');
 rmpath(genpath(util_dir));
 end
 
 function [v, d] = compute_eigen(ga_s,gb_s,n_gen, a_val,b_val)
 gs1 = ga_s{n_gen}; gs2 = gb_s{n_gen};
-R1 = full(generate_csymm(gs1, gs2, [a_val,b_val]));
+Na = 2*a_val; Nb = 2*b_val; R1 = full(so4_irrep(gs1,gs2,Na,Nb));
 [v,d] = eig(R1);
 end
 
@@ -65,11 +64,4 @@ function [v, d] = combine_XY_symms(X0, v, col)
 P0 = X0*X0';
 Y1 = orth(v(:,col)); Q1 = Y1*Y1';
 [v, d] = eig(P0*Q1*P0);
-end
-
-function save_symm_arr(a_val, b_val, v, col, fname)
-S = orth(v(:,col));
-% size(S,2)
-mat_name = [fname,'Sarr_',num2str(a_val),'_',num2str(b_val),'.mat'];
-save(mat_name,'S');
 end
