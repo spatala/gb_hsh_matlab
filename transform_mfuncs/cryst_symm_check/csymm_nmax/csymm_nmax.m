@@ -12,29 +12,18 @@ end
 util_dir = strcat(top_dir,'Util_functions','/');
 addpath(genpath(util_dir));
 
-s1 = set_vars();
-Nmax = s1.Nmax;
-% Nmax = 1;
-pt_grp = s1.pt_grp;
+s1 = set_vars(); Nmax = s1.Nmax; pt_grp = s1.pt_grp;
 
-data_fname0 = [top_dir,'data_files/ptgrp_',pt_grp,'/cryst_symm/'];
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-[ga_s, gb_s, num_gen] = get_symmgen_mats(pt_grp);
-
+data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
+data_fname0 = [data_fname,'cryst_symm/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-symm_orders = zeros(Nmax^2,2);
-ct3 = 1;
-for ct1=0:Nmax
-    for ct2=0:Nmax
-        symm_orders(ct3,:) = [ct1,ct2];
-        ct3 = ct3 + 1;
-    end
-end
-
-a1 = symm_orders(:,1); b1 = symm_orders(:,2); c1 = min(a1,b1);
-num_cols = sum((2*a1+1).*(2*b1+1).*(2*c1+1));
-nsymm = size(symm_orders,1);
+[ga_s, gb_s, num_gen] = get_symmgen_mats(pt_grp);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+mat_name = [data_fname,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+s1 = load(mat_name); symm_orders = s1.symm_orders;
+% a1 = symm_orders(:,1); b1 = symm_orders(:,2); c1 = min(a1,b1);
+% num_cols = sum((2*a1+1).*(2*b1+1).*(2*c1+1));
+% nsymm = size(symm_orders,1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -75,6 +64,7 @@ end
 
 function save_symm_arr(symm_orders, v, col, fname)
 S = orth(v(:,col));
-mat_name = [fname,'Sarr_full_symm_orders.mat'];
+Nmax = max(symm_orders(:));
+mat_name = [fname,'Sarr_full_symm_orders_nmax_',num2str(Nmax),'.mat'];
 save(mat_name,'S','symm_orders');
 end
