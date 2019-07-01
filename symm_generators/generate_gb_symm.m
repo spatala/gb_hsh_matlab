@@ -16,11 +16,9 @@ s1 = set_vars(); Nmax = s1.Nmax; pt_grp = s1.pt_grp;
 %%%% 
 gen_symm_orders(top_dir, pt_grp, Nmax);
 %%%% 
-generate_csymm_nmax(top_dir, pt_grp, Nmax);
+generate_all_symms(top_dir, pt_grp, Nmax);
 %%%%
-generate_ges(top_dir, pt_grp, Nmax)
-%%%% 
-generate_symm_combos(top_dir, pt_grp, Nmax);
-%%%% 
+combine_all_symms(top_dir, pt_grp, Nmax);
+%%%%
 rmpath(genpath(util_dir));
 
