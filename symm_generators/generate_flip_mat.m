@@ -34,12 +34,5 @@ for ct1=1:num_cols
     flip_mat(ind1,ct1) = 1;
 %     ind_maps(ct1,:) = [ct1, ind1];
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% s1 = load(['flip_inds_map_',num2str(Nmax),'.mat']);
-% ind_map = s1.ind_map;
-% max(max(abs(ind_maps - ind_map)))
-% %%% Save the flip-matrix in .mat file.
-% mat_name = ['flip_Nmax_',num2str(Nmax),'.mat']; 
-% save(mat_name, 'flip_mat','ind_maps');
 
 end
