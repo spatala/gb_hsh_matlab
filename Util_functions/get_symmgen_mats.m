@@ -12,7 +12,7 @@ function [ga_s, gb_s, num_gen, Laue] = get_symmgen_mats(pt_grp)
 %%%% num_gen:
 %%%% Laue:
 %%%% 
-if (strcmp(pt_grp,'O'))
+if (strcmp(pt_grp,'O') || strcmp(pt_grp,'Oh'))
     num_gen = 2;
     
     a_ax1 = [0 0 1]; a_ang1 = pi/2;
@@ -42,7 +42,11 @@ if (strcmp(pt_grp,'O'))
     gb_s{1} = gb_s1; gb_s{2} = gb_s2;
     gb_s{3} = gb_s3; gb_s{4} = gb_s4;
     
-    Laue = 0;
+    if strcmp(pt_grp,'O')
+        Laue = 0;
+    else
+        Laue = 1;
+    end
 end
 
 if (strcmp(pt_grp,'D2'))
