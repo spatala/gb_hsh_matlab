@@ -10,6 +10,7 @@ data_fname0 = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 symm_orders = zeros(Nmax^2,2);
 ct3 = 1;
 for ct1=0:Nmax
+    ct1
     for ct2=0:Nmax
         a_val = ct1; b_val = ct2;
         for ct4 = 1:2*num_gen
@@ -35,7 +36,8 @@ for ct1=0:Nmax
 end
 
 symm_orders(ct3:end,:) = [];
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+data_fname1 = [data_fname0,'nmax_',num2str(Nmax),'/'];
+mat_name = [data_fname1,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 save(mat_name,'symm_orders');
 
 end

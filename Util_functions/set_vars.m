@@ -13,6 +13,5 @@ function s1 = set_vars()
 % s1.pt_grp = 'D2'; s1.Nmax = 4; 
 
 %%%% Laue-groups
-s1.pt_grp = 'Oh'; s1.Nmax = 4;
-% s1.pt_grp = 'Oh'; s1.Nmax = 8;
+s1.pt_grp = 'Oh'; s1.Nmax = 20;
 end
