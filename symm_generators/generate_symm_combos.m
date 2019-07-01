@@ -1,21 +1,9 @@
-function [] = generate_symm_combs()
-clear all; clc;
+function [] = generate_symm_combos(top_dir, pt_grp, Nmax)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% 
+%%%% 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-curr_pwd = split(pwd,'/');
-top_dir = '';
-for ct1=1:length(curr_pwd)
-    top_dir = strcat(top_dir,curr_pwd{ct1},'/');
-    if (strcmp(curr_pwd{ct1},'gb_hsh_matlab'))
-        break;
-    end
-end
-util_dir = strcat(top_dir,'Util_functions','/');
-addpath(genpath(util_dir));
-
-s1 = set_vars();
-Nmax = s1.Nmax; pt_grp = s1.pt_grp;
-
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname0 = [data_fname,'ge_symm/'];
 data_fname1 = [data_fname,'cryst_symm/'];
