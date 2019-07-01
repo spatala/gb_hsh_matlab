@@ -1,4 +1,17 @@
-function [ga_s, gb_s, num_gen] = get_symmgen_mats(pt_grp)
+function [ga_s, gb_s, num_gen, Laue] = get_symmgen_mats(pt_grp)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Function to set the generators for each point group (only proper
+%%%% rotation elements are set.)
+%%%%
+%%%% Input:
+%%%% pt_grp:    string
+%%%%            Point-group of underlying crystal
+%%%% 
+%%%% Output:
+%%%% ga_s, gb_s:
+%%%% num_gen:
+%%%% Laue:
+%%%% 
 if (strcmp(pt_grp,'O'))
     num_gen = 2;
     
@@ -28,6 +41,8 @@ if (strcmp(pt_grp,'O'))
     gb_s = cell(num_gen^2,1);
     gb_s{1} = gb_s1; gb_s{2} = gb_s2;
     gb_s{3} = gb_s3; gb_s{4} = gb_s4;
+    
+    Laue = 0;
 end
 
 if (strcmp(pt_grp,'D2'))
@@ -59,6 +74,8 @@ if (strcmp(pt_grp,'D2'))
     gb_s = cell(num_gen^2,1);
     gb_s{1} = gb_s1; gb_s{2} = gb_s2;
     gb_s{3} = gb_s3; gb_s{4} = gb_s4;
+    
+    Laue = 0;
 end
 
 if (strcmp(pt_grp,'C2'))
@@ -78,5 +95,7 @@ if (strcmp(pt_grp,'C2'))
     ga_s{1} = ga_s1; ga_s{2} = ga_s2;
     gb_s = cell(num_gen^2,1);
     gb_s{1} = gb_s1; gb_s{2} = gb_s2;
+    
+    Laue = 0;
 end
 end
