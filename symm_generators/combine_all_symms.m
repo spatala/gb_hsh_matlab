@@ -23,6 +23,7 @@ end
 nmax = max(symm_orders(:));
 
 for ct4 = 1:num_symm
+    ct4
     [v0, d0] = compute_eigen(ct4, nmax, data_fname0);
     col0 = (abs(imag(diag(d0)))<1e-5 & abs(real(diag(d0))-1)<1e-5);
     if any(col0)
