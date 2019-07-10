@@ -1,4 +1,4 @@
-% function csymm_mat = generate_csymm(gs1, gs2, symm_orders)
+function csymm_mat = generate_csymm(gs1, gs2, symm_orders)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Function to compute the full Symmetry matrix that operates on
 %%%% M(0,0)....M(Nmax, Nmax) given by symm_orders
