@@ -16,6 +16,8 @@ for ct4 = 1:num_symm
     ct4
     gs1 = ga_s{ct4}; gs2 = gb_s{ct4};
     symm_mat = generate_csymm(gs1, gs2, symm_orders);
+    display(nnz(symm_mat));
+    [unique(real(symm_mat(:)));unique(imag(symm_mat(:)))]
     save_symm_mat(symm_orders, symm_mat, data_fname0, ct4);
 end
 if (Laue)
