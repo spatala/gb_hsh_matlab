@@ -49,13 +49,15 @@ end
 function [v, d] = combine_XY_symms(X0, v, col)
 P0 = X0*X0';
 Y1 = orth(v(:,col)); Q1 = Y1*Y1';
-[v, d] = eig(P0*Q1*P0);
+R1 = P0*Q1*P0;
+[v, d] = eig(R1);
 end
 
 function [v, d] = compute_eigen(ngen, nmax, fname)
 mat_name = [fname,'symm_mat_full_ngen_',num2str(ngen)...
     ,'_nmax_',num2str(nmax),'.mat'];
-s1 = load(mat_name); R1 = full(s1.symm_mat); [v,d] = eig(R1);
+s1 = load(mat_name); R1 = full(s1.symm_mat); 
+[v,d] = eig(R1);
 end
 
 
