@@ -14,22 +14,20 @@ for ct1=0:Nmax
     for ct2=0:Nmax
         a_val = ct1; b_val = ct2;
         for ct4 = 1:2*num_gen
-            [v0, d0] = compute_eigen(ga_s,gb_s,ct4,a_val,b_val);
-            col0 = (abs(imag(diag(d0)))<1e-5 & abs(real(diag(d0))-1)<1e-5);
-            if any(col0)
+            S0 = compute_eigen(ga_s,gb_s,ct4,a_val,b_val);
+            if (size(S0,2) > 0)
                 if (ct4 == 1)
-                    X0 = eye(size(v0,1), size(v0,1));
+                    X0 = eye(size(S0,1), size(S0,1));
                 else
-                    X0 = orth(v1(:,col1));
+                    X0 = S1;
                 end
-                [v1, d1] = combine_XY_symms(X0, v0, col0);
-                col1 = (abs(imag(diag(d1)))<1e-5 & abs(real(diag(d1))-1)<1e-5);
-                if ~any(col1)
+                S1 = combine_XY_symms(X0, S0);
+                if (size(S1,2) == 0)
                     break;
                 end
             end
         end
-        if any(col1)
+        if (size(S1,2) > 0)
             symm_orders(ct3,:) = [ct1, ct2]; ct3 = ct3 + 1;
         end
     end
@@ -42,14 +40,13 @@ save(mat_name,'symm_orders');
 
 end
 
-function [v, d] = compute_eigen(ga_s,gb_s,n_gen, a_val,b_val)
+function S = compute_eigen(ga_s,gb_s,n_gen, a_val,b_val)
 gs1 = ga_s{n_gen}; gs2 = gb_s{n_gen};
-Na = 2*a_val; Nb = 2*b_val; R1 = full(so4_irrep(gs1,gs2,Na,Nb));
-[v,d] = eig(R1);
+Na = 2*a_val; Nb = 2*b_val; R1 = so4_irrep(gs1,gs2,Na,Nb);
+nsz = size(R1,1); R2 = R1 - speye(nsz,nsz); S = spnull(R2);
 end
 
-function [v, d] = combine_XY_symms(X0, v, col)
-P0 = X0*X0';
-Y1 = orth(v(:,col)); Q1 = Y1*Y1';
-[v, d] = eig(P0*Q1*P0);
+function S = combine_XY_symms(X0, Y1)
+P0 = X0*X0'; Q1 = Y1*Y1'; R1 = P0*Q1*P0;
+nsz = size(R1); R2 = R1 - speye(nsz); S = spnull(R2);
 end
