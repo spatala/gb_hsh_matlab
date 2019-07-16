@@ -46,14 +46,24 @@ for ct1=1:nsz
     end
 end
 
-g1p = ypi*g1; g2p = ypi*g2;
-for ct1=1:nsz
-    gs1 = g1p*SymmMat{ct1};
-    for ct2=1:nsz
-        gs2 = g2p*SymmMat{ct1};
-        symm_rots(:,:,ct3) = [gs1,gs2];
-        ct3 = ct3 + 1;
+if Laue
+    g1p = ypi*g1; g2p = ypi*g2;
+    for ct1=1:nsz
+        gs1 = g1p*SymmMat{ct1};
+        for ct2=1:nsz
+            gs2 = g2p*SymmMat{ct1};
+            symm_rots(:,:,ct3) = [gs1,gs2];
+            ct3 = ct3 + 1;
+        end
+    end
+    g1p = g2; g2p = g1;
+    for ct1=1:nsz
+        gs1 = g1p*SymmMat{ct1};
+        for ct2=1:nsz
+            gs2 = g2p*SymmMat{ct1};
+            symm_rots(:,:,ct3) = [gs1,gs2];
+            ct3 = ct3 + 1;
+        end
     end
 end
-
 end
