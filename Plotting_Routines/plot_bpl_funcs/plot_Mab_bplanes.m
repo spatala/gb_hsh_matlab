@@ -40,7 +40,7 @@ s1 = load(mat_name); symm_orders = s1.symm_orders;
 % x1 = rot_pts(:,1); y1 = rot_pts(:,1); z1 = rot_pts(:,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-num = 25;
+num = 100;
 [X, Y, Z] = sphere(num);
 x1 = X(:); y1 = Y(:); z1 = Z(:);
 
@@ -68,8 +68,8 @@ s1 = load(mat_name); S = (s1.S);
 num_cols = size(S,1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Mvec = zeros(nsz, num_cols);
-for ct1=1:nsz
-    ct1
+parfor ct1=1:nsz
+%     ct1
     rots1 = rots(:,:,ct1);
     g1 = rots1(:,1:3); g2 = rots1(:,4:6);
     tMvec = calc_Mvec(g1,g2,symm_orders);
