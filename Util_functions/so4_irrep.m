@@ -14,11 +14,23 @@ function R_ab_12 = so4_irrep(g1,g2,Na,Nb)
 %%%% R_ab_12:
 %%%%    SO(4) irrep - (Na+1)*(Nb+1) square matrix 
 %%%% 
-ax_ang_1 = vrrotmat2vec(g1'); ax_ang_2 = vrrotmat2vec(g2');
-U1 = rotation( ax_ang_1(1:3),  ax_ang_1(4), Na);
-% U1 = adjust_complex_mats(U1);
-U2 = rotation( ax_ang_2(1:3),  ax_ang_2(4), Nb);
-% U2 = adjust_complex_mats(U2);
-R_ab_12 = kron(U1, U2);
-% R_ab_12 = adjust_complex_mats(R_ab_12);
+
+%%%%%
+tm1 = g1 - eye(3); tm1 = tm1(:);
+tm2 = g2 - eye(3); tm2 = tm2(:);
+
+if (norm(tm1) < 1e-14)
+    U1 = eye(Na+1);
+else
+    ax_ang_1 = vrrotmat2vec(g1'); 
+    U1 = rotation( ax_ang_1(1:3),  ax_ang_1(4), Na);
+end
+
+if (norm(tm2) < 1e-14)
+    U2 = eye(Nb+1);
+else
+    ax_ang_2 = vrrotmat2vec(g2');
+    U2 = rotation( ax_ang_2(1:3),  ax_ang_2(4), Nb);
+end
+R_ab_12 = sparse(kron(U1, U2));
 end
