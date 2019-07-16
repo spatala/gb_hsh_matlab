@@ -22,7 +22,7 @@ data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 s1 = load([top_dir,'GB_Parameters/rand_gb_rots.mat']); rot_mats = s1.rot_mats;
 rots1 = rot_mats(:,:,floor(size(rot_mats,3)*rand()));
 g1 = rots1(:,1:3); g2 = rots1(:,4:6);
@@ -59,5 +59,6 @@ parfor ct1=1:nsymm
     SMvec = calc_Mvec(Sg1, Sg2, symm_orders);
     diff_arr(ct1) = norm(Mvec*S - SMvec*S);
 end
+max(diff_arr)
 
 rmpath(genpath(util_dir));
