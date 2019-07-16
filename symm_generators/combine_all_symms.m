@@ -22,7 +22,8 @@ end
 
 nmax = max(symm_orders(:));
 
-for ct4 = 1:num_symm
+% for ct4 = 1:num_symm
+for ct4 = 1:5
     ct4
     [v0, d0] = compute_eigen(ct4, nmax, data_fname0);
     col0 = (abs(imag(diag(d0)))<1e-5 & abs(real(diag(d0))-1)<1e-5);
@@ -36,13 +37,17 @@ for ct4 = 1:num_symm
         col1 = (abs(imag(diag(d1)))<1e-5 & abs(real(diag(d1))-1)<1e-5);
         if ~any(col1)
             break;
+        else
+            S = orth(v1(:,col1));
+            mat_name = ['Sarr_cryst_combined_abc_nmax_',num2str(Nmax),'_',num2str(ct4),'.mat'];
+            save(mat_name,'S');
         end
     end
 end
 
-if any(col1)
-    save_symm_arr(Nmax, v1, col1, data_fname0);
-end
+% if any(col1)
+%     save_symm_arr(Nmax, v1, col1, data_fname0);
+% end
 
 end
 
