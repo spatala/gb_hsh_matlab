@@ -1,8 +1,5 @@
-function [] = generate_ab_symms(top_dir, pt_grp, Nmax)
-
+function [] = generate_ab_symms(data_fname0, pt_grp, Nmax)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
-data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 data_fname1 = [data_fname0,'Sarr_ab/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [ga_s, gb_s, num_gen, Laue] = get_symmgen_mats(pt_grp);
@@ -11,9 +8,6 @@ mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 nsymm = size(symm_orders,1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 ncryst_symm = 2*num_gen;
 nosymm_inds = zeros(nsymm,1);
 nosymm_ct = 1;
@@ -58,22 +52,9 @@ end
 
 function symm_mat = generate_c1symm(ct1, ga_s, gb_s, Na, Nb)
 gs1 = ga_s{ct1}; gs2 = gb_s{ct1};
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Rr_ab_12 = so4_irrep(gs1,gs2,Na,Nb);
 symm_mat = transpose(Rr_ab_12);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
-
-% function save_Sarr(R1, mat_name)
-% [v,d] = eig(full(R1));
-% col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
-% if any(col)
-%     S = orth(v(:,col));
-% end
-% save(mat_name, 'S');
-% end
-
 
 function save_mat = save_Sarr(R1, mat_name)
 nsz = size(R1,1);
