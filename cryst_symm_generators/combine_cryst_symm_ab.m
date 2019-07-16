@@ -89,11 +89,4 @@ R1 = P1*Q1*P1;
 nsz = size(R1,1);
 R2 = R1 - speye(nsz,nsz);
 Xarr = spnull(R2);
-
-
-% [v,d] = eig(R1);
-% col = (abs(imag(diag(d)))<1e-5 & abs(real(diag(d))-1)<1e-5);
-% if any(col)
-%     Xarr = orth(v(:,col));
-% end
 end
