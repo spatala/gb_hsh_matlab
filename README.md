@@ -2,7 +2,12 @@
 
 ## Wrapper
 
-1)	gen_symm_orders()
-2)	csymm_nmax()
-3)	generate_ges()
-4)	generate_symm_combs()
+### `generate_gb_cryst_symm(pt_grp, Nmax)`
+
+1) `gen_symm_orders(top_dir, pt_grp, Nmax);`
+2) `generate_ab_symms(top_dir, pt_grp, Nmax);`
+3) `combine_cryst_symm_ab(top_dir, pt_grp, Nmax);`
+4) `generate_ge_symms(top_dir, pt_grp, Nmax);`
+5) `combine_cryst_ges(top_dir,pt_grp, Nmax);`
+6) `save_symmvec_MabInds(top_dir,pt_grp, Nmax);`
+

@@ -36,31 +36,37 @@ for ns_ord = 1:nsymm
     Na = 2*a_val; Nb = 2*b_val;
     
     for ct1=1:ncryst_symm
-        symm_mat = generate_c1symm(ct1, ga_s, gb_s, Na, Nb);
         mat_name = [data_fname1,...
             'Sarr_ab_',num2str(a_val),'_',num2str(b_val),'_',num2str(ct1),'.mat'];
-        save_mat = save_Sarr(symm_mat, mat_name);
-        if ~(save_mat)
-            nosymm_inds(nosymm_ct) = ns_ord;
-            nosymm_ct = nosymm_ct + 1;
+        if ~(isfile(mat_name))
+            symm_mat = generate_c1symm(ct1, ga_s, gb_s, Na, Nb);
+            save_mat = save_Sarr(symm_mat, mat_name);
+            if ~(save_mat)
+                nosymm_inds(nosymm_ct) = ns_ord;
+                nosymm_ct = nosymm_ct + 1;
+            end
         end
     end
     
     if Laue
         ct1 = ct1 + 1;
-        symm_mat = generate_ypi_left_ab(a_val,b_val);
         mat_name = [data_fname1,...
             'Sarr_ab_',num2str(a_val),'_',num2str(b_val),'_',num2str(ct1),'.mat'];
-        save_mat = save_Sarr(symm_mat, mat_name);
-        if ~(save_mat)
-            nosymm_inds(nosymm_ct) = ns_ord;
-            nosymm_ct = nosymm_ct + 1;
+        if ~(isfile(mat_name))
+            symm_mat = generate_ypi_left_ab(a_val,b_val);
+            save_mat = save_Sarr(symm_mat, mat_name);
+            if ~(save_mat)
+                nosymm_inds(nosymm_ct) = ns_ord;
+                nosymm_ct = nosymm_ct + 1;
+            end
         end
     end
 end
 
-nosymm_inds(nosymm_ct:end) = [];
-symm_orders(nosymm_inds,:) = [];
+if nosymm_ct > 1
+    nosymm_inds(nosymm_ct:end) = [];
+    symm_orders(nosymm_inds,:) = [];
+end
 
 mat_name = [data_fname2,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 save(mat_name,'symm_orders');
