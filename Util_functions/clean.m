@@ -1,4 +1,4 @@
-function [S] = clean(S,N)
+function [S] = clean(S)
 % clean(S,N) - attempts to minimize the number of nonzero coefficients of
 %   the eigenvectors in S while maintaining orthonormality.
 % 

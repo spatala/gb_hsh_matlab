@@ -12,10 +12,10 @@ function R_ab_12 = so4_irrep(g1,g2,Na,Nb)
 %%%% 
 %%%% Output:
 %%%% R_ab_12:
-%%%%    SO(4) irrep - (Na+1)*(Nb+1) square matrix 
+%%%%    SO(4) irrep - square matrix with (Na+1)*(Nb+1) rows.
 %%%% 
 
-%%%%%
+%%%%% If Identity matrix, then no need to call rotation() function!
 tm1 = g1 - eye(3); tm1 = tm1(:);
 tm2 = g2 - eye(3); tm2 = tm2(:);
 
