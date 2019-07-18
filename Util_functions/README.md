@@ -36,8 +36,6 @@ Get the value of MBP functions for a given `(a,b)` and `R^(ab)` matrix.
 Get indices for MBP functions all the way to a=b=N.
 
 
-
-
 ## `mbp_to_rots(mbp)`
 
 Convert GB parameters from Misorientation-Boundary plane (MBP) to SO3xSO3 parametrization (rots).
