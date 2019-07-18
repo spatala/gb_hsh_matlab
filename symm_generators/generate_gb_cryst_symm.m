@@ -1,6 +1,6 @@
 function [] = generate_gb_cryst_symm(pt_grp, Nmax)
-% clear all; clc;
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 curr_pwd = split(pwd,'/');
 top_dir = '';
 for ct1=1:length(curr_pwd)
@@ -11,26 +11,21 @@ for ct1=1:length(curr_pwd)
 end
 util_dir = strcat(top_dir,'Util_functions','/');
 addpath(genpath(util_dir));
-
-% s1 = set_vars(); Nmax = s1.Nmax; pt_grp = s1.pt_grp;
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
-data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%
-gen_symm_orders(data_fname0, pt_grp, Nmax);
+gen_symm_orders(top_dir, pt_grp, Nmax);
 %%%%
-generate_ab_symms(data_fname0, pt_grp, Nmax);
+generate_ab_symms(top_dir, pt_grp, Nmax);
 %%%%
 combine_cryst_symm_ab(top_dir, pt_grp, Nmax);
 %%%%
-generate_ge_symms(data_fname0, pt_grp, Nmax)
+generate_ge_symms(top_dir, pt_grp, Nmax)
 %%%%
-combine_cryst_ges(data_fname0, Nmax)
+combine_cryst_ges(top_dir,pt_grp, Nmax)
 %%%%
-
+save_symmvec_MabInds(top_dir,pt_grp, Nmax)
+%%%%
 rmpath(genpath(util_dir));
 
 end
@@ -38,7 +33,11 @@ end
 
 
 
-function [] = gen_symm_orders(data_fname0, pt_grp, Nmax)
+function [] = gen_symm_orders(top_dir, pt_grp, Nmax)
+
+data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
+data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
+
 [ga_s, gb_s, num_gen] = get_symmgen_mats(pt_grp);
 symm_orders = zeros(Nmax^2,2);
 ct3 = 1;
@@ -83,14 +82,25 @@ P0 = X0*X0'; Q1 = Y1*Y1'; R1 = P0*Q1*P0;
 nsz = size(R1); R2 = R1 - speye(nsz); S = spnull(R2);
 end
 
-function [] = generate_ge_symms(data_fname0, pt_grp, Nmax)
+function [] = generate_ge_symms(top_dir, pt_grp, Nmax)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
+data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
+
+[~, ~, ~, Laue] = get_symmgen_mats(pt_grp);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ypi_left = generate_ypi_left(symm_orders);
 flip_mat = generate_flip_mat(symm_orders);
-symm_mat = ypi_left*flip_mat;
+if Laue
+    symm_mat = flip_mat;
+else
+    ypi_left = generate_ypi_left(symm_orders);
+    symm_mat = ypi_left*flip_mat;
+end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0, 'Sarr_ges_nmax_',num2str(Nmax),'.mat'];
 nsz = size(symm_mat,1);
@@ -99,7 +109,11 @@ S = spnull(symm_mat1);
 save(mat_name,'S');
 end
 
-function combine_cryst_ges(data_fname0, Nmax)
+function combine_cryst_ges(top_dir,pt_grp, Nmax)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
+data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0, ...
     'Sarr_ges_nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); Y1 = s1.S;
