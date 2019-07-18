@@ -1,4 +1,17 @@
 function ypileft_mat = generate_ypi_left_ab(a,b)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% The matrix equivalent for (g1, g2) -> (Ypi*g1, Ypi*g2)
+%%%%% M_ab(Ypi*g1, Ypi*g2) = M_ab(g1,g2) * ypileft_mat
+%%%%% 
+%%%%% Input:
+%%%%% a,b:
+%%%%%       Integers. Order for M_{a,b} function.
+%%%%% 
+%%%%% Output:
+%%%%% ypileft_mat:
+%%%%%       Matrix operation with size (Na+1)(Nb+1)(Nc+1)
+%%%%%       Na = 2a; Nb = 2b; Nc = 2*min(a,b)
+%%%%% 
 c = min(a,b);
 num_cols = (2*a+1)*(2*b+1)*(2*c+1);
 tot_inds = mbp_ab(a,b);
