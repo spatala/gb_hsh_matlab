@@ -55,7 +55,8 @@ parfor ct1=1:nsymm
     rots = symm_rots(:,:,ct1);
     Sg1 = rots(:,1:3); Sg2 = rots(:,4:6);
     
-    
+    %%%% calc_Mvec is very slow for large Nmax - replace with
+    %%%% rotation_wo_svd code!
     SMvec = calc_Mvec(Sg1, Sg2, symm_orders);
     diff_arr(ct1) = norm(Mvec*S - SMvec*S);
 end
