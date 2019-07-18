@@ -163,7 +163,7 @@ num_cols = sum((2*a1+1).*(2*b1+1).*(2*c1+1));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% The variable tot_inds contains the mapping between the column-index
 %%%% for the M-function and the (a,b,gamma,alpha, beta) values.
-tot_inds = mbp_inds_ab_array(symm_orders, num_cols);
+tot_inds = mbp_inds_ab_array(symm_orders);
 
 %%%% flip_mat is the $A$ matrix that specifies the grain-exchange-symmetry
 %%%% for the coefficients.
