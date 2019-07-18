@@ -1,10 +1,27 @@
-function [] = generate_ab_symms(data_fname0, pt_grp, Nmax)
+function [] = generate_ab_symms(top_dir, pt_grp, Nmax)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Function to compute symmetrized eigen-vectors for crystal symmetry
+%%%% operations. The eigen-vectors are for a given (a,b) order.
+%%%% 
+%%%% Input:
+%%%% top_dir:
+%%%%    String. Directory location for saving the symmetrized the
+%%%%    eigen-vectors.
+%%%% pt_grp:
+%%%%    The underlying point-group of the crystal.
+%%%% Nmax:
+%%%%    The maximum order for (a,b) for generating symmetrized
+%%%%    eigen-vectors.
+%%%% 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+data_fname0 = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname1 = [data_fname0,'Sarr_ab/'];
+data_fname2 = [data_fname0,'nmax_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [ga_s, gb_s, num_gen, Laue] = get_symmgen_mats(pt_grp);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname2,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 nsymm = size(symm_orders,1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,7 +62,7 @@ end
 nosymm_inds(nosymm_ct:end) = [];
 symm_orders(nosymm_inds,:) = [];
 
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname2,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 save(mat_name,'symm_orders');
 end
 
