@@ -11,3 +11,7 @@
 5) `combine_cryst_ges(top_dir,pt_grp, Nmax);`
 6) `save_symmvec_MabInds(top_dir,pt_grp, Nmax);`
 
+## TODO
+
+1) Edit `symm_checks` folder.
+2) Compute real basis vectors.
