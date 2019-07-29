@@ -24,7 +24,7 @@ for m = -l:l
     end
     
     % normalization
-    b = 1/prod(l-m+1:l+m); % factorial(n-m)/factorial(n+m);
+    b = 1/prod(l-m+1:l+m); % factorial(l-m)/factorial(l+m);
     C = sqrt(a*b);
     
     Pm = P(abs(m)+1,:)';
