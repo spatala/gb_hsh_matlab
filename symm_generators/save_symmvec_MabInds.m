@@ -21,7 +21,7 @@ s1 = load(mat_name); symm_orders = s1.symm_orders;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0, ...
-    'Sarr_cryst_ges_nmax_',num2str(Nmax),'.mat'];
+    'Sarr_cryst_ges_gbnull_nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name);
 S = s1.S;
 

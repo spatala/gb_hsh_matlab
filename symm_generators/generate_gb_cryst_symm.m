@@ -24,6 +24,8 @@ generate_ge_symms(top_dir, pt_grp, Nmax)
 %%%%
 combine_cryst_ges(top_dir,pt_grp, Nmax)
 %%%%
+combine_cryst_ges_gbnull(top_dir,pt_grp, Nmax)
+%%%%
 save_symmvec_MabInds(top_dir,pt_grp, Nmax)
 %%%%
 rmpath(genpath(util_dir));
@@ -133,6 +135,37 @@ S = spnull(R2);
 
 mat_name = [data_fname0, ...
     'Sarr_cryst_ges_nmax_',num2str(Nmax),'.mat'];
+save(mat_name,'S');
+
+end
+
+
+function combine_cryst_ges_gbnull(top_dir,pt_grp, Nmax)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
+data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+mat_name = [data_fname0, ...
+    'Sarr_gbnull_nmax_',num2str(Nmax),'.mat'];
+s1 = load(mat_name); Y1 = s1.S;
+
+nsz = size(Y1,1);
+
+% mat_name = [data_fname0, ...
+%     'Sarr_abc_combined_csymm_nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0, ...
+    'Sarr_cryst_ges_nmax_',num2str(Nmax),'.mat'];
+s1 = load(mat_name); X0 = sparse(s1.S);
+
+P0 = X0*X0';
+Q1 = Y1*Y1';
+
+R1 = P0*Q1*P0;
+R2 = R1 - speye(nsz,nsz);
+S = spnull(R2);
+
+mat_name = [data_fname0, ...
+    'Sarr_cryst_ges_gbnull_nmax_',num2str(Nmax),'.mat'];
 save(mat_name,'S');
 
 end
