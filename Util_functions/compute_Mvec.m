@@ -31,6 +31,6 @@ for ct2 = 1:size(vec_inds,1)
     end
 
     %     M = PI_ab*M/(2*pi*pi);
-    Mvec(:,vec_inds(ct2)) = PI_ab*(U1.*U2)/(2*(pi^2));
+    Mvec(:,vec_inds(ct2)) = PI_ab*(U1.*U2)/(sqrt(2*(pi^3)));
 end
 end

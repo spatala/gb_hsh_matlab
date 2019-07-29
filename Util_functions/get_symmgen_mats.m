@@ -120,4 +120,26 @@ if (strcmp(pt_grp,'C2'))
     
     Laue = 0;
 end
+
+if (strcmp(pt_grp,'C1'))
+    num_gen = 1;
+    
+    a_ax1 = [0 0 1]; a_ang1 = 0;
+    b_ax1 = [0 0 1]; b_ang1 = 0;
+    ga_s1 = vrrotvec2mat([a_ax1, a_ang1]);
+    gb_s1 = vrrotvec2mat([b_ax1, b_ang1]);
+    
+    a_ax2 = [0 0 1]; a_ang2 = 0;
+    b_ax2 = [0 0 1]; b_ang2 = 0;
+    ga_s2 = vrrotvec2mat([a_ax2, a_ang2]);
+    gb_s2 = vrrotvec2mat([b_ax2, b_ang2]);
+    
+    ga_s = cell(num_gen^2,1);
+    ga_s{1} = ga_s1; ga_s{2} = ga_s2;
+    gb_s = cell(num_gen^2,1);
+    gb_s{1} = gb_s1; gb_s{2} = gb_s2;
+    
+    Laue = 0;
+end
+
 end
