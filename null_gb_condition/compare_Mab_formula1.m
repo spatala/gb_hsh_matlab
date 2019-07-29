@@ -68,7 +68,9 @@ Z = 0;
 for e_val = abs(a1-b1):(a1+b1)
     Z = Z + (sph_harm_Mab_formula(arr1,e_val,om_b1, phi_b1));
 end
-PI_ab = get_PIab(a1,b1); Z = sqrt(2)*PI_ab*Z/pi;
+% PI_ab = get_PIab(a1,b1);
+PI_ab = (sqrt(2*a1+1))*(sqrt(2*b1+1));
+Z = sqrt(2)*PI_ab*Z/pi;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 norm(Z-Mvec(ct2))
