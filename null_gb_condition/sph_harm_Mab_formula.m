@@ -15,7 +15,6 @@ ct1 = 1;
 for m=-l:l
     cleb1 = clebschgordan(a1, al1, b1, be1, l, -m);
     cleb2 = clebschgordan(a1, g1, b1, -g1, l, 0);
-    %     [cleb1, cleb2]
     mult1(ct1) = ((-1i)^m)*cleb1*cleb2;
     ct1 = ct1 + 1;
 end

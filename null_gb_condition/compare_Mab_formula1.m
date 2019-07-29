@@ -75,6 +75,7 @@ PI_ab = get_PIab(a1,b1);
 
 Z = sqrt(2)*PI_ab*Z/pi;
 
+norm(Z-Mvec(ct2))
 
 % if (abs(Z-Mvec(ct2)) < 1e-13)
 %     display(arr1);
