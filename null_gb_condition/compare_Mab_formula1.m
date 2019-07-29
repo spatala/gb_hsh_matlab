@@ -23,6 +23,9 @@ s1 = load(mat_name); symm_orders = s1.symm_orders;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tot_inds = mbp_inds_ab_array(symm_orders);
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Get boundary-planes for Identity misorientation
 pts = 10;
 c = zeros(pts*pts/2,1); 
 p = zeros(pts*pts/2,1);
@@ -30,6 +33,8 @@ th1 = linspace(0,pi,pts/2);
 phi1 = linspace(0,2*pi,pts);
 [phi1v, th1v] = meshgrid(phi1, th1);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Conver (I, n) to (g1, g1)
 %%%% Boundary normals are given by phi2, th2
 phi2 = phi1v(:); th2 = th1v(:);
 bpn_vecs = [sin(th2).*cos(phi2), sin(th2).*sin(phi2), cos(th2)];
@@ -48,34 +53,40 @@ for ct1 = 1:nvecs
     [phi_b(ct1), ~, ~] = cart2pol(ax1(1), ax1(2), ax1(3));
 end
 
-ct1 = 5;
-gb = gb_rots(:,1:3,ct1);
-om_b1 = om_b(ct1);
-phi_b1 = phi_b(ct1);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ct1 = 2; %%% Index for boundary-plane iteration
+gb = gb_rots(:,1:3,ct1); om_b1 = om_b(ct1); phi_b1 = phi_b(ct1);
+%%%% Compute Mvec using SO(3) irreps
 Mvec = calc_Mvec(gb,gb,symm_orders);
-ct_f = 0;
-% for ct2=1:size(tot_inds,1)
-% a = 3; b = 2; g1 = 2; al1 = 3; be1 = -1;
-ct2 = 5;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-a1  = tot_inds(ct2,3);
-b1  = tot_inds(ct2,4);
-% g1  = tot_inds(ct2,5);
-% al1 = tot_inds(ct2,6);
-% be1 = tot_inds(ct2,7);
-arr1 = tot_inds(ct2,3:7);
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ct2 = 5; %%% Index for (a,b) iteration
+a1  = tot_inds(ct2,3); b1  = tot_inds(ct2,4); arr1 = tot_inds(ct2,3:7);
 Z = 0;
 for e_val = abs(a1-b1):(a1+b1)
     Z = Z + (sph_harm_Mab_formula(arr1,e_val,om_b1, phi_b1));
 end
-
-PI_ab = get_PIab(a1,b1);
-
-Z = sqrt(2)*PI_ab*Z/pi;
+PI_ab = get_PIab(a1,b1); Z = sqrt(2)*PI_ab*Z/pi;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 norm(Z-Mvec(ct2))
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+rmpath(genpath(util_dir));
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ct_f = 0;
+% for ct2=1:size(tot_inds,1)
+% a = 3; b = 2; g1 = 2; al1 = 3; be1 = -1;
+% g1  = tot_inds(ct2,5);
+% al1 = tot_inds(ct2,6);
+% be1 = tot_inds(ct2,7);
+
+
+
 
 % if (abs(Z-Mvec(ct2)) < 1e-13)
 %     display(arr1);
@@ -85,5 +96,3 @@ norm(Z-Mvec(ct2))
 % 
 % end
 
-rmpath(genpath(util_dir));
-% rmpath(genpath('Spherical-Harmonic-Transform/'));
