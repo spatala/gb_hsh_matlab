@@ -1,17 +1,9 @@
 function Yl_vals = compute_complex_Yl(th,phi,l)
-% clear all; clc;
 
-% th = rand()*pi; phi = rand()*2*pi;
-% th = 1.160022974928946;
-% phi = 0.698707518179812;
-
+% include Condon-Shortley phase term
+% this term is in fact included in MATLAB's associated Legendre function
+% definition, so what we are doing here is removing it if not requested
 CS_phase = true;
-
-% l = ceil(rand()*10);
-% m_vals = -l:l;
-% m = m_vals(ceil(rand()*(2*l+1)));
-% l = 3; m = 1;
-% Y1 = harmonicY(l,m,th,phi,'type','complex', 'norm', true, 'phase', true);
 
 %%%%% Dependent on $l$
 a = (2*l+1)/(4*pi);
@@ -31,8 +23,8 @@ if isnegm
     m = abs(m);
 end
 
-% b = factorial(n-m)/factorial(n+m);
-b = 1/prod(l-m+1:l+m);
+% normalization
+b = 1/prod(l-m+1:l+m); % factorial(n-m)/factorial(n+m);
 C = sqrt(a*b);
 
 Pm = P(abs(m)+1,:)';
@@ -58,8 +50,4 @@ end
 Yl_vals(ct1) = Y;
 ct1 = ct1 + 1;
 end
-
-% [l, m, E, Y]
-% Y - Y1
-
 end
