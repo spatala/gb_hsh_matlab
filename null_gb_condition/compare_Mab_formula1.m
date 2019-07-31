@@ -62,7 +62,7 @@ Mvec = calc_Mvec(gb,gb,symm_orders);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ct2 = 5; %%% Index for (a,b) iteration
+ct2 = 2; %%% Index for (a,b) iteration
 a1  = tot_inds(ct2,3); b1  = tot_inds(ct2,4); arr1 = tot_inds(ct2,3:7);
 Z = 0;
 for e_val = abs(a1-b1):(a1+b1)
