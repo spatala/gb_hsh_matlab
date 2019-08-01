@@ -52,15 +52,15 @@ Rmult_v2 = Rv_ab_12*kron(transpose(Rr_ab_12),Rl_ab_12);
 
 norm(Rmult_v1 - Rmult_v2)
 
-% %%%%% Check the tranpose rotations as well!
-% trR_ab_12 = transpose(R_ab_12);
-% trRv_ab_12 = transpose(R_ab_12(:));
-% trRr_ab_12 = transpose(Rr_ab_12); trRl_ab_12 = transpose(Rl_ab_12);
-% % tr_Rmult = trRl_ab_12*trR_ab_12*trRr_ab_12;
-% tr_Rmult = transpose(Rmult);
-% tr_Rmult_v1 = transpose(Rmult(:));
-% tr_Rmult_v2 = trRv_ab_12*kron(Rl_ab_12,trRr_ab_12);
-% norm(tr_Rmult_v1 - tr_Rmult_v2)
+%%%%% Check the tranpose rotations as well!
+trR_ab_12 = transpose(R_ab_12);
+trRv_ab_12 = transpose(R_ab_12(:));
+trRr_ab_12 = transpose(Rr_ab_12); trRl_ab_12 = transpose(Rl_ab_12);
+% tr_Rmult = trRl_ab_12*trR_ab_12*trRr_ab_12;
+tr_Rmult = transpose(Rmult);
+tr_Rmult_v1 = transpose(Rmult(:));
+tr_Rmult_v2 = trRv_ab_12*kron(Rl_ab_12,trRr_ab_12);
+norm(tr_Rmult_v1 - tr_Rmult_v2)
 
 
 rmpath(genpath(util_dir));
