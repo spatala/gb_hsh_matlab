@@ -3,8 +3,8 @@
 %%%%%%%
 clear all; clc;
 
-pt_grp = 'C1'; Nmax = 1;
-% pt_grp = 'Oh'; Nmax = 14;
+% pt_grp = 'C1'; Nmax = 1;
+pt_grp = 'Oh'; Nmax = 6;
 
 curr_pwd = split(pwd,'/');
 top_dir = '';
@@ -29,8 +29,11 @@ s1 = load(mat_name); symm_orders = s1.symm_orders;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tot_inds = mbp_inds_ab_array(symm_orders);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mat_name = [data_fname0, ...
+%     'Sarr_gbnull_nmax_',num2str(Nmax),'.mat'];
 mat_name = [data_fname0, ...
-    'Sarr_gbnull_nmax_',num2str(Nmax),'.mat'];
+    'Sarr_cryst_ges_gbnull_nmax_',num2str(Nmax),'.mat'];
+
 s1 = load(mat_name); S = (s1.S);
 nsymm_evs = size(S,2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,12 +59,12 @@ num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
 
 
 for ct1=1:nsymm_evs 
-    
+    ct1
 Mvec = zeros(1,num_cols);
 
 for a=a_val
     for b=b_val
-        M1 = mbp_basis(a, b, w_m, th_m, ph_m, w_b, ph_b);
+        M1 = mbp_basis(a, b, [w_m, th_m, ph_m, w_b, ph_b]);
         
         cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
         ind_start = find(cond1,1);

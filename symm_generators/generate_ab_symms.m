@@ -19,7 +19,7 @@ data_fname0 = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname1 = [data_fname0,'Sarr_ab/'];
 data_fname2 = [data_fname0,'nmax_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-[ga_s, gb_s, num_gen, Laue] = get_symmgen_mats(pt_grp);
+[ga_s, gb_s, num_gen, Laue] = get_symmgen_angs(pt_grp);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname2,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
@@ -73,10 +73,16 @@ save(mat_name,'symm_orders');
 end
 
 
-function symm_mat = generate_c1symm(ct1, ga_s, gb_s, Na, Nb)
+function symm_mat = generate_c1symm(ct1, ga_s, gb_s, a_val, b_val)
 gs1 = ga_s{ct1}; gs2 = gb_s{ct1};
-Rr_ab_12 = so4_irrep(gs1,gs2,Na,Nb);
-symm_mat = transpose(Rr_ab_12);
+
+U_a = rotation_mat(a_val, gs1);
+U_b = rotation_mat(b_val, gs2);
+
+symm_mat = sparse((kron(U_a, U_b)).');
+
+% Rr_ab_12 = so4_irrep(gs1,gs2,Na,Nb);
+% symm_mat = transpose(Rr_ab_12);
 end
 
 function save_mat = save_Sarr(R1, mat_name)

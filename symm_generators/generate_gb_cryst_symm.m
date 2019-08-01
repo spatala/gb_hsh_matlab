@@ -1,4 +1,6 @@
-function [] = generate_gb_cryst_symm(pt_grp, Nmax)
+% function [] = generate_gb_cryst_symm(pt_grp, Nmax)
+function [] = generate_gb_cryst_symm()
+pt_grp = 'Oh'; Nmax = 6;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 curr_pwd = split(pwd,'/');
@@ -45,11 +47,10 @@ function [] = gen_symm_orders(top_dir, pt_grp, Nmax)
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 
-[ga_s, gb_s, num_gen] = get_symmgen_mats(pt_grp);
+[ga_s, gb_s, num_gen] = get_symmgen_angs(pt_grp);
 symm_orders = zeros(Nmax^2,2);
 ct3 = 1;
 for ct1=0:Nmax
-    ct1
     for ct2=0:Nmax
         a_val = ct1; b_val = ct2;
         for ct4 = 1:2*num_gen
@@ -64,6 +65,8 @@ for ct1=0:Nmax
                 if (size(S1,2) == 0)
                     break;
                 end
+            else
+                break;
             end
         end
         if (size(S1,2) > 0)
@@ -80,7 +83,15 @@ end
 
 function S = compute_eigen(ga_s,gb_s,n_gen, a_val,b_val)
 gs1 = ga_s{n_gen}; gs2 = gb_s{n_gen};
-Na = 2*a_val; Nb = 2*b_val; R1 = so4_irrep(gs1,gs2,Na,Nb);
+% Na = 2*a_val; Nb = 2*b_val; R1 = so4_irrep(gs1,gs2,Na,Nb);
+% ra_s1 = rotmat_to_angs(gs1); check_conv(gs1, ra_s1);
+% ra_s2 = rotmat_to_angs(gs2); check_conv(gs2, ra_s2);
+
+U_a = rotation_mat(a_val, gs1);
+U_b = rotation_mat(b_val, gs2);
+
+R1 = sparse((kron(U_a, U_b)).');
+
 nsz = size(R1,1); R2 = R1 - speye(nsz,nsz); S = spnull(R2);
 end
 
