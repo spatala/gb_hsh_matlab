@@ -1,8 +1,5 @@
 clear all; clc;
 
-symm_orders = [[0,0];[0,1];[1,0];[1,1]];
-clear all; clc;
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 curr_pwd = split(pwd,'/');
 top_dir = '';
@@ -75,6 +72,9 @@ for a=a_val
     end
 end
 S = spnull(null_mat);
-save('null_gb.mat','S');
+
+mat_name = [data_fname0, ...
+    'Sarr_gbnull_nmax_',num2str(Nmax),'.mat'];
+save(mat_name,'S');
 
 rmpath(genpath(util_dir));
