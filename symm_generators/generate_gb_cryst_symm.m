@@ -11,6 +11,8 @@ for ct1=1:length(curr_pwd)
 end
 util_dir = strcat(top_dir,'Util_functions','/');
 addpath(genpath(util_dir));
+% util_dir1 = strcat(top_dir,'computations','/');
+% addpath(genpath(util_dir1));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%
@@ -24,11 +26,14 @@ generate_ge_symms(top_dir, pt_grp, Nmax)
 %%%%
 combine_cryst_ges(top_dir,pt_grp, Nmax)
 %%%%
+generate_gb_null(top_dir,pt_grp, Nmax)
+%%%%
 combine_cryst_ges_gbnull(top_dir,pt_grp, Nmax)
 %%%%
-save_symmvec_MabInds(top_dir,pt_grp, Nmax)
+% save_symmvec_MabInds(top_dir,pt_grp, Nmax)
 %%%%
 rmpath(genpath(util_dir));
+% rmpath(genpath(util_dir1));
 
 end
 
