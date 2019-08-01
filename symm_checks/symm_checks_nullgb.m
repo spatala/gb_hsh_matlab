@@ -24,25 +24,10 @@ addpath(genpath(util_dir));
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-s1 = load([top_dir,'data_files/GB_Parameters/rand_gb_rots.mat']); 
-rot_mats = s1.rot_mats;
-rots1 = rot_mats(:,:,floor(size(rot_mats,3)*rand()));
-g1 = rots1(:,1:3); g2 = rots1(:,4:6);
-% M1 = vrrotvec2mat([1,1,1,pi/3]);
-% th = rand()*pi; ph = rand()*2*pi;
-% nvec = [sin(th)*cos(ph); sin(th)*sin(ph); cos(th)];
-% rots1 = mbp_to_rots([M1, nvec]);
-% g1 = rots1(:,1:3); g2 = rots1(:,4:6);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+tot_inds = mbp_inds_ab_array(symm_orders);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0, ...
     'Sarr_gbnull_nmax_',num2str(Nmax),'.mat'];
@@ -50,18 +35,42 @@ s1 = load(mat_name); S = (s1.S);
 nsymm_evs = size(S,2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 diff_vec = zeros(nsymm_evs,1);
-% for ct1 = 1:nsymm_evs
-% symm_Mvec = full(compute_symm_Mvec(symm_rots, S, ct1, data_fname0, Nmax));
-% diff_vec(ct1) = abs(max(symm_Mvec)-min(symm_Mvec));
-% % uniquetol(abs(symm_Mvec),1e-8)
-% end
 
-symm_rots = zeros(3,6,4);
-symm_rots(:,:,1) = [g1, g1];
-symm_rots(:,:,2) = [g1^(-1), g1^(-1)];
-symm_rots(:,:,3) = [g2, g2];
-symm_rots(:,:,4) = [g2^(-1), g2^(-1)];
+
+w_m  = 0;
+th_m = pi * rand();
+ph_m = 2. * pi * rand();
+axang_m = [sin(th_m)*cos(ph_m), sin(th_m)*sin(ph_m), cos(th_m), w_m];
+gm = vrrotvec2mat(axang_m);
+
+w_b  = 8 * pi * (rand() - 1);
+th_b = pi / 2;
+ph_b = 2. * pi * rand();
+axang_b = [sin(th_b)*cos(ph_b), sin(th_b)*sin(ph_b), cos(th_b), w_b];
+gb = vrrotvec2mat(axang_b);
+
+a_val = symm_orders(:,1)';
+b_val = symm_orders(:,2)';
+c_val = min(a_val, b_val);
+num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
+
+
 for ct1=1:nsymm_evs 
-    symm_Mvec = full(compute_symm_Mvec(symm_rots, S, ct1, data_fname0, Nmax));
+    
+Mvec = zeros(1,num_cols);
+
+for a=a_val
+    for b=b_val
+        M1 = mbp_basis(a, b, w_m, th_m, ph_m, w_b, ph_b);
+        
+        cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
+        ind_start = find(cond1,1);
+        ind_stop  = find(cond1,1,'last');
+        
+        Mvec(ind_start:ind_stop) = M1;
+    end
 end
+    diff_vec(ct1) = norm(Mvec*S(:,ct1));
+end
+norm(diff_vec)
 rmpath(genpath(util_dir));
