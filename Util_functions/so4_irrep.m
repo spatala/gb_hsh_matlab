@@ -23,14 +23,21 @@ if (norm(tm1) < 1e-14)
     U1 = eye(Na+1);
 else
     ax_ang_1 = vrrotmat2vec(g1'); 
-    U1 = rotation( ax_ang_1(1:3),  ax_ang_1(4), Na);
+    % U1 = rotation( ax_ang_1(1:3),  ax_ang_1(4), Na);
+    [az, el, ~] = cart2sph(ax_ang_1(1),ax_ang_1(2),ax_ang_1(3));
+    ph = az; th = pi/2 - el;
+    U1 = rotation_mat(Na/2, ax_ang_1(4), th, ph);
+    
 end
 
 if (norm(tm2) < 1e-14)
     U2 = eye(Nb+1);
 else
     ax_ang_2 = vrrotmat2vec(g2');
-    U2 = rotation( ax_ang_2(1:3),  ax_ang_2(4), Nb);
+    % U2 = rotation( ax_ang_2(1:3),  ax_ang_2(4), Nb);
+    [az, el, ~] = cart2sph(ax_ang_2(1),ax_ang_2(2),ax_ang_2(3));
+    ph = az; th = pi/2 - el;
+    U2 = rotation_mat(Nb/2, ax_ang_2(4), th, ph);
 end
 R_ab_12 = sparse(kron(U1, U2));
 end
