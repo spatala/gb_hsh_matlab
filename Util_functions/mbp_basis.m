@@ -1,18 +1,22 @@
-function [M] = mbp_basis(a, b, w_m, th_m, ph_m, w_b, ph_b)
+function [M] = mbp_basis(a, b, mbp_angs)
 % [M] = mbp_basis(a, b, w_m, th_m, ph_m, w_b, ph_b) - returns the basis
 %   functions for the grain boundary space using the MBP parameterization.
 %   Rows ordered by (\gamma, \alpha, \beta) in lexicographic order, i.e., 
 %   starting with negative values, ending with positive values).
 %
 %   Follows Equation 14 of the manuscript.
+
+    w_m=mbp_angs(1); th_m=mbp_angs(2); ph_m=mbp_angs(3);
+    w_b=mbp_angs(4); ph_b=mbp_angs(5);
+    
     CK_m = angles_to_CK(w_m, th_m, ph_m);
     CK_b = angles_to_CK(w_b, pi / 2., ph_b);
     
     [w_1, th_1, ph_1] = CK_to_angles(CK_b);
     [w_2, th_2, ph_2] = CK_to_angles(CK_b * CK_m);
 
-    U1 = rotation_mat(a, -w_1, th_1, ph_1);
-    U2 = rotation_mat(b, -w_2, th_2, ph_2);
+    U1 = rotation_mat(a, [-w_1, th_1, ph_1]);
+    U2 = rotation_mat(b, [-w_2, th_2, ph_2]);
     
     na = 2 * a + 1;
     nb = 2 * b + 1;
