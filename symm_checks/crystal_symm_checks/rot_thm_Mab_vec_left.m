@@ -32,41 +32,26 @@ rots1  = rot_mats(:,:,1+floor(size(rot_mats,3)*rand()));
 % rots1 = rot_mats(:,:,1);
 rots_r = rot_mats(:,:,1+floor(size(rot_mats,3)*rand()));
 
-Zpi = vrrotvec2mat([0,0,1,rand()*2*pi]);
-g1 = Zpi*rots1(:,1:3); g2 = Zpi*rots1(:,4:6); 
-Zpi = vrrotvec2mat([0,0,1,rand()*2*pi]);
-gr1 = Zpi*rots_r(:,1:3); gr2 = Zpi*rots_r(:,4:6); 
+Zth = vrrotvec2mat([0,0,1,rand()*2*pi]);
+g1 = Zth*rots1(:,1:3); g2 = Zth*rots1(:,4:6); 
+Ypi = vrrotvec2mat([0,1,0,pi]);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Get Mvecs
 mbp_angs = rots_to_angs(g1, g2);
-Mvec_ab_12 = (mbp_basis(a_val, b_val, mbp_angs).');
+Mvec_ab_12 = (mbp_basis(a_val, b_val, mbp_angs)');
 
-gt1 = g1*(gr1'); gt2 = g2*(gr2');
+gt1 = Ypi*g1; gt2 = Ypi*g2;
 tmbp_angs = rots_to_angs(gt1, gt2);
-tMvec_ab_12 = (mbp_basis(a_val, b_val, tmbp_angs).');
+tMvec_ab_12 = (mbp_basis(a_val, b_val, tmbp_angs)');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ra_r1 = rotmat_to_angs(gr1); check_conv(gr1, ra_r1);
-ra_r2 = rotmat_to_angs(gr2); check_conv(gr2, ra_r2);
 
-U_a = rotation_mat(a_val, ra_r1);
-U_b = rotation_mat(b_val, ra_r2);
-rMat1 = (kron(U_a, U_b).');
+rMat = generate_ypi_left_ab(a_val, b_val);
 
-% %%%% Check on the nsz components of Mvec
-% tn1 = floor(rand()*ng); inds = (tn1*nsz + 1):((tn1+1)*nsz);
-% Mvec1 = Mvec_ab_12(inds); tMvec1 = tMvec_ab_12(inds); 
-% if (norm(tMvec1 - Mvec1*(rMat1)) > 1e-10)
+% if (max(abs(tMvec_ab_12 - Mvec_ab_12*(rMat))) > 1e-10)
 %     disp(tct1)
-% else
-%     disp(max(abs(tMvec1 - Mvec1*(rMat1))))
+%     disp([tct1, max(abs(tMvec_ab_12 - Mvec_ab_12*(rMat))),[ra_r1, ra_r2]*180/pi])
 % end
-
-rMat = kron(eye(ng), rMat1);
-if (max(abs(tMvec_ab_12 - Mvec_ab_12*(rMat))) > 1e-10)
-    disp(tct1)
-    disp([tct1, max(abs(tMvec_ab_12 - Mvec_ab_12*(rMat))),[ra_r1, ra_r2]*180/pi])
-end
 diff_vec(tct1) = max(abs(tMvec_ab_12 - Mvec_ab_12*(rMat)));
 
 end

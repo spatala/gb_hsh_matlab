@@ -4,7 +4,7 @@
 clear all; clc;
 
 % pt_grp = 'C1'; Nmax = 1;
-pt_grp = 'Oh'; Nmax = 4;
+pt_grp = 'Oh'; Nmax = 6;
 
 curr_pwd = split(pwd,'/');
 top_dir = '';
@@ -45,10 +45,10 @@ tot_inds = mbp_inds_ab_array(symm_orders);
 [symm_rots, Laue] = get_symm_rots(g1,g2, pt_grp, data_fname);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% mat_name = [data_fname0, ...
-%     'Sarr_cryst_ges_gbnull_nmax_',num2str(Nmax),'.mat'];
-mat_name = [data_fname0,...
-    'Sarr_abc_combined_csymm_nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0, ...
+    'Sarr_cryst_ges_gbnull_nmax_',num2str(Nmax),'.mat'];
+% mat_name = [data_fname0,...
+%     'Sarr_abc_combined_csymm_nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); S = (s1.S);
 nsymm_evs = size(S,2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,7 +64,7 @@ num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
 Mvec1 = zeros(1,num_cols); Mvec2 = zeros(1,num_cols);
 for a=a_val
     for b=b_val
-        M1 = mbp_basis(a, b, ma1(1), ma1(2), ma1(3), ma1(4), ma1(5));
+        M1 = mbp_basis(a, b, [ma1(1), ma1(2), ma1(3), ma1(4), ma1(5)]);
         
         cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
         ind_start = find(cond1,1);
@@ -85,7 +85,7 @@ for ct2=2:nsymm_rots
         Mvec2 = zeros(1,num_cols);
         for a=a_val
             for b=b_val
-                M2 = mbp_basis(a, b, ma2(1), ma2(2), ma2(3), ma2(4), ma2(5));       
+                M2 = mbp_basis(a, b, [ma2(1), ma2(2), ma2(3), ma2(4), ma2(5)]);       
                 cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
                 ind_start = find(cond1,1); ind_stop  = find(cond1,1,'last');
                 Mvec2(ind_start:ind_stop) = M2;
