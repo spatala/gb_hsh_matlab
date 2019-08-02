@@ -16,9 +16,10 @@ function U_val = rotation_wo_svd(a,lb,q, Q, a_val, alp_val, al_val)
 %%%%    [q1,q2,q3] components array of the rotation quaternion. Array of
 %%%%    size N X 3.
 %%%%
-%%%% alp_val: Corresponds to row-index.    Range -alp_val:alp_val
-%%%% al_val:  Corresponds to column-index. Range -al_val:al_val
-%%%%
+%%%% -(alp_val): Corresponds to row-index.    Range -alp_val:alp_val
+%%%% -(al_val):  Corresponds to column-index. Range -al_val:al_val
+%%%%            The "-" sign is added because "rotation.m" had the
+%%%%            convention of decreasing order of alp_val and al_val.
 %%%%
 %%%% a = q-1i*Q(3); lb = -Q(2)-1i*Q(1);
 %%%% 
@@ -34,9 +35,9 @@ function U_val = rotation_wo_svd(a,lb,q, Q, a_val, alp_val, al_val)
 %%%%%%
 N = 2*a_val;
 %%%%%% alp_val represents rows
-ri = alp_val + a_val + 1;
+ri = -alp_val + a_val + 1;
 %%%%%% al_val represents columns
-cj = al_val + a_val + 1;
+cj = -al_val + a_val + 1;
 %%%%%%
 
 ind1 = find(abs(lb) < 1e-10);
