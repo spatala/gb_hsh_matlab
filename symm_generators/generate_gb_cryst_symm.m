@@ -32,7 +32,7 @@ generate_gb_null(top_dir,pt_grp, Nmax)
 %%%%
 combine_cryst_ges_gbnull(top_dir,pt_grp, Nmax)
 %%%%
-% save_symmvec_MabInds(top_dir,pt_grp, Nmax)
+save_symmvec_MabInds(top_dir,pt_grp, Nmax)
 %%%%
 rmpath(genpath(util_dir));
 % rmpath(genpath(util_dir1));
