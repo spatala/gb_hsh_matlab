@@ -1,4 +1,4 @@
-function [ga_s, gb_s, num_gen, Laue] = get_symmgen_mats(pt_grp)
+function [ga_s, gb_s, num_gen, Laue] = get_symmgen_angs(pt_grp)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Function to set the generators for each point group (only proper
 %%%% rotation elements are set.)

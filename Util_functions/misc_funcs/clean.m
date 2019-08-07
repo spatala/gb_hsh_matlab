@@ -1,81 +1,98 @@
-function [S] = clean(S)
-% clean(S,N) - attempts to minimize the number of nonzero coefficients of
-%   the eigenvectors in S while maintaining orthonormality.
+function [A] = clean(A, TOL)
+% clean attempts to construct an orthonormal column space for A with the 
+% minimum number of nonzero entries. Assumes that A has full column rank.
 % 
-% 
-% Copyright (c) 2013, Lawrence Livermore National Security, LLC.  Produced
-% at the Lawrence Livermore National Laboratory.  Written by Jeremy Mason,
-% reachable at mason47@llnl.gov.
-% 
-% CODE-609912. All rights reserved.
-% 
-% This file is part of the Quaternionic Harmonic Analysis of Texture.  
-% Please read LICENSE.txt for Our Notice and GNU General Public License
-% information.
+% Inputs:
+%   A   - matrix specifying the column space.
+%   TOL - threshold below which an entry is considered insignificant.
 %
-% This program is free software; you can redistribute it and/or modify
-% it under the terms of the GNU General Public License (as published by
-% the Free Software Foundation) version 2, dated June 1991.
-% 
-% This program is distributed in the hope that it will be useful, but
-% WITHOUT ANY WARRANTY; without even the IMPLIED WARRANTY OF
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the terms and
-% conditions of the GNU General Public License for more details.
-% 
-% You should have received a copy of the GNU General Public License along
-% with this program; if not, write to the Free Software Foundation, Inc.,
-% 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
-% % Reorder rows for increasing l, and increasing m for given value of l
-% for L = 0:N
-%     S((L+1)^2-2*L:(L+1)^2,:) = flipud(S((L+1)^2-2*L:(L+1)^2,:));
-% end
-
-% Forward sweep
-for m = 1:size(S,2)
-    mr = find(abs(S(:,m))>1e-10,1);
-    S(:,m) = S(:,m)*conj(S(mr,m));
-    S(:,m) = S(:,m)/sqrt(S(:,m)'*S(:,m));
-    for n = m+1:size(S,2)
-        nr = find(abs(S(:,n))>1e-10,1);
-        if nr < mr
-            swap = S(:,m);
-            S(:,m) = S(:,n);
-            S(:,n) = swap;
-            
-            mr = find(abs(S(:,m))>1e-10,1);
-            S(:,m) = S(:,m)*conj(S(mr,m));
-            S(:,m) = S(:,m)/sqrt(S(:,m)'*S(:,m));
-        elseif nr == mr
-            S(:,n) = S(:,n)-(S(mr,n)/S(mr,m))*S(:,m);
-            S(:,n) = S(:,n)/sqrt(S(:,n)'*S(:,n));
+% Outputs:
+%   A   - matrix whose columns form an orthonormal column space for A.
+%
+% Copyright 2019 Jeremy Mason
+%
+% Licensed under the Apache License, Version 2.0, <LICENSE-APACHE or
+% http://apache.org/licenses/LICENSE-2.0> or the MIT license <LICENSE-MIT or
+% http://opensource.org/licenses/MIT>, at your option. This file may not be
+% copied, modified, or distributed except according to those terms.
+    [m, n] = size(A);
+    
+    % Initial processing
+    for a = 1:n
+        A(:, a) = A(:, a) / sqrt(A(:, a)' * A(:, a));
+        A = clean_col(A, a, TOL);
+    end
+    
+    % Forward sweep
+    r1 = 0;
+    for a = 1:n
+        % Find column containing most significant entry
+        p = 0.;
+        while p < TOL && r1 < m
+            r1 = r1 + 1;
+            [p, b] = max(abs(A(r1, a:n)));
         end
+        b = (a - 1) + b;
+        
+        % Should not happen
+        if r1 == m
+            disp('A is not full column rank');
+            break;
+        end
+        
+        % Swap column into leading position
+        swap = A(:, a);
+        A(:, a) = A(:, b);
+        A(:, b) = swap;
+        
+        % Make leading entry real
+        A(:, a) = A(:, a) * (conj(A(r1, a)) / abs(A(r1, a)));
+
+        % Cancel leading entries, breaks orthogonality and normality
+        for b = a + find(abs(A(r1, (a + 1):n)) > TOL)
+            A(:, b) = A(:, b) - (A(r1, b) / A(r1, a)) * A(:, a);
+            A = clean_col(A, b, TOL);
+        end
+        
+    end
+    
+    % Backward sweep to restore orthonormality
+    [Q, ~] = qr(fliplr(A), 0);
+    A = fliplr(Q);
+
+    for a = 1:n
+        % Strip out small values introduced by orthonormalization
+        A = clean_col(A, a, TOL);
+        
+        % Make leading entry positive
+        A(:, a) = sign(A(find(A(:, a), 1), a)) * A(:, a);
     end
 end
 
-% Backward sweep
-for m = fliplr(1:size(S,2))
-    S(:,m) = S(:,m)*conj(S(find(abs(S(:,m))>1e-10,1),m));
-    S(:,m) = S(:,m)/sqrt(S(:,m)'*S(:,m));
-    for n = fliplr(1:m-1)
-        S(:,n) = S(:,n)-(S(:,m)'*S(:,n))*S(:,m);
-        S(:,n) = S(:,n)/sqrt(S(:,n)'*S(:,n));
-    end
+function [A] = clean_col(A, a, TOL)
+% clean_col strips out any real and imaginary components of the entries in
+% A(:, a) with magnitudes below the threshold.
+% 
+% Inputs:
+%   A   - matrix containing the column.
+%   a   - column index.
+%   TOL - threshold below which a component is considered insignificant.
+%
+% Outputs:
+%   A   - matrix containing the column.
+%
+% Copyright 2019 Jeremy Mason
+%
+% Licensed under the Apache License, Version 2.0, <LICENSE-APACHE or
+% http://apache.org/licenses/LICENSE-2.0> or the MIT license <LICENSE-MIT or
+% http://opensource.org/licenses/MIT>, at your option. This file may not be
+% copied, modified, or distributed except according to those terms.
+    I = find(A(:, a));
+    
+    Re = real(A(I, a));
+    Re(abs(Re) < TOL) = 0.;
+    Im = imag(A(I, a));
+    Im(abs(Im) < TOL) = 0.;
+    
+    A(I, a) = Re + 1i * Im;
 end
-
-% Attempt to remove remainders
-Re = real(S);
-Re(abs(Re)<1e-10) = 0;
-Im = imag(S);
-Im(abs(Im)<1e-10) = 0;
-S = Re+1i*Im;
-
-% First nonzero coefficient of the eigenvector is postive.
-for m = 1:size(S,2)
-    S(:,m) = sign(S(find(abs(S(:,m))>1e-10,1),m))*S(:,m);
-end
-
-% % Reorder rows for increasing l, and decreasing m for given value of l
-% for L = 0:N
-%     S((L+1)^2-2*L:(L+1)^2,:) = flipud(S((L+1)^2-2*L:(L+1)^2,:));
-% end

@@ -1,4 +1,10 @@
-function [symm_rots, Laue] = get_symm_rots(g1,g2, pt_grp, data_fname)
+function [symm_rots, Laue] = get_symm_rots(g1,g2, pt_grp, data_fname, opt)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% opt:
+%%%%%%%%    1: crystal symmetries only (if Laue (M,n) = (M,-n))
+%%%%%%%%    2: crystal symmetries + Grain Exchange symmetry
+%%%%%%%%
+
 Laue = 0;
 switch pt_grp
     case 'Oh'
@@ -13,11 +19,22 @@ mat_name = [data_fname, 'SymmMat_', pt_grp, '.mat'];
 s1 = load(mat_name);
 SymmMat = s1.SymmMat;
 nsz = size(SymmMat,1);
-if Laue
-    symm_rots = zeros(3,6,4*nsz*nsz);
-else
-    symm_rots = zeros(3,6,2*nsz*nsz);
+nrot_csymm = nsz*nsz;
+
+if opt == 1
+    if Laue
+        symm_rots = zeros(3,6,2*nrot_csymm);
+    else
+        symm_rots = zeros(3,6,1*nrot_csymm);
+    end
+elseif  opt == 2
+    if Laue
+        symm_rots = zeros(3,6,4*nrot_csymm);
+    else
+        symm_rots = zeros(3,6,2*nrot_csymm);
+    end
 end
+
 ct3 = 1;
 for ct1=1:nsz
     gs1 = g1*SymmMat{ct1};
@@ -29,35 +46,26 @@ for ct1=1:nsz
 end
 
 ypi = vrrotvec2mat([0,1,0,pi]);
-
-g1p = ypi*g2; g2p = ypi*g1;
-for ct1=1:nsz
-    gs1 = g1p*SymmMat{ct1};
-    for ct2=1:nsz
-        gs2 = g2p*SymmMat{ct1};
+if Laue
+    for ct1 = 1:nrot_csymm
+        gs1 = ypi*symm_rots(:,1:3,ct1);
+        gs2 = ypi*symm_rots(:,4:6,ct1);
         symm_rots(:,:,ct3) = [gs1,gs2];
         ct3 = ct3 + 1;
     end
 end
 
-if Laue
-    g1p = ypi*g1; g2p = ypi*g2;
-    for ct1=1:nsz
-        gs1 = g1p*SymmMat{ct1};
-        for ct2=1:nsz
-            gs2 = g2p*SymmMat{ct1};
-            symm_rots(:,:,ct3) = [gs1,gs2];
-            ct3 = ct3 + 1;
-        end
+if opt == 2
+    if Laue
+        nsymm = 2*nrot_csymm;
+    else
+        nsymm = nrot_csymm;
     end
-    g1p = g2; g2p = g1;
-    for ct1=1:nsz
-        gs1 = g1p*SymmMat{ct1};
-        for ct2=1:nsz
-            gs2 = g2p*SymmMat{ct1};
-            symm_rots(:,:,ct3) = [gs1,gs2];
-            ct3 = ct3 + 1;
-        end
+    for ct1 = 1:nsymm
+        gs1 = ypi*symm_rots(:,4:6,ct1);
+        gs2 = ypi*symm_rots(:,1:3,ct1);
+        symm_rots(:,:,ct3) = [gs1,gs2];
+        ct3 = ct3 + 1;
     end
 end
 end
