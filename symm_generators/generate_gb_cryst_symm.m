@@ -17,7 +17,7 @@ addpath(genpath(util_dir));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%
-combine_cryst_symm_ab(top_dir, pt_grp, Nmax, TOL);
+generate_cryst_symm_ab(top_dir, pt_grp, Nmax, TOL);
 %%%%
 generate_ges_mat(top_dir, pt_grp, Nmax)
 %%%%
@@ -173,4 +173,6 @@ for ct1=1:num_cols
 end
 
 end
+
+
 
