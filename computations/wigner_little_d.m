@@ -1,10 +1,25 @@
 function [d, err] = wigner_little_d(j, theta)
-% [d, err] = wigner_little_d(j, theta) - returns the Wigner d matrix for
-%   the given order and rotation angle, with rows and colums ordered in
-%   increasing values of m. The second output is an estimate of the
-%   magnitude of numerical error.
-%   
-%   Follows the approach of X. M. Feng et al in 10.1103/PhysRevE.92.043307.
+% wigner_little_d constructs a Wigner little d matrix given a total angular 
+% momenum and an angle. This corresponds to the irrep of SO(3) for a rotation
+% about the y axis.
+% 
+% Inputs:
+%   j     - specifies dimension of the matrix.
+%   theta - rotation angle in the interval [0, 2 \pi].
+%
+% Outputs:
+%   d     - Wigner little d matrix, with the rows and columns ordered in
+%           increasing values of m' and m. Follows the approach of X. M. Feng
+%           et al in 10.1103/PhysRevE.92.043307.
+%   err   - simple estimate of the numerical error in the calculation of the
+%           entries. Usually not calculated or returned.
+%
+% Copyright 2019 Jeremy Mason
+%
+% Licensed under the Apache License, Version 2.0, <LICENSE-APACHE or
+% http://apache.org/licenses/LICENSE-2.0> or the MIT license <LICENSE-MIT or
+% http://opensource.org/licenses/MIT>, at your option. This file may not be
+% copied, modified, or distributed except according to those terms.
     m = -j:j;
     n = 2 * j + 1;
     

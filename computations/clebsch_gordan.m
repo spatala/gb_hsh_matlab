@@ -1,10 +1,27 @@
 function [C, m1, m2] = clebsch_gordan(j1, j2, j, m)
-% [C, m1, m2] = clebsch_gordan(j1, j2, j, m) - returns all of the relevant
-%   Clebsch-Gordan coefficients for the specified j1, j2, j and m. The
-%   second and third outputs are the indices of the corresponding m1 and
-%   m2. Output is ordered in increasing values of m1.
+% clebsch_gordan returns the Clebsch-Gordan coefficients for the specified
+% total angular momenta and coupled z angular momentum component. This form
+% is particularly convenient from a computational standpoint. Follows the
+% approach of W. Straub in viXra:1403.0263.
+% 
+% Inputs:
+%   j1 - first uncoupled total angular momentum.
+%   j2 - second uncoupled total angular momentum.
+%   j  - coupled total angular momentum.
+%   m  - coupled z angular momentum component.
 %
-%   Follows the approach of W. Straub in viXra:1403.0263.
+% Outputs:
+%   C  - all of the nonzero Clebsch-Gordan coefficients for the specified
+%        inputs. Ordered in increasing values of m1.
+%   m1 - first uncoupled z angular momentum components.
+%   m2 - second uncoupled z angular momentum components.
+%
+% Copyright 2019 Jeremy Mason
+%
+% Licensed under the Apache License, Version 2.0, <LICENSE-APACHE or
+% http://apache.org/licenses/LICENSE-2.0> or the MIT license <LICENSE-MIT or
+% http://opensource.org/licenses/MIT>, at your option. This file may not be
+% copied, modified, or distributed except according to those terms.
     assert(isscalar(j) && isscalar(m) && isscalar(j1) && isscalar(j2), 'All inputs must be scalars.')
 
     if j1 < 0 || mod(j1, 0.5) ~= 0 || ...
@@ -38,7 +55,7 @@ function [C, m1, m2] = clebsch_gordan(j1, j2, j, m)
         A(a, a) = j_const + 2 * m1(a) * m2(a);
     end
     for a = 1:(n - 1)
-        tmp = sqrt(j1 * (j1 + 1) - m1(a) * m1(a + 1)) * sqrt(j2 * (j2 + 1) - m2(a) * m2(a + 1));
+        tmp = realsqrt(j1 * (j1 + 1) - m1(a) * m1(a + 1)) * realsqrt(j2 * (j2 + 1) - m2(a) * m2(a + 1));
         A(a, a + 1) = tmp;
         A(a + 1, a) = tmp;
     end
