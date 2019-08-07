@@ -7,59 +7,64 @@ data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-tot_inds = mbp_inds_ab_array(symm_orders);
 
-a_val = symm_orders(:,1)'; b_val = symm_orders(:,2)';
-c_val = min(a_val, b_val);
-num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
-
-null_mat = sparse((2*Nmax+1)^2,num_cols);
-
-for ct1 = 1:size(symm_orders,1)
-    a = a_val(ct1); b = b_val(ct1);
-    [a, b]
-    c = min(a,b);
-    na = 2*a+1; nb = 2*b+1; ng = 2*c+1;
-    alpha = -a:a; beta = -b:b; gamma = -c:c;
-    
-    cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
-    ind_start = find(cond1,1);
-    ind_stop  = find(cond1,1,'last');
-    
-    for e = abs(a - b):(a + b)
-        epsilon = -e:e;
-        ne = 2 * e + 1;
-        
-        [C, m1, m2] = clebsch_gordan(a, b, e, 0);
-        ind = (m1 + a) * nb + m2 + b + 1;
-        Cz = sparse(ind, 1, C, na * nb, 1);
-        for p = 1:ne % \epsilon
-            M3 = zeros(na * nb, ng);
-            
-            [C, m1, m2] = clebsch_gordan(a, b, e, -epsilon(p));
-            ind = (m1 + a) * nb + m2 + b + 1;
-            Ce = sparse(ind, 1, C, na * nb, 1);
-            for s = 1:na % \alpha
-                for t = 1:nb % \beta
-                    row = (alpha(s) + a) * nb + beta(t) + b + 1;
-                    for u = 1:ng % \gamma
-                        M3(row, u) = M3(row, u) + ...
-                            (Ce(row)/ sqrt(2 * e + 1)) * ...
-                            Cz((gamma(u) + a) * nb - gamma(u) + b + 1);
-                    end
-                end
-            end
-            M3 = M3 * sqrt(2) * sqrt((2 * a + 1) * (2 * b + 1)) / pi;
-            
-            row1 = e^2 + e + epsilon(p) + 1;
-            null_mat(row1,ind_start:ind_stop) = M3(:)';
-        end
+a1 = symm_orders(:,1); b1 = symm_orders(:,2);
+na1 = 2*a1+1;nb1 = 2*b1+1; ng1 = 2*min(a1,b1)+1; inds1 = na1.*nb1.*ng1;
+nsymm = numel(inds1);
+row_inds = zeros(nsymm,2);
+col_inds = zeros(nsymm,2);
+for ct1 = 1:nsymm
+    ta1 = symm_orders(ct1,1); tb1 = symm_orders(ct1,2);
+    row_inds(ct1,:) = [(ta1-tb1)^2+1,(ta1+tb1+1)^2];
+    if ct1 == 1
+        col_inds(ct1,:) = [1,sum(inds1(1:ct1))];
+    else
+        col_inds(ct1,:) = [sum(inds1(1:ct1-1))+1,sum(inds1(1:ct1))];
     end
 end
-S = spnull(null_mat);
 
-mat_name = [data_fname0, ...
-    'Sarr_gbnull_nmax_',num2str(Nmax),'.mat'];
-save(mat_name,'S');
+a_max = max(a1); b_max = max(b1);
+null_mat = sparse((a_max+b_max+1)^2,sum(inds1));
+for ct1 = 1:nsymm
+    % ct1
+    ta1 = symm_orders(ct1,1); tb1 = symm_orders(ct1,2);
+    mat_ab = null_mat_ab(ta1,tb1);
+    r1 = row_inds(ct1,1); r2 = row_inds(ct1,2);
+    c1 = col_inds(ct1,1); c2 = col_inds(ct1,2);
+    null_mat(r1:r2,c1:c2) = mat_ab;
+end
 
+mat_name = [data_fname0, 'gbnull_mat_nmax_',num2str(Nmax),'.mat'];
+save(mat_name,'null_mat');
+end
+
+function mat_ab = null_mat_ab(a,b)
+c = min(a,b);
+na = 2 * a + 1; nb = 2 * b + 1; ng = 2 * c + 1;
+
+e_range = abs(a-b):a+b; num_e = numel(e_range);
+mat_ab = sparse(sum(2*e_range+1),na*nb*ng);
+
+r_ct = 1;
+for e_ct = 1:num_e
+    e = e_range(e_ct);
+    
+    [Cz, ~, ~] = clebsch_gordan(a, b, e, 0);
+    
+    eps_range = -e:e;
+    ne = 2 * e + 1;
+    for eps_ct = 1:ne
+        eps = eps_range(eps_ct);
+        [Ce, m1, m2] = clebsch_gordan(a, b, e, -eps);
+        ind = (m1 + a) * nb + m2 + b + 1;
+        C_val = Ce*(Cz.');
+        C_val = C_val(:); % C_val = transpose(C_val(:));
+        ind1 = ind + (0:ng-1)*na*nb;
+        ind1 = ind1(:); % ind1 = transpose(ind1(:));
+        
+        mat_ab(r_ct, ind1) = C_val/(sqrt(2*e+1));
+        r_ct = r_ct + 1;
+    end
+end
+mat_ab = mat_ab * sqrt(2) * sqrt((2 * a + 1) * (2 * b + 1)) / pi;
 end

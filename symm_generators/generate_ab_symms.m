@@ -1,4 +1,4 @@
-function [] = generate_ab_symms(top_dir, pt_grp, Nmax)
+function [] = generate_ab_symms(top_dir, pt_grp, Nmax, TOL)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Function to compute symmetrized eigen-vectors for crystal symmetry
 %%%% operations. The eigen-vectors are for a given (a,b) order.
@@ -75,14 +75,8 @@ end
 
 function symm_mat = generate_c1symm(ct1, ga_s, gb_s, a_val, b_val)
 gs1 = ga_s{ct1}; gs2 = gb_s{ct1};
-
-U_a = rotation_mat(a_val, gs1);
-U_b = rotation_mat(b_val, gs2);
-
+U_a = rotation_mat(a_val, gs1); U_b = rotation_mat(b_val, gs2);
 symm_mat = sparse((kron(U_a, U_b)).');
-
-% Rr_ab_12 = so4_irrep(gs1,gs2,Na,Nb);
-% symm_mat = transpose(Rr_ab_12);
 end
 
 function save_mat = save_Sarr(R1, mat_name)

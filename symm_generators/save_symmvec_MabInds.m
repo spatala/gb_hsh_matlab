@@ -34,7 +34,7 @@ tot_Uprops = zeros(num_rows*num_cols,6);
 ind_ranges = zeros(num_cols,2);
 st1 = 1;
 for ct1 = 1:num_cols
-    ct1
+%     ct1
     ind1 = find(abs(S(:,ct1))>0);
     st2 = st1 - 1 + size(ind1,1);
     U_props = tot_inds(ind1,:);
