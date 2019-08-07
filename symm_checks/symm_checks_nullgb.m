@@ -1,10 +1,10 @@
+function [] = symm_checks_nullgb(pt_grp, Nmax)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% Code to check the rotation of SO(4) Functions R^(a,b)
 %%%%%%%
-clear all; clc;
-
+% clear all; clc;
 % pt_grp = 'C1'; Nmax = 1;
-pt_grp = 'Oh'; Nmax = 6;
+% pt_grp = 'Oh'; Nmax = 4;
 
 curr_pwd = split(pwd,'/');
 top_dir = '';
@@ -58,22 +58,23 @@ c_val = min(a_val, b_val);
 num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
 
 
-for ct1=1:nsymm_evs 
+for ct1=1:nsymm_evs
     ct1
-Mvec = zeros(1,num_cols);
-
-for a=a_val
-    for b=b_val
-        M1 = mbp_basis(a, b, [w_m, th_m, ph_m, w_b, ph_b]);
-        
-        cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
-        ind_start = find(cond1,1);
-        ind_stop  = find(cond1,1,'last');
-        
-        Mvec(ind_start:ind_stop) = M1;
+    Mvec = zeros(1,num_cols);
+    
+    for a=a_val
+        for b=b_val
+            M1 = mbp_basis(a, b, [w_m, th_m, ph_m, w_b, ph_b]);
+            
+            cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
+            ind_start = find(cond1,1);
+            ind_stop  = find(cond1,1,'last');
+            
+            Mvec(ind_start:ind_stop) = M1;
+        end
     end
-end
     diff_vec(ct1) = norm(Mvec*S(:,ct1));
 end
-norm(diff_vec)
+disp(max(abs(diff_vec)));
+
 rmpath(genpath(util_dir));
