@@ -39,7 +39,7 @@ ct3 = 1;
 for ct1=1:nsz
     gs1 = g1*SymmMat{ct1};
     for ct2=1:nsz
-        gs2 = g2*SymmMat{ct1};
+        gs2 = g2*SymmMat{ct2};
         symm_rots(:,:,ct3) = [gs1,gs2];
         ct3 = ct3 + 1;
     end
