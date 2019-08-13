@@ -84,63 +84,57 @@ mat_name = [data_fname0, ...
 % mat_name = [data_fname0,...
 %     'Sarr_abc_combined_csymm_nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); S = (s1.S);
-nsymm_evs = size(S,2);
+% nsymm_evs = size(S,2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-num_rows = size(S,1);
-tic;
-Mvec = compute_Mvec(s,nrots, num_rows, vec_inds);
-toc;
-
-Smvec = Mvec*S;
-disp(norm(full(Smvec - Smvec(1,:)))/size(S,2))
+% num_rows = size(S,1);
+% tic;
+% Mvec = compute_Mvec(s,nrots, num_rows, vec_inds);
+% toc;
+% disp(size(Mvec))
+% Smvec = Mvec*S;
+% disp(norm(full(Smvec - Smvec(1,:)))/size(S,2))
 
 % disp(size(Mvec))
 
-% g1_1 = symm_rots(:,1:3,1); g1_2 = symm_rots(:,4:6,1);
-% ma1 = rots_to_angs(g1_1, g1_2);
-% 
-% a_val = symm_orders(:,1)'; b_val = symm_orders(:,2)';
-% c_val = min(a_val, b_val);
-% num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
-% 
-% Mvec1 = zeros(1,num_cols);
-% for a=a_val
-%     for b=b_val
-%         M1 = mbp_basis(a, b, [ma1(1), ma1(2), ma1(3), ma1(4), ma1(5)]);
-%         
-%         cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
-%         ind_start = find(cond1,1);
-%         ind_stop  = find(cond1,1,'last');
-%         
-%         Mvec1(ind_start:ind_stop) = M1;
-%     end
-% end
-% 
-% nsymm_rots = size(symm_rots,3);
+
+
+a_val = symm_orders(:,1); b_val = symm_orders(:,2);
+c_val = min(a_val, b_val);
+num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
+
+nsymm_rots = size(symm_rots,3);
 % diff_vec = zeros(nsymm_evs*(nsymm_rots-1),1);
 % ct3 = 1;
-% for ct2=2:nsymm_rots
+
+ma2 = zeros(nsymm_rots, 5);
+for ct2=1:nsymm_rots
+    g2_1 = symm_rots(:,1:3,ct2); g2_2 = symm_rots(:,4:6,ct2);
+    ma2(ct2,:) = rots_to_angs(g2_1, g2_2);
+end
+
+SMvec2 = zeros(nsymm_rots,size(S,2));
+tic;
+for ct2=1:nsymm_rots
 %     ct2
-%     g2_1 = symm_rots(:,1:3,ct2); g2_2 = symm_rots(:,4:6,ct2);
-%     ma2 = rots_to_angs(g2_1, g2_2);
-%     for ct1=1:nsymm_evs
-%         Mvec2 = zeros(1,num_cols);
-%         for a=a_val
-%             for b=b_val
-%                 M2 = mbp_basis(a, b, [ma2(1), ma2(2), ma2(3), ma2(4), ma2(5)]);       
-%                 cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
-%                 ind_start = find(cond1,1); ind_stop  = find(cond1,1,'last');
-%                 Mvec2(ind_start:ind_stop) = M2;
-%             end
-%         end
-%         if norm(Mvec1*S(:,ct1) - Mvec2*S(:,ct1)) > 1e-12
-%             disp([ct2, ct1])
-%         end
-%         diff_vec(ct3) = norm(Mvec1*S(:,ct1) - Mvec2*S(:,ct1)); ct3 = ct3 + 1;
-%     end
-% end
+    Mvec2 = zeros(1,num_cols);
+    for ct1 = 1:size(a_val,1)
+        a=a_val(ct1); b = b_val(ct1);
+        M2 = mbp_basis(a, b, [ma2(ct2,1), ma2(ct2,2), ...
+            ma2(ct2,3), ma2(ct2,4), ma2(ct2,5)]);
+        cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
+        ind_start = find(cond1,1); ind_stop  = find(cond1,1,'last');
+        Mvec2(ind_start:ind_stop) = M2;
+    end
+    SMvec2(ct2,:) = Mvec2*S;
+end
+toc;
+% Smvec = Mvec*S;
+% disp(norm(full(Smvec - Smvec(1,:)))/size(S,2))
+% Smvec = Mvec2*S;
+disp(norm(full(SMvec2 - SMvec2(1,:)))/size(S,2))
+
 % disp(max(abs(diff_vec)));
 
 rmpath(genpath(util_dir));
