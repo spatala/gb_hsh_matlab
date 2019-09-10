@@ -134,7 +134,6 @@ end
 
 
 
-
 function flip_mat = generate_flip_mat(symm_orders)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
