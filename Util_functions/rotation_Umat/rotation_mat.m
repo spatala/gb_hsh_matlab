@@ -1,11 +1,18 @@
 function [U] = rotation_mat(j, rot_angs)
-% [U] = rotation_mat(j, w, th, ph) - returns the rotation matrix U of the
-%   order j, with a rotation angle w and rotation axis given by polar and
-%   aximuthal angles th and ph.
+% Input Parameters
+%   j: Umatrix of order j.
+%   rot_angs: 3 X 1 array.
+%                w = rot_angs(1); th = rot_angs(2); ph = rot_angs(3);
+%       + w: rotation angle;
+%       + th: polar angle of rotation axis
+%       + ph: azimuthal angle of rotation axis
+%
+% Returns
+%   [U]: rotation matrix U of the order j. Size: (2*j+1, 2*j+1)
 %
 %   Follows Eq. 6 on page 81 of D. A. Varshalovich et al, Quantum Theory of
 %   Angular Momentum, 1988.
-
+%
 
 w = rot_angs(1); th = rot_angs(2); ph = rot_angs(3);
 if (abs(mod(w,2*pi)) < 1e-14)
