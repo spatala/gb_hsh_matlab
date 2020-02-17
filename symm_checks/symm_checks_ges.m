@@ -1,4 +1,4 @@
-function [] = symm_checks(pt_grp, Nmax)
+function [] = symm_checks_ges(pt_grp, Nmax)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Steps:
 %%%%    1) Load a random grain boundary (g1, g2).
@@ -38,52 +38,54 @@ num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
 %%%% This should be made faster!
 tot_inds = mbp_inds_ab_array(symm_orders);
 
-%%%% Load random GB parameter
-s1 = load([top_dir,'data_files/GB_Parameters/rand_gb_rots.mat']); 
-rot_mats = s1.rot_mats;
-rots1 = rot_mats(:,:,floor(size(rot_mats,3)*rand()));
-g1 = rots1(:,1:3); g2 = rots1(:,4:6);
-
-%%%% Generate the symmetrically equivalent boundary parameters
-%%%% The last parameter in get_symm_rots: opt
-%%%%    1: Do not consider grain exchange symmetry
-%%%%    2: Consider grain exchange symmetry
-% [symm_rots, ~] = get_symm_rots(g1,g2, pt_grp, data_fname,1);
-[symm_rots, ~] = get_symm_rots(g1,g2, pt_grp, data_fname,2);
-nsymm_rots = size(symm_rots,3);
-
 %%%% Load mat file containing the symmetrized basis functions
 mat_name = [data_fname0, ...
     'Sarr_cryst_ges_gbnull_nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); S = (s1.S);
 nsymm_evs = size(S,2);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Check GES "num" GB parameters
+num = 100;
+diff_norms = zeros(num,1);
+for tct1 = 1:num
+    %%%% Generate Random Grain boundary (g1_1, g1_2)
+    diff_vec = zeros(nsymm_evs,1);
+    w1 = rand()*pi; th1 = rand()*pi; ph1 = 2. * pi * rand();
+    axang1 = [sin(th1)*cos(ph1), sin(th1)*sin(ph1), cos(th1), w1];
+    g1_1 = vrrotvec2mat(axang1);
+    w2 = rand()*pi; th2 = rand()*pi; ph2 = 2. * pi * rand();
+    axang2 = [sin(th2)*cos(ph2), sin(th2)*sin(ph2), cos(th2), w2];
+    g1_2 = vrrotvec2mat(axang2);
+    ma1 = rots_to_angs(g1_1, g1_2);
 
-%%%% Compute the basis functions for all the symmetrically equivalent
-%%%% representations of the random GB parameter.
-ma2 = zeros(nsymm_rots, 5);
-for ct2=1:nsymm_rots
-    g2_1 = symm_rots(:,1:3,ct2); g2_2 = symm_rots(:,4:6,ct2);
-    ma2(ct2,:) = rots_to_angs(g2_1, g2_2);
-end
-
-SMvec2 = zeros(nsymm_rots,nsymm_evs);
-
-for ct2=1:nsymm_rots
-    ct2
-    Mvec2 = zeros(1,num_cols);
-    for ct1 = 1:size(symm_orders,1)
-        a=a_val(ct1); b = b_val(ct1);
-        M2 = mbp_basis(a, b, [ma2(ct2,1), ma2(ct2,2), ...
-            ma2(ct2,3), ma2(ct2,4), ma2(ct2,5)]);
+    %%%% Generate GES of Random Grain boundary (g2_1, g2_2)
+    Ypi = vrrotvec2mat([0,1,0,pi]);
+    g2_1 = Ypi*g1_2; g2_2 = Ypi*g1_1;
+    ma2 = rots_to_angs(g2_1, g2_2);
+    
+    %%%% Compute Mvec1 and Mvec2
+    Mvec1 = zeros(1,num_cols); Mvec2 = zeros(1,num_cols);
+    for ct2 = 1:size(symm_orders,1)
+        a = a_val(ct2); b = b_val(ct2);
+        M1 = mbp_basis(a, b, ma1);
+        M2 = mbp_basis(a, b, ma2);
+        
         cond1 = tot_inds(:,3)==a & tot_inds(:,4)==b;
-        ind_start = find(cond1,1); ind_stop  = find(cond1,1,'last');
+        ind_start = find(cond1,1);
+        ind_stop  = find(cond1,1,'last');
+        
+        Mvec1(ind_start:ind_stop) = M1;
         Mvec2(ind_start:ind_stop) = M2;
     end
-    SMvec2(ct2,:) = Mvec2*S;
+    
+    %%%%% Compute the difference between two Mvectors
+    for ct1=1:nsymm_evs
+        diff_vec(ct1) = norm(Mvec1*S(:,ct1) - Mvec2*S(:,ct1));
+    end
+    diff_norms(tct1) = norm(diff_vec)/nsymm_evs;
 end
 
-disp(norm(full(SMvec2 - SMvec2(1,:)))/size(S,2))
+norm(diff_norms)/num
 
 rmpath(genpath(util_dir));
-end
