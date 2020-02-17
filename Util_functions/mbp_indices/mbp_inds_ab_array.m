@@ -19,6 +19,7 @@ function tot_inds = mbp_inds_ab_array(symm_orders)
 %%%%%         6) Value of 'alpha' - range [-a, a]
 %%%%%         7) Value of 'beta'  - range [-b, b]
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 a1 = symm_orders(:,1); b1 = symm_orders(:,2);  c1 = min(a1,b1);
 num_rows = sum((2*a1+1).*(2*b1+1).*(2*c1+1));

@@ -1,18 +1,25 @@
 function [symm_rots, Laue] = get_symm_rots(g1,g2, pt_grp, data_fname, opt)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%% opt:
-%%%%%%%%    1: crystal symmetries only (if Laue (M,n) = (M,-n))
-%%%%%%%%    2: crystal symmetries + Grain Exchange symmetry
-%%%%%%%%
+%%%% 
+%%%% Inputs:
+%%%%    1) g1, g2: $3 \times 3$ rotationa matrices of the 
+%%%%        $SO(3) \times SO(3)$ parameterization
+%%%%    2) pt_grp: string
+%%%%        Crystal point group to apply symmetries
+%%%%    3) data_fname: string
+%%%%        Location of the symmetry elements (matrices)
+%%%%    4) opt:
+%%%%        1: crystal symmetries only (if Laue (M,n) = (M,-n))
+%%%%        2: crystal symmetries + Grain Exchange symmetry
+%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Laue = 0;
 switch pt_grp
     case 'Oh'
-        pt_grp = 'O';
-        Laue = 1;
+        pt_grp = 'O'; Laue = 1;
     case 'D2h'
-        pt_grp = 'D2';
-        Laue = 1;
+        pt_grp = 'D2'; Laue = 1;
 end
 
 mat_name = [data_fname, 'SymmMat_', pt_grp, '.mat'];

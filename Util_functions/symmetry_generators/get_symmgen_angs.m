@@ -16,6 +16,8 @@ function [ga_s, gb_s, num_gen, Laue] = get_symmgen_angs(pt_grp)
 %%%% Laue:
 %%%%    `0` for non-Laue and `1` for Laue group.
 %%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 if (strcmp(pt_grp,'O') || strcmp(pt_grp,'Oh'))
     num_gen = 2;

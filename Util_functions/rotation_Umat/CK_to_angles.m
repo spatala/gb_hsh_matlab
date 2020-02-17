@@ -1,6 +1,21 @@
 function [w, th, ph] = CK_to_angles(CK)
-% [w, th, ph] = CK_to_angles(CK) - returns the rotation angle and axis for
-%   the given U^{1/2} with rows and cols ordered by increasing m' and m.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% 
+%%%% returns the rotation angle and axis for the given U^{1/2} with rows 
+%%%% and cols ordered by increasing m' and m.
+%%%% 
+%%%% 
+%%%% Input
+%%%%    CK: Cayley-Klein Parameters
+%%%% 
+%%%% Output
+%%%%    w, th, ph:
+%%%%        The rotation angle, polar and azimuthal angles of the rotation
+%%%%        matrix.
+%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% [w, th, ph] = CK_to_angles(CK) - 
     a = CK(2, 2);
     b = CK(2, 1);
     

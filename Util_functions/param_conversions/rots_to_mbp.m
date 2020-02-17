@@ -1,10 +1,10 @@
 function mbp = rots_to_mbp(rots)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% Convert GB parameters from SO3xSO3 parametersation (rots) to 
 %%%%%%% Misorientation-Boundaryplane (MBP).
 %%%%%%%
 %%%%%%% Input
-%%%%%%% rots: 3 X 6 matrix
+%%%%%%% rots: 1 X 3 X 6 matrix
 %%%%%%%         First three columns are the first orientation matrix (g1)
 %%%%%%%         and the second three are the second orientaiton matrix (g2)
 %%%%%%%
@@ -13,6 +13,7 @@ function mbp = rots_to_mbp(rots)
 %%%%%%%         First three columns are the misorientation matrix and the
 %%%%%%%         last column is the boundary-plane.
 %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 g1 = rots(:,1:3); g2 = rots(:,4:6);
 

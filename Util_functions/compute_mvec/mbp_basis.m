@@ -1,10 +1,22 @@
 function [M] = mbp_basis(a, b, mbp_angs)
-% [M] = mbp_basis(a, b, w_m, th_m, ph_m, w_b, ph_b) - returns the basis
-%   functions for the grain boundary space using the MBP parameterization.
-%   Rows ordered by (\gamma, \alpha, \beta) in lexicographic order, i.e., 
-%   starting with negative values, ending with positive values).
-%
-%   Follows Equation 14 of the manuscript.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Returns the basis functions $M^{a,b}$ for the grain boundary space 
+%%%%% using the MBP parameterization.
+%%%%% 
+%%%%% Rows ordered by (\gamma, \alpha, \beta) in lexicographic order, i.e., 
+%%%%% starting with negative values, ending with positive values).
+%%%%%
+%%%%% Follows Equation 14 of the manuscript.
+%%%%%
+%%%%% Input
+%%%%%   a, b: Indices for $M^{a,b}$ function.
+%%%%%   mbp_angs: (omega_m, theta_m, phi_m, omega_b, phi_b) 
+%%%%%
+%%%%% Output
+%%%%%   M: 3 X 6 matrix
+%%%%%      For the 
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     w_m=mbp_angs(1); th_m=mbp_angs(2); ph_m=mbp_angs(3);
     w_b=mbp_angs(4); ph_b=mbp_angs(5);
