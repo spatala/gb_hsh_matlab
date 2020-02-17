@@ -1,21 +1,10 @@
 function save_symmvec_MabInds(top_dir, pt_grp, Nmax)
-% clear all; clc; pt_grp = 'Oh'; Nmax = 10;
-% curr_pwd = split(pwd,'/');
-% top_dir = '';
-% for ct1=1:length(curr_pwd)
-%     top_dir = strcat(top_dir,curr_pwd{ct1},'/');
-%     if (strcmp(curr_pwd{ct1},'gb_hsh_matlab'))
-%         break;
-%     end
-% end
-% util_dir = strcat(top_dir,'Util_functions','/');
-% addpath(genpath(util_dir));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

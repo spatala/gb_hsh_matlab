@@ -1,6 +1,4 @@
 function [] = generate_gb_cryst_symm(pt_grp, Nmax, TOL)
-% function [] = generate_gb_cryst_symm()
-% pt_grp = 'Oh'; Nmax = 4; TOL = 1e-12;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 curr_pwd = split(pwd,'/');
@@ -45,7 +43,7 @@ function [] = generate_ges_mat(top_dir, pt_grp, Nmax)
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_nmax_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 
 [~, ~, ~, Laue] = get_symmgen_mats(pt_grp);

@@ -58,7 +58,7 @@ S = clean(S1_arr, TOL);
 mat_name = [data_fname0,'Sarr_abc_combined_csymm_nmax_',num2str(Nmax),'.mat'];
 save(mat_name, 'S');
 
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_nmax_',num2str(Nmax),'.mat'];
 save(mat_name,'symm_orders');
 
 end
