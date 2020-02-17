@@ -12,7 +12,7 @@ num_rows = 0; num_cols = 0; ns_ord = 1;
 symm_orders = zeros(Nmax^2,2);
 
 for tct1=0:Nmax
-    for tct2=0:Nmax-tct1
+    for tct2=0:Nmax
         
         a_val = tct1; b_val = tct2;
         
