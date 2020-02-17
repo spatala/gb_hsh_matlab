@@ -4,6 +4,8 @@
 
 ### `generate_gb_cryst_symm(pt_grp, Nmax)`
 
+In folder, `symm_generators/`
+
 1) `gen_symm_orders(top_dir, pt_grp, Nmax);`
 2) `generate_ab_symms(top_dir, pt_grp, Nmax);`
 3) `combine_cryst_symm_ab(top_dir, pt_grp, Nmax);`
