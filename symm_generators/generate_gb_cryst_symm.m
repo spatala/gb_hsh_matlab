@@ -17,22 +17,27 @@ addpath(genpath(util_dir));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%
+disp('Step 1');
 generate_cryst_symm_ab(top_dir, pt_grp, Nmax, TOL);
 %%%%
+disp('Step 2');
 generate_ges_mat(top_dir, pt_grp, Nmax)
 %%%%
+disp('Step 3');
 combine_cryst_ges(top_dir,pt_grp, Nmax, TOL)
 %%%%
+disp('Step 4');
 generate_gb_null(top_dir,pt_grp, Nmax)
 %%%%
+disp('Step 5');
 combine_cryst_ges_gbnull(top_dir,pt_grp, Nmax, TOL)
 %%%%
+disp('Step 6');
 save_symmvec_MabInds(top_dir,pt_grp, Nmax)
 %%%%
+disp('Step 7');
 rmpath(genpath(util_dir));
 end
-
-
 
 function [] = generate_ges_mat(top_dir, pt_grp, Nmax)
 
