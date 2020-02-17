@@ -1,4 +1,4 @@
-function [] = symm_checks(pt_grp, Nmax)
+function [] = symm_checks(pt_grp, Nmax, coeffs_typ)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Steps:
 %%%%    1) Load a random grain boundary (g1, g2).
@@ -6,6 +6,12 @@ function [] = symm_checks(pt_grp, Nmax)
 %%%%    3) Compute MBP basis functions for all the symmetrically equivalent
 %%%%       grain boundaries.
 %%%%    4) Check that all the basis functions return the same vectors.
+%%%%
+%%%% Input:
+%%%%    1) pt_grp
+%%%%    2) Nmax
+%%%%    3) coeffs_typ: string
+%%%%        'nmax' or 'aPLUSb_max'
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -26,10 +32,10 @@ addpath(genpath(util_dir));
 
 %%%%% Get data files
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
-data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
+data_fname0 = [data_fname,coeffs_typ,'_',num2str(Nmax),'/'];
 
 %%%%% Load the possible (a,b) values for (pt_grp, Nmax)
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_',coeffs_typ,'_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 a_val = symm_orders(:,1)'; b_val = symm_orders(:,2)'; c_val = min(a_val, b_val);
 num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
@@ -54,7 +60,7 @@ nsymm_rots = size(symm_rots,3);
 
 %%%% Load mat file containing the symmetrized basis functions
 mat_name = [data_fname0, ...
-    'Sarr_cryst_ges_gbnull_nmax_',num2str(Nmax),'.mat'];
+    'Sarr_cryst_ges_gbnull_',coeffs_typ,'_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); S = (s1.S);
 nsymm_evs = size(S,2);
 
