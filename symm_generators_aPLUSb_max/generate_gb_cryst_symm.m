@@ -43,9 +43,9 @@ function [] = generate_ges_mat(top_dir, pt_grp, Nmax)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
-data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
+data_fname0 = [data_fname,'aPLUSb_max_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_aPLUSb_max_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 
 [~, ~, ~, Laue] = get_symmgen_mats(pt_grp);
@@ -59,27 +59,27 @@ else
     symm_mat = ypi_left*flip_mat;
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-mat_name = [data_fname0, 'ges_mat_nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0, 'ges_mat_aPLUSb_max_',num2str(Nmax),'.mat'];
 save(mat_name,'symm_mat');
 end
- 
+
 function combine_cryst_ges(top_dir,pt_grp, Nmax, TOL)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
-data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
+data_fname0 = [data_fname,'aPLUSb_max_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0, ...
-    'ges_mat_nmax_',num2str(Nmax),'.mat'];
+    'ges_mat_aPLUSb_max_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); R1 = s1.symm_mat;
 
 mat_name = [data_fname0, ...
-    'Sarr_abc_combined_csymm_nmax_',num2str(Nmax),'.mat'];
+    'Sarr_abc_combined_csymm_aPLUSb_max_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); S0 = sparse(s1.S);
 
 S = S0 * sp_orth(sp_null(S0' * R1 * S0 - eye(size(S0, 2)), 1, TOL));
 
 mat_name = [data_fname0, ...
-    'Sarr_cryst_ges_nmax_',num2str(Nmax),'.mat'];
+    'Sarr_cryst_ges_aPLUSb_max_',num2str(Nmax),'.mat'];
 save(mat_name,'S');
 
 end
@@ -89,14 +89,14 @@ function combine_cryst_ges_gbnull(top_dir,pt_grp, Nmax, TOL)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
-data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
+data_fname0 = [data_fname,'aPLUSb_max_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0, ...
-    'gbnull_mat_nmax_',num2str(Nmax),'.mat'];
+    'gbnull_mat_aPLUSb_max_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); R1 = s1.null_mat;
 
 mat_name = [data_fname0, ...
-    'Sarr_cryst_ges_nmax_',num2str(Nmax),'.mat'];
+    'Sarr_cryst_ges_aPLUSb_max_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); S0 = sparse(s1.S);
 
 S = S0 * sp_orth(sp_null(R1 * S0, 1, TOL));
@@ -105,7 +105,7 @@ tic; S = clean(S, TOL); toc;
 disp(size(S));
 
 mat_name = [data_fname0, ...
-    'Sarr_cryst_ges_gbnull_nmax_',num2str(Nmax),'.mat'];
+    'Sarr_cryst_ges_gbnull_aPLUSb_max_',num2str(Nmax),'.mat'];
 save(mat_name,'S');
 
 end
@@ -158,7 +158,7 @@ flip_mat = sparse(num_cols, num_cols);
 for ct1=1:num_cols
     %%%% Get the (a,b,gamma,alpha, beta) corresponding to the column.
     a1 = tot_inds(ct1,3); b1 = tot_inds(ct1,4);
-    gamma1 = tot_inds(ct1,5); 
+    gamma1 = tot_inds(ct1,5);
     alpha1 = tot_inds(ct1,6); beta1 = tot_inds(ct1,7);
     %%%% Find the index for (b,a,-gamma,beta, alpha) row.
     a2 = b1; b2 = a1; gamma2 = -gamma1;
@@ -170,7 +170,7 @@ for ct1=1:num_cols
         (tot_inds(:,6) == alpha2 ) & ...
         (tot_inds(:,7) == beta2  ));
     
-    %%%% The (a,b, gamma, alpha, beta)th column contains a 1 in the 
+    %%%% The (a,b, gamma, alpha, beta)th column contains a 1 in the
     %%%% (b,a, -gamma, beta, alpha)th row
     flip_mat(ind1,ct1) = 1;
 %     ind_maps(ct1,:) = [ct1, ind1];

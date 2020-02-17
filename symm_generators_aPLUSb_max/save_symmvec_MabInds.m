@@ -13,15 +13,15 @@ function save_symmvec_MabInds(top_dir, pt_grp, Nmax)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
-data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
+data_fname0 = [data_fname,'aPLUSb_max_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_aPLUSb_max_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0, ...
-    'Sarr_cryst_ges_gbnull_nmax_',num2str(Nmax),'.mat'];
+    'Sarr_cryst_ges_gbnull_aPLUSb_max_',num2str(Nmax),'.mat'];
 s1 = load(mat_name);
 S = s1.S;
 
@@ -49,7 +49,7 @@ tot_Uprops(st2+1:end,:) = [];
 %%% C = A(ia,:) and A = C(ic,:)
 
 mat_name = [data_fname0, ...
-    'Sarr_MabInds_nmax_',num2str(Nmax),'.mat'];
+    'Sarr_MabInds_aPLUSb_max_',num2str(Nmax),'.mat'];
 save(mat_name, 'tot_Uprops', 'ind_ranges');
 end
 

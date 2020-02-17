@@ -2,9 +2,9 @@ function [] = generate_gb_null(top_dir,pt_grp, Nmax)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
-data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
+data_fname0 = [data_fname,'aPLUSb_max_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_aPLUSb_max_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -34,7 +34,7 @@ for ct1 = 1:nsymm
     null_mat(r1:r2,c1:c2) = mat_ab;
 end
 
-mat_name = [data_fname0, 'gbnull_mat_nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0, 'gbnull_mat_aPLUSb_max_',num2str(Nmax),'.mat'];
 save(mat_name,'null_mat');
 end
 
