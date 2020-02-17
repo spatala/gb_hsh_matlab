@@ -1,6 +1,6 @@
-function [] = check_basis_orth(pt_grp, Nmax)
+function [] = check_basis_orth(pt_grp, Nmax, coeffs_typ)
 % clear all; clc;
-% pt_grp = 'Oh'; Nmax = 8;
+% pt_grp = 'Oh'; Nmax = 8; coeffs_typ = 'aPLUSb_max'; coeffs_typ = 'nmax';
 
 curr_pwd = split(pwd,'/');
 top_dir = '';
@@ -18,7 +18,7 @@ addpath(genpath(util_dir));
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_',coeffs_typ,'_',num2str(Nmax),'.mat'];
 s1 = load(mat_name);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

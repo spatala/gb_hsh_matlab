@@ -20,7 +20,7 @@ data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 data_fname1 = [data_fname0,'Sarr_ab/'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_',coeffs_typ,'_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 nsymm = size(symm_orders,1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

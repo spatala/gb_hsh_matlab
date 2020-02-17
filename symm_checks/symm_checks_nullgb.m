@@ -1,4 +1,4 @@
-function [] = symm_checks_nullgb(pt_grp, Nmax)
+function [] = symm_checks_nullgb(pt_grp, Nmax, coeffs_typ)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% Code to check the rotation of SO(4) Functions R^(a,b)
 %%%%%%%
@@ -27,7 +27,7 @@ data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
 data_fname0 = [data_fname,'nmax_',num2str(Nmax),'/'];
 
 %%%%% Load the possible (a,b) values for (pt_grp, Nmax)
-mat_name = [data_fname0,'symm_ab_',pt_grp,'_Nmax_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0,'symm_ab_',pt_grp,'_',coeffs_typ,'_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
 a_val = symm_orders(:,1)'; b_val = symm_orders(:,2)'; c_val = min(a_val, b_val);
 num_cols = sum((2*a_val+1).*(2*b_val+1).*(2*c_val+1));
