@@ -6,10 +6,7 @@ data_fname0 = [data_fname,'aPLUSb_max_',num2str(Nmax),'/'];
 [ga_s, gb_s, num_gen, Laue] = get_symmgen_angs(pt_grp);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Sab_arr = {};
-
-num_rows = 0; num_cols = 0; ns_ord = 1;
-n_inds = (Nmax*(Nmax+1)/2);
+n_inds = ((Nmax+1)*(Nmax+2)/2);
 
 symm_orders = zeros(n_inds,2);
 ab_inds = zeros(n_inds,2);
@@ -21,7 +18,8 @@ for tct1=0:Nmax
     end
 end
 
-% tct1 = 0; tct2 = 0; tct3 = 0;
+Sab_arr = {};
+num_rows = 0; num_cols = 0; ns_ord = 1;
 
 for tct1 = 1:n_inds
     a_val = ab_inds(tct1,1); b_val = ab_inds(tct1,2);
