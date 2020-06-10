@@ -1,10 +1,12 @@
 function [d, err] = wigner_little_d(j, theta)
+% 
 % [d, err] = wigner_little_d(j, theta) - returns the Wigner d matrix for
 %   the given order and rotation angle, with rows and colums labelled in
 %   increasing values of m. The second argument is an estimate of the
 %   magnitude of numerical error.
 %   
 %   Follows the approach of X. M. Feng et al in 10.1103/PhysRevE.92.043307.
+% 
     m = -j:j;
     n = 2 * j + 1;
     

@@ -1,44 +1,35 @@
 function U_val = rotation_wo_svd(a,lb,q, Q, a_val, alp_val, al_val)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Function to compute elements of SO(3) Irreducible representative 
-%%%% U^{a_val}_{alp_val, al_val} for a rotation given by (q,Q) quaterion.
-%%%%
-%%%% U^{a_val}_{alp_val, al_val}:
-%%%%    a_val is the order of the rotation matrix. 
-%%%%
-%%%% Optimized for array of rotations as input (suppose N rotations).
-%%%%
-%%%% Input:
-%%%% q: 
-%%%%    q0 component of the rotation quaternion. Array of size N X 1. N is
-%%%%    the number rotations.
-%%%% Q: 
-%%%%    [q1,q2,q3] components array of the rotation quaternion. Array of
-%%%%    size N X 3.
-%%%%
-%%%% -(alp_val): Corresponds to row-index.    Range -alp_val:alp_val
-%%%% -(al_val):  Corresponds to column-index. Range -al_val:al_val
-%%%%            The "-" sign is added because "rotation.m" had the
-%%%%            convention of decreasing order of alp_val and al_val.
-%%%%
-%%%% a = q-1i*Q(3); lb = -Q(2)-1i*Q(1);
-%%%% 
-%%%% 
-%%%% Output:
-%%%% U_val:
-%%%%    Value of U in the alp_val row and al_val column. Size N X 1, where
-%%%%    N is the number of rotations.
-%%%%    
-%%%% 
+%
+% Function to compute elements of SO(3) Irreducible representative 
+% U^{a_val}_{alp_val, al_val} for a rotation given by (q,Q) quaterion.
+% 
+% Optimized for array of rotations as input (suppose N rotations).
+% 
+% - Input:
+% 	+ a: q-1i*Q(3)
+% 	+ lb: -Q(2)-1i*Q(1)
+% 	+ q: q0 component of the rotation quaternion. 
+%           Array of size N X 1. N is the number rotations.
+% 	+ Q: [q1,q2,q3] components array of the rotation quaternion. 
+%           Array of size N X 3.
+% 	+ a_val: The order of the rotation matrix
+% 	+ alp_val: Corresponds to row-index. 
+% 	+ al_val:  Corresponds to column-index.
+% 
+% - Output:
+% 	+ U_val: Value of U in the alp_val row and al_val column. 
+%       Size N X 1, where N is the number of rotations.
+% 
+% - Notes:
+% 	+ U^{a_val}_{alp_val, al_val}: a_val is the order of the rotation matrix.
+% 	+ The "-" sign is added because "rotation.m" had the 
+%       convention of decreasing order of alp_val and al_val.
+%
 
 
-%%%%%%
 N = 2*a_val;
-%%%%%% alp_val represents rows
 ri = -alp_val + a_val + 1;
-%%%%%% al_val represents columns
 cj = -al_val + a_val + 1;
-%%%%%%
 
 ind1 = find(abs(lb) < 1e-10);
 ind2 = find(abs(a) < 1e-10);
@@ -137,11 +128,8 @@ if ((ri ~= 1) || (cj ~= N+1))
     ltau = ones(size(aa));
     
     for n = rmax-(rmin:(rmax-1))
-%         n
         ltau = 1-((((c-n+1)*(d-n+1)*bb)./((e+n)*(f+n)*aa)).*ltau);
     end
-    
-%     [ri, cj]
     
     U_val = realsqrt(prod(1:(j+mpr))*prod(1:(j-mpr))*prod(1:(j+mup))*prod(1:(j-mup)))*(-1)^rmin*...
         (a.^c.*transpose(a').^d.*lb.^e.*transpose(lb').^f)...
