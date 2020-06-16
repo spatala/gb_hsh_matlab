@@ -21,9 +21,9 @@ function mbp_angs = rots_to_angs(g1, g2)
 %
 
 % g1 = rots(:,1:3); g2 = rots(:,4:6);
-mbp = rots_to_mbp([g1, g2]);
-g_rots = mbp_to_rots(mbp);
-g1 = g_rots(:,1:3); g2 = g_rots(:,4:6);
+% mbp = rots_to_mbp([g1, g2]);
+% g_rots = mbp_to_rots(mbp);
+% g1 = g_rots(:,1:3); g2 = g_rots(:,4:6);
 gb = g1; gm = (gb^(-1))*g2;
 
 ra_m = rotmat_to_angs(gm);

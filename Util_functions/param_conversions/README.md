@@ -17,7 +17,33 @@ Misorientation-Boundary plane (MBP).
 
 ## `rotmat_to_angs`
 
+Convert rotation maxtrix to angles
+
+- Input:
+  + g: $3 \times 3$ rotation matrix.
+
+- Output:
+  + rot_angs: $1 \times 3$ rotation angles
+	- w: Omega (rotation angle)
+	- th: polar angle (theta), and 
+	- ph: azimuthal angle (phi)
+
 ## `mbp_to_rots`
+
+Convert GB parameters from Misorientation-Boundary plane (MBP) to
+SO3xSO3 parametersation (rots).
+
+- Input
+  + mbp: 3 X 4 matrix
+        First three columns are the misorientation matrix and the
+        last column is the boundary-plane.
+
+- Output
+  + rots: 3 X 6 matrix
+        First three columns are the first orientation matrix (g1)
+        and the second three are the second orientaiton matrix (g2)
+
+
 
 ## `rots_to_angs`
 
