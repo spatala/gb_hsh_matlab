@@ -1,0 +1,13 @@
+#!/bin/bash
+# args=("$@")
+# TeXf="${args[0]}tex"
+# Bibf="${args[0]}"
+TeXf="main.tex"
+Bibf="main"
+pdflatex $TeXf
+bibtex $Bibf
+pdflatex $TeXf
+bibtex $Bibf
+pdflatex $TeXf
+bibtex $Bibf
+pdflatex $TeXf

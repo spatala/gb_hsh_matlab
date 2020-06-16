@@ -1,6 +1,6 @@
 function U_val = rotation_wo_svd(a,lb,q, Q, a_val, alp_val, al_val)
 %
-% Function to compute elements of SO(3) Irreducible representative 
+% Computes elements of SO(3) Irreducible representative 
 % U^{a_val}_{alp_val, al_val} for a rotation given by (q,Q) quaterion.
 % 
 % Optimized for array of rotations as input (suppose N rotations).
@@ -21,7 +21,8 @@ function U_val = rotation_wo_svd(a,lb,q, Q, a_val, alp_val, al_val)
 %       Size N X 1, where N is the number of rotations.
 % 
 % - Notes:
-% 	+ U^{a_val}_{alp_val, al_val}: a_val is the order of the rotation matrix.
+% 	+ U^{a_val}_{alp_val, al_val}: a_val is the order of the rotation 
+%       matrix.
 % 	+ The "-" sign is added because "rotation.m" had the 
 %       convention of decreasing order of alp_val and al_val.
 %

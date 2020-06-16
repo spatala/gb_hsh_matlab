@@ -7,29 +7,25 @@ Computes `U^{1/2}` for the rotation given by a rotation angle (`w`) and axis (`t
 Rows and cols ordered by increasing `m'` and `m`.
  
 - Input
-   + w, th, ph:
+   + `w`, `th`, `ph`:
        The rotation angle, polar and azimuthal angles of the rotation
        matrix.
 
 - Output
-   + CK: Cayley-Klein Parameters
-
-
+   + `CK`: Cayley-Klein Parameters
 
 ## CK_to_angles
 
 Computes the rotation angle (`w`) and axis (`th`, `ph`) for the 
 given `U^{1/2}` with rows and cols ordered by increasing `m'` and `m`.
 
-
 - Input
-   + CK: Cayley-Klein Parameters
+   + `CK`: Cayley-Klein Parameters
 
 - Output
-   + w, th, ph:
+   + `w`, `th`, `ph`:
        The rotation angle, polar and azimuthal angles of the rotation
        matrix.
-
 
 ## wigner_little_d
 
@@ -49,8 +45,8 @@ Computes the Wigner `d` matrix for the given order and rotation angle, with rows
 
 ## rotation_wo_svd
 
-Function to compute elements of SO(3) Irreducible representative 
-`U^{a_val}_{alp_val, al_val}` for a rotation given by (q,Q) quaterion.
+Computes elements of SO(3) Irreducible representative 
+`U^{a_val}_{alp_val, al_val}` for rotations given by (q,Q) quaterion.
 
 Optimized for array of rotations as input (suppose N rotations).
 
@@ -84,7 +80,7 @@ Computes the `(2j + 1)`-dimensional irreducible representation (irrep) of `SU(2)
     + `ph`: azimuthal angle of rotation axis
 
 - Output
-  + [U]: rotation matrix `U` of the order `j`. Size: `(2*j+1, 2*j+1)`
+  + `[U]`: rotation matrix `U` of the order `j`. Size: `(2*j+1, 2*j+1)`
 
 - Notes:
   + Follows Eq. 6 on page 81 of D. A. Varshalovich et al, Quantum Theory of Angular Momentum, 1988.

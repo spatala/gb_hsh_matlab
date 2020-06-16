@@ -2,19 +2,18 @@ function [M] = mbp_basis(a, b, mbp_angs)
 %
 % Returns the basis functions $M^{a,b}$ for the grain boundary space
 % using the MBP parameterization.
-%
-% Rows ordered by (\gamma, \alpha, \beta) in lexicographic order, i.e.,
-% starting with negative values, ending with positive values).
-%
-% Follows Equation () of the manuscript 
-% (finalize eqn. number after publishing).
-%
-% Input
-%  a, b: Indices for $M^{a,b}$ function.
-%  mbp_angs: (omega_m, theta_m, phi_m, omega_b, phi_b)
-%
-% Output
-%  M: 3 X 6 matrix
+% 
+% - Input:
+%   + a, b: Indices for $M^{a,b}$ function.
+%   + mbp_angs: (omega_m, theta_m, phi_m, omega_b, phi_b)
+% 
+% - Output:
+%   + M: MBP basis function with order (a,b). 
+% 	- Rows ordered by (\gamma, \alpha, \beta) in lexicographic order, i.e., starting with negative values, ending with positive values).
+% 
+% - Notes:
+%   + Follows Equation () of the manuscript (finalize eqn. number after publishing).
+%   + Not vectorized for array of mbp_angs.
 %
 
 t = num2cell(mbp_angs);

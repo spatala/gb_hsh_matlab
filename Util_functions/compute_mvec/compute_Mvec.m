@@ -1,5 +1,33 @@
 function Mvec = compute_Mvec(s, nrots, num_cols, vec_inds)
-
+% 
+% Computes MBP basis functions for given set of (a, b, gamma, alpha, beta)
+% for a given order (a+b \leq Nmax) of symmetrized MBP basis function.
+% 
+% - Input:
+%   + s: struct of N(=nrots)-arrays (8 elements)
+%     - ((s.a1, s.lb1, s.q1, s.Q1), (s.a2, s.lb2, s.q2, s.Q2))
+%   + nrots: Number of GB parameters
+%   + num_cols: Number of columns in the given order (a+b \leq Nmax) of 
+%       symmetrized MBP basis function
+%   + vec_inds: The non-zero indices in the symmetrized MBP basis 
+%       functions.
+% 
+% - Output:
+%   + Mvec: array of size nrots x num_cols
+%     - The rows coresspond to different rotations.
+%     - The columns correspond to all possible combinations of 
+%       a, b, gamma, alpha, beta.
+%     - Only the non-zero indices (stored in vec_inds) are calculated.
+% 
+% - Notes:
+%   + The idea is to compute MBP functions only for those combinations of 
+%       (a, b, gamma, alpha, beta) that are necessary for the 
+%       symmetrized MBP basis functions.
+%   + For any given order of symmetrized MBP basis functions 
+%       (a+b \leq Nmax), we can determine all the non-zero indices 
+%       (corresponding to unique a, b, gamma, alpha, beta). 
+%       This is stored in the array vec_inds.
+% 
 
 a1_rots  = s.a1;
 a2_rots  = s.a2;

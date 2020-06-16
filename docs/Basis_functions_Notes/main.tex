@@ -1,0 +1,209 @@
+\documentclass[fleqn,11pt]{wlscirep}
+
+\usepackage{lineno,hyperref}
+\usepackage[normalem]{ulem}
+\modulolinenumbers[5]
+
+%%% Custom Commands
+\def\colg{\textcolor{ForestGreen}}
+\def\colb{\textcolor{blue}}
+\def\colr{\textcolor{red}}
+\DeclareMathAlphabet\mathrsfso      {U}{rsfso}{m}{n}
+%%% Custom Packages
+\usepackage{xspace}
+\usepackage{multicol}
+\usepackage{setspace}
+
+%\usepackage{natbib}
+\usepackage{color}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\usepackage{tensor}
+
+\usepackage[numbered,framed]{matlab-prettifier}
+\let\ph\mlplaceholder % shorter macro
+\lstMakeShortInline"
+
+\lstset{
+  style              = Matlab-editor,
+  basicstyle         = \mlttfamily,
+  escapechar         = ",
+  mlshowsectionrules = true,
+}
+% %%%%%%%%%%%%%
+% \usepackage{listings}
+% \usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+% \definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+% \definecolor{mylilas}{RGB}{170,55,241}
+% %%%%%%%%%%%
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+%%%% Graphics Path
+\graphicspath{{./Images/}}
+\usepackage{sidecap}
+% \newcommand{\CBred}[1]{%
+%   {\color{red}{#1}}\xspace}
+
+\newcommand{\Cred}[1]{%
+  {\color{red}{#1}}\xspace}
+\newcommand{\Tref}{\textbf{{\color{red}{[xx]}}}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%vector
+\usepackage{esvect}
+%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\beginsupplement}{%
+        \setcounter{table}{0}
+        \renewcommand{\thetable}{S\arabic{table}}%
+        \setcounter{figure}{0}
+        \renewcommand{\thefigure}{S\arabic{figure}}%
+     }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+     
+\DeclareMathOperator*{\argmax}{arg\,max}  % in your preamble
+\DeclareMathOperator*{\argmin}{arg\,min} % in your preamble
+
+
+
+% \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+% \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\newcommand{\GrimmP}{CSLGrimmer\xspace} %
+
+\newcommand{\RotMat}[3]{%
+ \ensuremath{R_{{\text{\textbf{\tiny #1}}} \rightarrow {\text{\textbf{\tiny #2}}}}^{\text{\textbf{\tiny #3}}}}}
+
+% \newcommand{\RotMat}[3]{%
+%   \ensuremath{R_{{{\textbf{\tiny #1}}} \rightarrow {{\textbf{\tiny #2}}}}^{{\textbf{\tiny #3}}}}}
+  
+% \newcommand{\RotMat}[2]{%
+%   \ensuremath{R_{ {#1} \rightarrow {#2} }^{GO} } }  
+  
+% \newcommand{\VecSpace}[1]{%
+%   \ensuremath{\mathbb{L}_{{\textbf{\tiny #1}}}}}
+
+\newcommand{\VecSpace}[1]{%
+  \ensuremath{\mathbb{L}_{{\tiny #1}}}}
+
+\newcommand{\VecSpaceT}[1]{%
+  \ensuremath{\mathbb{L}_{\textbf{\tiny #1}}}}
+
+\newcommand{\LBasis}[2]{%
+  \ensuremath{\Lambda_{{\textbf{\tiny #1}}}^{\textbf{\tiny #2}}}}
+
+\newcommand{\LBasism}[2]{%
+  \ensuremath{\Lambda_{{{\tiny #1}}}^{{\textbf{\tiny #2}}}}}
+
+\newcommand{\LTBasism}[2]{%
+  \ensuremath{\Lambda_{{{\tiny #1}}}^{' {\textbf{\tiny #2}}}}}
+
+\newcommand{\BaseG}{%
+  \ensuremath{\Lambda_{{\text{\tiny g}}}}\xspace}
+
+% \newcommand{\BaseL}[1]{%
+%   \ensuremath{\Lambda_{{\text{\tiny #1}}}}\xspace}
+
+\newcommand{\BaseL}[1]{%
+  \ensuremath{\mathcal{B}_{{\textbf{\tiny #1}}}}\xspace}
+
+\newcommand{\Vect}[1]{%
+  \ensuremath{\mathbf{#1}}\xspace}
+
+% \newcommand{\RBaseL}[1]{%
+%   \ensuremath{\Lambda_{{\text{\tiny #1}}}^*}\xspace}
+
+\newcommand{\RBaseL}[1]{%
+  \ensuremath{\mathcal{B}_{{\text{\tiny #1}}}^*}\xspace}
+
+\newcommand{\CBred}[1]{\textbf{{\color{red}{#1}}}}
+
+% \newcommand{\Tref}{\textbf{{\color{red}{[xx]}}}\xspace}
+
+\newcommand{\TTm}[1]{
+  \ensuremath{\text{\tiny{#1}}}}
+
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+
+\usepackage{bm}
+
+
+
+\title{Notes on Grain Boundary Basis Functions}
+% * <spatala@ncsu.edu> 2016-11-21T15:51:42.149Z:
+%
+% ^.
+
+\author[1]{Leila Khalili}  \author[1,*]{Srikanth Patala}
+\affil[1]{Department of Materials Science and Engineering, North
+  Carolina State University, Raleigh, NC}
+% \affil[2]{Department of Materials Science and Engineering, University of Wisconsin-Madison, Madison, WI}
+% \affil[3]{Laboratory for Research on the Structure of Matter, University of Pennsylvania, Philadelphia, PA}
+% \affil[2]{Affiliation, department, city, postcode, country}
+
+\affil[*]{spatala@ncsu.edu}
+
+% \affil[+]{these authors contributed equally to this work}
+
+% \keywords{Keyword1, Keyword2, Keyword3}
+
+\begin{abstract}
+
+
+
+\end{abstract}
+\begin{document}
+
+\flushbottom
+\maketitle
+% * <john.hammersley@gmail.com> 2015-02-09T12:07:31.197Z:
+%
+% Click the title above to edit the author information and abstract
+%
+% ^ <spatala@ncsu.edu> 2016-11-21T15:51:46.363Z.
+\thispagestyle{empty}
+
+% \noindent Please note: Abbreviations should be introduced at the
+% first mention in the main text – no abbreviations lists. Suggested
+% structure of main text (not enforced) is provided below.
+
+% \linenumbers
+ 
+\newpage
+
+\input{Introduction.tex}
+
+% \newpage
+
+
+
+
+% \section*{Acknowledgements}
+% % \section{Acknowledgments}
+
+% This work was supported by start-up funds from North Carolina State
+% University \colb{and by NSF CAREER grant DMR\#1554270}. \colb{We
+%   acknowledge Prof. Julian McAuley from University of California, San
+%   Diego, for sharing the two-dimensional point-pattern matching
+%   code}. The computational support was provided by the High
+% Performance Computing Center at North Carolina State University.
+
+
+\newpage
+
+
+\newpage
+\bibliography{main}
+
+% \include{figures}
+\newpage
+
+% \input{supp_info}
+
+
+\end{document}

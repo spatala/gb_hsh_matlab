@@ -1,22 +1,28 @@
 function [ga_s, gb_s, num_gen, Laue] = get_symmgen_angs(pt_grp)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Function to set the generators for each point group (only proper
-%%%% rotation elements are set.)
-%%%%
-%%%% Input:
-%%%% pt_grp:    string
-%%%%            Point-group of underlying crystal
-%%%% 
-%%%% Output:
-%%%% 
-%%%% ga_s, gb_s: 
-%%%%    Cell arrays with GB symmetry generators.
-%%%% num_gen:
-%%%%    Number of generators for the point-group.
-%%%% Laue:
-%%%%    `0` for non-Laue and `1` for Laue group.
-%%%% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Function to set the symmetry generators for each point group.
+% The symmetries are for grain boundaries in the $SO(3) \times SO(3)$
+% parameterization, i.e. $(O_a, O_b) ~ (O_b S_i, O_a S_j)$
+% 
+% - Input:
+%   + pt_grp:	(string) 
+%   			Point-group of the underlying crystal
+% 
+% - Output:
+%   + ga_s, gb_s: (Cell arrays)
+%    		grain boundary symmetry generators.
+%   + num_gen: (integer)
+%    		Number of generators for the point-group.
+%   + Laue: (string)
+%    		0 for non-Laue and 1 for Laue group.
+% 
+% - Notes:
+% + Only proper rotation elements are set.
+%   + The symmetry operation is provided using three angles
+%   	- w : rotation angle
+%   	- th: polar angle of the axis
+%   	- ph: azimuthal angle of the axis
+%
 
 
 if (strcmp(pt_grp,'O') || strcmp(pt_grp,'Oh'))

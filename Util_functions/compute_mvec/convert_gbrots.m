@@ -1,4 +1,23 @@
 function s = convert_gbrots(rot_mats)
+%
+% Convert (g1,g2) rotation matrices (of GBs) into 
+% quaternions and Cayley-Klein parameters
+% 
+% - Input:
+%   + rot_mats: Array of size 3X6XN
+%   		N GB parameters in SO3XSO3 parameterization
+% 
+% - Output:
+%   + s: struct of N-arrays (8 elements)
+%   	- ((s.a1, s.lb1, s.q1, s.Q1), (s.a2, s.lb2, s.q2, s.Q2))
+%   	- s.a  :   q_0 - i*q_3
+%   	- s.lb : -q_2 - i*q_1
+%   	- s.q  : q_0
+%   	- s.Q  : (q_1, q_2, q_3)
+% 
+% - Notes:
+% 	+ This struct is used to compute MBP basis functions
+%     
 nrots = size(rot_mats,3);
 
 a1_rots = zeros(nrots,1);
