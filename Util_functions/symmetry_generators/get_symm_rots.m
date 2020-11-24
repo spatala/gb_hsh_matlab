@@ -29,6 +29,8 @@ switch pt_grp
         pt_grp = 'O'; Laue = 1;
     case 'D2h'
         pt_grp = 'D2'; Laue = 1;
+    case 'Ci'
+        pt_grp = 'C1'; Laue = 1;
 end
 
 mat_name = [data_fname, 'SymmMat_', pt_grp, '.mat'];
