@@ -23,7 +23,7 @@ num_rows = 0; num_cols = 0; ns_ord = 1;
 
 for tct1 = 1:n_inds
     a_val = ab_inds(tct1,1); b_val = ab_inds(tct1,2);
-    
+    disp([a_val, b_val])
     for ct4 = 1:2*num_gen
         if ct4 == 1
             S0 = compute_basis(ga_s,gb_s,ct4,a_val,b_val, TOL);
@@ -63,10 +63,10 @@ for ns_ord = 1:nsymm
 end
 S = clean(S1_arr, TOL);
 mat_name = [data_fname0,'Sarr_abc_combined_csymm_aPLUSb_max_',num2str(Nmax),'.mat'];
-save(mat_name, 'S');
+save(mat_name, 'S','-v7.3');
 
 mat_name = [data_fname0,'symm_ab_',pt_grp,'_aPLUSb_max_',num2str(Nmax),'.mat'];
-save(mat_name,'symm_orders');
+save(mat_name,'symm_orders','-v7.3');
 
 end
 

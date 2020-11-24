@@ -21,21 +21,33 @@ disp('Step 1');
 generate_cryst_symm_ab(top_dir, pt_grp, Nmax, TOL);
 %%%%
 disp('Step 2');
-generate_ges_mat(top_dir, pt_grp, Nmax)
+save_symmvec_MabInds_cryst(top_dir, pt_grp, Nmax)
 %%%%
 disp('Step 3');
-combine_cryst_ges(top_dir,pt_grp, Nmax, TOL)
+generate_ges_mat(top_dir, pt_grp, Nmax)
 %%%%
 disp('Step 4');
-generate_gb_null(top_dir,pt_grp, Nmax)
+combine_cryst_ges(top_dir,pt_grp, Nmax, TOL)
 %%%%
 disp('Step 5');
-combine_cryst_ges_gbnull(top_dir,pt_grp, Nmax, TOL)
+save_symmvec_MabInds_cryst_ges(top_dir,pt_grp, Nmax)
 %%%%
 disp('Step 6');
-save_symmvec_MabInds(top_dir,pt_grp, Nmax)
+generate_gb_null(top_dir,pt_grp, Nmax)
 %%%%
 disp('Step 7');
+combine_cryst_ges_gbnull(top_dir,pt_grp, Nmax, TOL)
+%%%%
+disp('Step 8');
+combine_cryst_ges_gbnull_const(top_dir,pt_grp, Nmax, TOL)
+%%%%
+disp('Step 9');
+save_symmvec_MabInds_gbnull_zero(top_dir,pt_grp, Nmax)
+%%%
+disp('Step 10');
+save_symmvec_MabInds_gbnull_const(top_dir,pt_grp, Nmax)
+%%%%
+disp('Step 11');
 rmpath(genpath(util_dir));
 end
 
@@ -60,7 +72,7 @@ else
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mat_name = [data_fname0, 'ges_mat_aPLUSb_max_',num2str(Nmax),'.mat'];
-save(mat_name,'symm_mat');
+save(mat_name,'symm_mat','-v7.3');
 end
 
 function combine_cryst_ges(top_dir,pt_grp, Nmax, TOL)
@@ -80,7 +92,7 @@ S = S0 * sp_orth(sp_null(S0' * R1 * S0 - eye(size(S0, 2)), 1, TOL));
 
 mat_name = [data_fname0, ...
     'Sarr_cryst_ges_aPLUSb_max_',num2str(Nmax),'.mat'];
-save(mat_name,'S');
+save(mat_name,'S','-v7.3');
 
 end
 
@@ -105,8 +117,33 @@ tic; S = clean(S, TOL); toc;
 disp(size(S));
 
 mat_name = [data_fname0, ...
-    'Sarr_cryst_ges_gbnull_aPLUSb_max_',num2str(Nmax),'.mat'];
-save(mat_name,'S');
+    'Sarr_cryst_ges_gbnull_zero_aPLUSb_max_',num2str(Nmax),'.mat'];
+save(mat_name,'S','-v7.3');
+
+end
+
+function combine_cryst_ges_gbnull_const(top_dir,pt_grp, Nmax, TOL)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
+data_fname0 = [data_fname,'aPLUSb_max_',num2str(Nmax),'/'];
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+mat_name = [data_fname0, ...
+    'gbnull_mat_aPLUSb_max_',num2str(Nmax),'.mat'];
+s1 = load(mat_name); R1 = s1.null_mat; R1 = R1(2:end,:);
+
+mat_name = [data_fname0, ...
+    'Sarr_cryst_ges_aPLUSb_max_',num2str(Nmax),'.mat'];
+s1 = load(mat_name); S0 = sparse(s1.S);
+
+S = S0 * sp_orth(sp_null(R1 * S0, 1, TOL));
+tic; S = clean(S, TOL); toc;
+
+disp(size(S));
+
+mat_name = [data_fname0, ...
+    'Sarr_cryst_ges_gbnull_const_aPLUSb_max_',num2str(Nmax),'.mat'];
+save(mat_name,'S','-v7.3');
 
 end
 

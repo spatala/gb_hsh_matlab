@@ -24,8 +24,7 @@ for ct1 = 1:nsymm
     end
 end
 
-a_max = max(a1); b_max = max(b1);
-null_mat = sparse((a_max+b_max+1)^2,sum(inds1));
+null_mat = sparse(max(max(row_inds)),sum(inds1));
 for ct1 = 1:nsymm
     % ct1
     ta1 = symm_orders(ct1,1); tb1 = symm_orders(ct1,2);
@@ -36,7 +35,7 @@ for ct1 = 1:nsymm
 end
 
 mat_name = [data_fname0, 'gbnull_mat_aPLUSb_max_',num2str(Nmax),'.mat'];
-save(mat_name,'null_mat');
+save(mat_name,'null_mat','-v7.3');
 end
 
 function mat_ab = null_mat_ab(a,b)
@@ -63,9 +62,11 @@ for e_ct = 1:num_e
         C_val = C_val(:);
         ind1 = ind + (0:ng-1)*na*nb;
         ind1 = ind1(:);
-        mat_ab(r_ct, ind1) = C_val/(sqrt(2*e+1));
+        % mat_ab(r_ct, ind1) = C_val/(sqrt(2*e+1));
+        mat_ab(r_ct, ind1) = C_val;
         r_ct = r_ct + 1;
     end
 end
-mat_ab = mat_ab*sqrt(2)*sqrt((2*a+1)*(2*b+1))/pi;
+% mat_ab = mat_ab*sqrt(2)*sqrt((2*a+1)*(2*b+1))/pi;
+mat_ab = mat_ab*sqrt((2*a+1)*(2*b+1));
 end
