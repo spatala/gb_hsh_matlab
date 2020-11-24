@@ -1,4 +1,23 @@
-function [Mvec, SMvec]=calc_Mvec_full(top_dir, pt_grp, Nmax, coeffs_typ, rots)
+function [Mvec, SMvec]=calc_Mvec_full(top_dir, pt_grp, Nmax, ...
+    coeffs_typ, null_typ, rots)
+%
+% Returns the basis functions $M^{a,b}$ for the grain boundary space
+% using the MBP parameterization.
+%
+% - Input:
+%   + a, b: Indices for $M^{a,b}$ function.
+%   + mbp_angs: (omega_m, theta_m, phi_m, omega_b, phi_b)
+%
+% - Output:
+%   + M: MBP basis function with order (a,b).
+%     - Rows ordered by (\gamma, \alpha, \beta) in lexicographic order, i.e.,
+%       starting with negative values, ending with positive values).
+%
+% - Notes:
+%   + Follows Equation () of the manuscript
+%       (finalize eqn. number after publishing).
+%   + Not vectorized for array of mbp_angs.
+%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
@@ -6,8 +25,8 @@ data_fname0 = [data_fname,coeffs_typ,'_',num2str(Nmax),'/'];
 mat_name = [data_fname0,'symm_ab_',pt_grp,'_',...
     coeffs_typ,'_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); symm_orders = s1.symm_orders;
-mat_name = [data_fname0, ...
-    'Sarr_cryst_ges_gbnull_',coeffs_typ,'_',num2str(Nmax),'.mat'];
+mat_name = [data_fname0, 'Sarr_cryst_ges_gbnull_',...
+    null_typ,'_',coeffs_typ,'_',num2str(Nmax),'.mat'];
 s1 = load(mat_name); S = (s1.S);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -34,7 +53,7 @@ nbfuncs = size(S,1);
 SMvec = zeros(n_rots,nsymm_evs);
 Mvec = zeros(n_rots,nbfuncs);
 
-for ct2=1:n_rots
+parfor ct2=1:n_rots
     Mvec2 = zeros(1,num_cols);
     for ct1 = 1:size(symm_orders,1)
         a=a_val(ct1);

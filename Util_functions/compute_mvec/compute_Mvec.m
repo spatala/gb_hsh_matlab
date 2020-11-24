@@ -47,9 +47,10 @@ bep_val =  vec_inds(:,7);
 be_val  = -vec_inds(:,5);
 
 
-Mvec = sparse(nrots,num_cols);
-
-for ct2 = 1:size(vec_inds,1)
+nsz = size(vec_inds,1);
+Mvec1 = zeros(nrots,nsz);
+parfor ct2 = 1:nsz
+    % ct2
     a = a_val(ct2); b = b_val(ct2);
     U1 = rotation_wo_svd(a1_rots,lb1_rots, ...
         q1_rots, Q1_rots, a, alp_val(ct2), al_val(ct2));
@@ -57,6 +58,9 @@ for ct2 = 1:size(vec_inds,1)
         q2_rots, Q2_rots, b, bep_val(ct2), be_val(ct2));
     PI_ab = realsqrt((2*a+1)*(2*b+1));
     % M = PI_ab*M/(2*pi*pi);
-    Mvec(:,vec_inds(ct2,1)) = PI_ab*(U1.*U2)/(sqrt(2*(pi^3)));
+    Mvec1(:,ct2) = PI_ab*(U1.*U2)/(sqrt(2*(pi^3)));
 end
+
+Mvec = sparse(nrots,num_cols);
+Mvec(:,vec_inds(:,1)) = Mvec1;
 end

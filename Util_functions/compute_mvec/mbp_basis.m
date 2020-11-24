@@ -9,10 +9,12 @@ function [M] = mbp_basis(a, b, mbp_angs)
 % 
 % - Output:
 %   + M: MBP basis function with order (a,b). 
-% 	- Rows ordered by (\gamma, \alpha, \beta) in lexicographic order, i.e., starting with negative values, ending with positive values).
+% 	- Rows ordered by (\gamma, \alpha, \beta) in lexicographic order, i.e.,
+%       starting with negative values, ending with positive values).
 % 
 % - Notes:
-%   + Follows Equation () of the manuscript (finalize eqn. number after publishing).
+%   + Follows Equation () of the manuscript
+%       (finalize eqn. number after publishing).
 %   + Not vectorized for array of mbp_angs.
 %
 
