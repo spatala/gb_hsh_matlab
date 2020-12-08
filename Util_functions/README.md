@@ -9,10 +9,11 @@
 6. `symmetry_generators`
 
 ## `compute_mvec`
-1. `mbp_basis.m`
-2. `convert_gbrots.m`
-3. `compute_Mvec.m`
-4. `compute_symm_Mvec.m`
+1. `mbp_basis`: Returns the basis functions `$M^{a,b}$` for the grain boundary space using the MBP parameterization.
+2. `convert_gbrots`: Convert (g1,g2) rotation matrices (of GBs) into quaternions and Cayley-Klein parameters
+3. `compute_Mvec`: Computes MBP basis functions for given set of (a, b, gamma, alpha, beta) for a given order (a+b \leq Nmax) of symmetrized MBP basis function.
+4. `compute_Mvec_full`: Computes MBP basis functions for given set of (a, b, gamma, alpha, beta) for a given order (a+b \leq Nmax) of symmetrized MBP basis function.
+5. `calc_Mvec_symm`: % Computes symmetrized MBP basis functions for given set of(a, b, gamma, alpha, beta) for a given order (a+b \leq Nmax) of symmetrized MBP basis function.
 
 
 ## symmetry_generators

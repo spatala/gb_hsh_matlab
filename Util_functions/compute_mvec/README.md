@@ -68,4 +68,51 @@ using the MBP parameterization.
   + Follows Equation () of the manuscript (finalize eqn. number after publishing).
 
 
+## `calc_Mvec_full`
+
+
+Returns the full and symmetrized basis functions for the grain boundary 
+space using the SO3 X SO3 parameterization.
+
+- Input:
+  + top_dir: Directory to find the symmetrized basis functions
+  + pt_grp: The crystallographic point group ('Oh')
+  + Nmax: all basis functions such that a+b \leq Nmax
+  + coeffs_typ: 'aPLUSb_max'
+  + null_typ: 'zero' or 'const'
+    - 'const': Crystal and GES and constant no-boundary condition
+    - 'null':  Crystal and GES and null no-boundary condition
+  + rots: gA and gB, orientations of the two crystals defining the GB
+
+- Output:
+  + Mvec: Full basis vectors
+  + SMvec: Symmetrized basis vectors
+
+
+
+## `calc_Mvec_symm`
+
+Computes symmetrized MBP basis functions for given set of
+(a, b, gamma, alpha, beta) for a given order (a+b \leq Nmax)
+of symmetrized MBP basis function.
+
+- Input:
+  + top_dir: Directory to find the symmetrized basis functions
+  + pt_grp: The crystallographic point group ('Oh')
+  + Nmax: all basis functions such that a+b \leq Nmax
+  + coeffs_typ: 'aPLUSb_max'
+  + symm_typ: string ('cryst' or 'cryst_ges' or 'const' or 'zero')
+    - specify which level of symmetry to use to compute basis functions
+    - 'cryst': Only crystal point group symmetries
+    - 'cryst_ges': Crystal and GES
+    - 'const': Crystal and GES and constant no-boundary condition
+    - 'null':  Crystal and GES and null no-boundary condition
+  + s_angs: struct of N(=nrots)-arrays (8 elements)
+    - ((s.a1, s.lb1, s.q1, s.Q1), (s.a2, s.lb2, s.q2, s.Q2))
+
+- Output:
+  + SMvec: symmetrized basis functions
+    - The rows coresspond to different rotations.
+    - The columns correspond to the number of symmetrized basis functions.
+
 

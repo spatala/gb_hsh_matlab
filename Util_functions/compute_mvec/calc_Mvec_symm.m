@@ -1,10 +1,10 @@
 function SMvec=calc_Mvec_symm(top_dir, pt_grp, Nmax, ...
     coeffs_typ, symm_typ, s_angs)
-%
+% 
 % Computes symmetrized MBP basis functions for given set of
 % (a, b, gamma, alpha, beta) for a given order (a+b \leq Nmax)
 % of symmetrized MBP basis function.
-%
+% 
 % - Input:
 %   + top_dir: Directory to find the symmetrized basis functions
 %   + pt_grp: The crystallographic point group ('Oh')
@@ -18,12 +18,12 @@ function SMvec=calc_Mvec_symm(top_dir, pt_grp, Nmax, ...
 %     - 'null':  Crystal and GES and null no-boundary condition
 %   + s_angs: struct of N(=nrots)-arrays (8 elements)
 %     - ((s.a1, s.lb1, s.q1, s.Q1), (s.a2, s.lb2, s.q2, s.Q2))
-%
+% 
 % - Output:
 %   + SMvec: symmetrized basis functions
 %     - The rows coresspond to different rotations.
 %     - The columns correspond to the number of symmetrized basis functions.
-%
+% 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];

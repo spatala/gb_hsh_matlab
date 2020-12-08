@@ -1,23 +1,23 @@
 function [Mvec, SMvec]=calc_Mvec_full(top_dir, pt_grp, Nmax, ...
     coeffs_typ, null_typ, rots)
-%
-% Returns the basis functions $M^{a,b}$ for the grain boundary space
-% using the MBP parameterization.
-%
+% 
+% Returns the full and symmetrized basis functions for the grain boundary 
+% space using the SO3 X SO3 parameterization.
+% 
 % - Input:
-%   + a, b: Indices for $M^{a,b}$ function.
-%   + mbp_angs: (omega_m, theta_m, phi_m, omega_b, phi_b)
-%
+%   + top_dir: Directory to find the symmetrized basis functions
+%   + pt_grp: The crystallographic point group ('Oh')
+%   + Nmax: all basis functions such that a+b \leq Nmax
+%   + coeffs_typ: 'aPLUSb_max'
+%   + null_typ: 'zero' or 'const'
+%     - 'const': Crystal and GES and constant no-boundary condition
+%     - 'null':  Crystal and GES and null no-boundary condition
+%   + rots: gA and gB, orientations of the two crystals defining the GB
+% 
 % - Output:
-%   + M: MBP basis function with order (a,b).
-%     - Rows ordered by (\gamma, \alpha, \beta) in lexicographic order, i.e.,
-%       starting with negative values, ending with positive values).
-%
-% - Notes:
-%   + Follows Equation () of the manuscript
-%       (finalize eqn. number after publishing).
-%   + Not vectorized for array of mbp_angs.
-%
+%   + Mvec: Full basis vectors
+%   + SMvec: Symmetrized basis vectors
+% 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 data_fname = [top_dir,'data_files/ptgrp_',pt_grp,'/'];
