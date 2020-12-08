@@ -121,7 +121,7 @@ if (strcmp(pt_grp,'C2'))
     Laue = 0;
 end
 
-if (strcmp(pt_grp,'C1'))
+if (strcmp(pt_grp,'C1') || strcmp(pt_grp,'Ci'))
     num_gen = 1;
     
     a_ax1 = [0 0 1]; a_ang1 = 0;
@@ -138,8 +138,11 @@ if (strcmp(pt_grp,'C1'))
     ga_s{1} = ga_s1; ga_s{2} = ga_s2;
     gb_s = cell(num_gen^2,1);
     gb_s{1} = gb_s1; gb_s{2} = gb_s2;
-    
-    Laue = 0;
+    if (strcmp(pt_grp,'C1'))
+        Laue = 0;
+    else
+        Laue = 1;
+    end
 end
 
 end

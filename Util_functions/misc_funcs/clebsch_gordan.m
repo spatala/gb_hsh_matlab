@@ -1,10 +1,21 @@
 function [C, m1, m2] = clebsch_gordan(j1, j2, j, m)
-% [C, m1, m2] = clebsch_gordan(j1, j2, j, m) - returns all of the relevant
-%   Clebsch-Gordan coefficients for the specified j1, j2, j and m. The
-%   second and third outputs are the indices of the corresponding m1 and
-%   m2. Output is ordered in increasing values of m1.
-%
-%   Follows the approach of W. Straub in viXra:1403.0263.
+% 
+% Computes all of the relevant Clebsch-Gordan coefficients for 
+% the specified j1, j2, j and m.
+% 
+% - Inputs:
+%   + j1, j2, j, m: indices
+% 
+% - Outputs:
+%   + C  : Clebsch-Gordan coefficients
+%   + m1 : indices of the corresponding m1
+%   + m2 : indices of the corresponding m2
+% 
+% - Notes:
+%   + Follows the approach of W. Straub in viXra:1403.0263.
+%   + Output is ordered in increasing values of m1.
+%   + The convention is: $C^{j,m}_{j1,m1;j2,m2}$
+% 
     assert(isscalar(j) && isscalar(m) && isscalar(j1) && isscalar(j2), 'All inputs must be scalars.')
 
     if j1 < 0 || mod(j1, 0.5) ~= 0 || ...

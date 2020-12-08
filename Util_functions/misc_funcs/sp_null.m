@@ -12,14 +12,14 @@ function [N] = sp_null(A, opt, TOL)
 %   A   - a sparse matrix with m rows and n columns.
 %   opt - 0 or 1 specifies that the left or right null space is desired.
 %   TOL - threshold for a pivot to be considered significant.
-%
+% 
 % Outputs:
 %   N   - the left or right null space of the matrix A depending on the
 %         value of opt. The sparsity is increased at the expense of the columns
 %         not being orthonormal.
 % 
 % Copyright 2019 Jeremy Mason
-%
+% 
 % Licensed under the Apache License, Version 2.0, <LICENSE-APACHE or
 % http://apache.org/licenses/LICENSE-2.0> or the MIT license <LICENSE-MIT or
 % http://opensource.org/licenses/MIT>, at your option. This file may not be

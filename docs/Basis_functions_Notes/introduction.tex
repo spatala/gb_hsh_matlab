@@ -1,0 +1,120 @@
+\section{Introduction}
+
+
+The conventions and notes for generating basis function for the five-parameter
+grain boundary space are listed.
+
+\begin{itemize}
+\item \textcolor{red}{Should we update} \verb|symm_orders| \textcolor{red}{based
+    on grain exchange symmetry and Laue group symmetry?}.
+  \begin{enumerate}
+  \item Before
+  \end{enumerate}
+\item In the function, \verb|null_mat_ab|, \textbf{In line 25, why am I
+    dividing} \verb|C_val| by \verb|sqrt(2*e+1)| and \textbf{In line 29, how did
+    I define the normalizing constant}. \textcolor{red}{\textbf{Check with
+      Jeremy!!}}
+\end{itemize}
+
+\clearpage
+\newpage
+
+\subsection{Computing the Null Boundary Singularity Matrix}
+
+
+% \lstinputlisting[caption = {Code for computing Null Boundary Operation for fixed $(a,b)$}]{null_mat_ab.m}
+% \newpage
+
+\subsubsection{Description of \texttt{null\_mat\_ab.m}}
+
+The matrix \verb|mat_ab| represents the null-boundary operation for fixed values
+of $(a,b)$. The operation for null-boundary singularity is:
+
+\begin{equation*}
+\sum_{a b} \sum_{\alpha \beta \gamma} \bigg[ \Pi_{a b} C^{e -\epsilon}_{a \alpha b \beta} C^{e 0}_{a \gamma b -\gamma} \bigg] c^{a b}_{\alpha \beta \gamma} = \sqrt{2 \pi^3} f_0 \delta_{e 0} \delta_{\epsilon 0}
+\end{equation*}
+
+For fixed values of $(a,b)$, the number of coefficients $c^{a b}_{\alpha \beta
+  \gamma}$ is equal to $n_{col} = (2a+1)(2b+1)(2c+1)$, where $c = \min (a,b)$.
+Therefore, the number of columns of \verb|mat_ab| is equal to $n_{col}$. The
+number of rows of of \verb|mat_ab| is computed as follows:
+
+\begin{itemize}
+
+\item The values of $e$ are constrained to lie between $|a-b|$ and $(a+b)$, i.e.
+  $|a-b| \leq e \leq (a+b)$. These indices are stored in the variable
+  \verb|e_range|.
+\item For a given value of $e$, $\epsilon$ ranges from $-e$ to $e$. That is, $-e
+  \leq \epsilon \leq e$. This is provided by the variable \verb|eps_range|.
+\item Therefore, the total number of rows is given by
+
+  \begin{equation*}
+    n_{rows} = \sum_{e = |a-b|}^{a+b} \sum_{-e}^{e} \epsilon
+  \end{equation*}
+
+  This is given by the value in the expression \verb|sum(2*e_range+1)| in line
+  number 9.
+    
+\item The Clebsch-Gordan coefficient is given by the function
+  \verb|clebsch_gordan(j1, j2, j, m)| for possible values of
+  $C^{j,m}_{j1,m1;j2,m2}$. The function returns the coefficients \verb|C| and
+  the values of \verb|m1| and \verb|m2| for which $C^{j,m}_{j1,m1;j2,m2} \neq
+  0$.
+    
+\item This function, \verb|clebsch_gordan(j1, j2, j, m)|, is used to determine
+  the indices containing non-zero values for a given row, \verb|r_ct|. This is
+  accomplished using the lines \textbf{20} and \textbf{23}.
+    
+  \begin{itemize}
+  \item In line \textbf{20}, the indices containing non-zero values for any
+    fixed value of $\gamma$ are computed.
+  \item In line \textbf{23}, the non-zero values are repeated for every value of
+    $\gamma$. The corresponding indices are computed.
+  \end{itemize}
+    
+\item \textbf{In line 25, why am I dividing} \verb|C_val| by \verb|sqrt(2*e+1)|
+  and \textbf{In line 29, how did I define the normalizing constant}.
+  \textcolor{red}{\textbf{Check with Jeremy!!}}
+
+\end{itemize}
+
+\clearpage
+\newpage
+
+% \lstinputlisting[caption = {Code for computing Null Boundary Operation for a range of $(a,b)$ values}]{generate_gb_null.m}
+% \pagebreak
+
+\subsubsection{Description of \texttt{generate\_gb\_null.m}}
+
+This code computes the Null Boundary Operation for a range of $(a,b)$ values
+provided in the \verb|symm_orders| array. The matrix \verb|null_mat| gives the
+operation for null-boundary singularity. The function \verb|null_mat_ab| gives
+the operation for a fixed $(a,b)$. However, we are interested in the operation
+for all possible values of $(a,b)$ such that $\max(a+b) \leq N$ (N is denoted by
+the variable \verb|Nmax|).
+
+\begin{itemize}
+\item The array \verb|symm_orders| contains all the possible values of $(a,b)$
+  such that symmetrized basis function (symmetrized using crystal rotation point
+  group symmetries) exist.
+\item The variable \verb|nsymm| gives the total number of basis functions
+  $M^{a,b}_{\alpha, \beta, \gamma}$ for $(a,b)$ values listed in
+  \verb|symm_orders|.
+\item The for-loop in lines \textbf{17} to \textbf{25} gives the appropriate
+  row-indices (\verb|row_inds|) and appropriate col-indices (\verb|col_inds|),
+  where the matrix operation computed using \verb|null_mat_ab| will be added to
+  the complete \verb|null_mat|.
+\item Using the row- and column-indices computed in the previous for-loop, the
+  for loop in lines \textbf{29} to \textbf{36}, calculates the
+  \verb|null_mat_ab| for each combination of $(a,b)$ listed in
+  \verb|symm_orders| and add this to the matrix \verb|null_mat|.
+\end{itemize}
+
+\clearpage
+\newpage
+
+\begin{equation}
+  \label{eq:mbp}
+\tensor[_{\gamma}]{M}{^a_{\alpha}^b_{\beta}}
+\end{equation}
+% \lstinputlisting[caption = {Code for computing $Y_{\pi}$ operation a given $(a,b)$ value.}]{generate_ypi_left_ab.m}
