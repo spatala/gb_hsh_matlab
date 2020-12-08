@@ -1,6 +1,14 @@
 # Code Descriptions
 
-## compute_mvec
+## Folders
+1. `compute_mvec`
+2. `mbp_indices`
+3. `misc_funcs`
+4. `param_conversions`
+5. `rotation_Umat`
+6. `symmetry_generators`
+
+## `compute_mvec`
 1. `mbp_basis.m`
 2. `convert_gbrots.m`
 3. `compute_Mvec.m`
@@ -61,27 +69,27 @@ This folder contains functions to construct SO(3) irreducible representatives (m
 
 ### Doucmented
 
-`get_symmgen_mats`
-`get_symm_rots`
-`check_conv`
-`mbp_inds_ab_array`
-`mbp_ab`
-`mbp_basis`
-`convert_gbrots`
-`compute_Mvec`
-`clean`
-`clebsch_gordan`
-`sp_orth`
-`mbp_to_rots`
-`rotmat_to_angs`
-`rots_to_angs`
-`rots_to_mbp`
-`angles_to_CK`
-`CK_to_angles`
-`rotation_mat`
-`rotation_wo_svd`
-`wigner_little_d`
-`get_symmgen_angs`
+1. `get_symmgen_mats`
+2. `get_symm_rots`
+3. `check_conv`
+4. `mbp_inds_ab_array`
+5. `mbp_ab`
+6. `mbp_basis`
+7. `convert_gbrots`
+8. `compute_Mvec`
+9. `clean`
+10. `clebsch_gordan`
+11. `sp_orth`
+12. `mbp_to_rots`
+13. `rotmat_to_angs`
+14. `rots_to_angs`
+15. `rots_to_mbp`
+16. `angles_to_CK`
+17. `CK_to_angles`
+18. `rotation_mat`
+19. `rotation_wo_svd`
+20. `wigner_little_d`
+21. `get_symmgen_angs`
 
  
 
