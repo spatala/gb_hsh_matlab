@@ -38,3 +38,23 @@ Get indices for MBP functions with fixed a and b.
     - Value of 'gamma' - range [-c, c], where $c = min(a,b)$
     - Value of 'alpha' - range [-a, a]
     - Value of 'beta'  - range [-b, b]
+
+
+## `check_mbp_ab`
+
+For given values of (a,b), the set of basis functions have the
+folloing indices
+  + mbp: N X 6 matrix. The columns are as follows:
+    - Index number for fixed a, b.
+    - Value of 'a'
+    - Value of 'b'
+    - Value of 'gamma' - range [-c, c], where $c = min(a,b)$
+    - Value of 'alpha' - range [-a, a]
+    - Value of 'beta'  - range [-b, b]
+  
+In the following code, we wrote two functions:
+  + ind_to_gab: Converts the Index number to (gamma, alpha, beta) for
+  given mbp_inds.
+  + gab_to_inds: Convers (a, b, gamma, alpha, beta) to index.
+
+
