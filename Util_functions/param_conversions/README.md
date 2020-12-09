@@ -77,3 +77,18 @@ matrix (r1)
 - Output: None
   + Prints an error message if the check fails.
 
+
+## `rotangs_to_mat`
+
+
+Convert angles to rotation maxtrix
+
+- Input:
+  + rot_angs: $1 \times 3$ rotation angles
+  - w: Omega (rotation angle)
+  - th: polar angle (theta), and 
+  - ph: azimuthal angle (phi)
+
+- Output:
+  + g: $3 \times 3$ rotation matrix.
+

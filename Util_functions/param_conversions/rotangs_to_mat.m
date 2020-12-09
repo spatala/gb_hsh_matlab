@@ -1,5 +1,5 @@
 function g = rotangs_to_mat(angs)
-%
+% 
 % Convert angles to rotation maxtrix
 % 
 % - Input:
@@ -10,7 +10,7 @@ function g = rotangs_to_mat(angs)
 % 
 % - Output:
 %   + g: $3 \times 3$ rotation matrix.
-%
+% 
 
 w = angs(1); th = angs(2); ph = angs(3);
 
