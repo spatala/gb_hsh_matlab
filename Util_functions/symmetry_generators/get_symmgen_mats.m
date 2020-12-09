@@ -1,21 +1,24 @@
 function [ga_s, gb_s, num_gen, Laue] = get_symmgen_mats(pt_grp)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Function to set the generators for each point group (only proper
-%%%% rotation elements are set.)
-%%%%
-%%%% Input:
-%%%% pt_grp:    string
-%%%%            Point-group of underlying crystal
-%%%% 
-%%%% Output:
-%%%% 
-%%%% ga_s, gb_s: 
-%%%%    Cell arrays with GB symmetry generators.
-%%%% num_gen:
-%%%%    Number of generators for the point-group.
-%%%% Laue:
-%%%%    `0` for non-Laue and `1` for Laue group.
-%%%% 
+% 
+% Function to set the generators for each point group (only proper
+% rotation elements are set.)
+% The symmetries are for grain boundaries in the $SO(3) \times SO(3)$
+% parameterization, i.e. $(O_a, O_b) ~ (O_b S_i, O_a S_j)$
+% 
+% 
+% Input:
+% pt_grp:    string
+%            Point-group of underlying crystal
+% 
+% Output:
+% 
+% ga_s, gb_s: 
+%    Cell arrays with GB symmetry generators.
+% num_gen:
+%    Number of generators for the point-group.
+% Laue:
+%    `0` for non-Laue and `1` for Laue group.
+% 
 
 if (strcmp(pt_grp,'O') || strcmp(pt_grp,'Oh'))
     num_gen = 2;

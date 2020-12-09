@@ -25,6 +25,28 @@ parameterization, i.e. `(O_a, O_b) ~ (O_a S_i, O_b S_j)`
   	- `th`: polar angle of the axis
   	- `ph`: azimuthal angle of the axis
 
+## `get_symmgen_mats`
+
+Function to set the generators for each point group (only proper
+rotation elements are set.)
+The symmetries are for grain boundaries in the $SO(3) \times SO(3)$
+parameterization, i.e. $(O_a, O_b) ~ (O_b S_i, O_a S_j)$
+
+
+Input:
+pt_grp:    string
+           Point-group of underlying crystal
+
+Output:
+
+ga_s, gb_s: 
+   Cell arrays with GB symmetry generators.
+num_gen:
+   Number of generators for the point-group.
+Laue:
+   `0` for non-Laue and `1` for Laue group.
+
+
 
 ## `get_symm_rots`
 
@@ -49,4 +71,5 @@ computed.
         of equivalent parameters depends on opt (1 or 2).
       - `opt == 1`, has only crystal point group symmetries.
       - `opt == 2`, has both crystal + GES.
+
 
