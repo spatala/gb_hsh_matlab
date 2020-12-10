@@ -1,4 +1,4 @@
-function [] = generate_gb_cryst_symm(pt_grp, Nmax, TOL)
+function [] = generate_gb_symm_basis(pt_grp, Nmax, TOL)
 % function [] = generate_gb_cryst_symm()
 % pt_grp = 'Oh'; Nmax = 4; TOL = 1e-12;
 
