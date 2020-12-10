@@ -1,6 +1,6 @@
 # Function Descriptions
 
-## `generate_gb_cryst_symm`
+## `generate_gb_symm_basis`
 
 - Inputs:
   + pt_grp	: Point group symmetry of the underlying crystal
@@ -22,11 +22,15 @@ Generate symmetrized basis functions with both crystal point-group and grain-exc
 
 ## `generate_gb_null`
 
-Generate the matrix operator for Null-boundary singularity (i.e. the functions take the value **zero** at zero misorientation)
+Generate the matrix operator for Null-boundary singularity (i.e. the functions take the value **zero** at zero misorientation). The same matrix, except for the first row, is used for Const-boundary singularity.
 
 ## `combine_cryst_ges_gbnull`
 
-Generate symmetrized basis functions with both crystal point-group and grain-exchange symmetries applied
+Generate symmetrized basis functions with both crystal point-group and grain-exchange symmetries applied and **null**-boundary singularity.
+
+## `combine_cryst_ges_gbnull_const`
+
+Generate symmetrized basis functions with both crystal point-group and grain-exchange symmetries applied and **const**-boundary singularity.
 
 
 ## `generate_yp_left_ab`
@@ -46,9 +50,6 @@ The matrix equivalent for `(g1, g2) -> (Ypi*g1, Ypi*g2)`
   + For a column corresponding to `gamma1, alpha1, beta1`,
   the row corresponding to `-gamma1, alpha1, beta1` contains
   the value `(-1)^(a+b)`
-
-
-## `generate_gb_null`
 
 
 ## `save_symmvec_MabInds`
