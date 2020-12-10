@@ -40,4 +40,8 @@ else
         U(:, a) = U(:, a) * c_base^m(a);
     end
 end
+
+%%% Normalize basis function
+% U = U*sqrt((2*j+1)/(2*pi*pi));
+
 end

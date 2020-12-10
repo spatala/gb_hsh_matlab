@@ -8,6 +8,27 @@
   + TOL		: threshold for a pivot to be considered significant in sp_null code
 
 
+## `generate_cryst_symm_ab`
+
+Basis functions symmetrized with crystal symmetries
+
+## `generate_ges_mat`
+
+Generate the matrix operator for grain exchange symmetry
+
+## `combine_cryst_ges`
+
+Generate symmetrized basis functions with both crystal point-group and grain-exchange symmetries applied
+
+## `generate_gb_null`
+
+Generate the matrix operator for Null-boundary singularity (i.e. the functions take the value **zero** at zero misorientation)
+
+## `combine_cryst_ges_gbnull`
+
+Generate symmetrized basis functions with both crystal point-group and grain-exchange symmetries applied
+
+
 ## `generate_yp_left_ab`
 
 The matrix equivalent for `(g1, g2) -> (Ypi*g1, Ypi*g2)`
@@ -55,3 +76,19 @@ to non-zero components of the symmetrized basis functions.
   rows 296:544 contain the (a,b,gamma,alpha,beta) indices of non-zero
   components for the "third" basis vector.
 
+
+### `save_symmvec_MabInds_cryst`
+
+Indices of basis functions symmetrized with just the crystal point-group symmetries.
+
+### `save_symmvec_MabInds_cryst_ges`
+
+Indices of basis functions symmetrized with just the crystal point-group symmetries and grain-exchange symmetry.
+
+### `save_symmvec_MabInds_gbnull_const`
+
+Indices of basis functions symmetrized with just the crystal point-group, grain-exchange symmetries, and a **Constant** constraint for zero misorientation.
+
+### `save_symmvec_MabInds_gbnull_zero`
+
+Indices of basis functions symmetrized with just the crystal point-group, grain-exchange symmetries, and a **Zero** constraint for zero misorientation.
