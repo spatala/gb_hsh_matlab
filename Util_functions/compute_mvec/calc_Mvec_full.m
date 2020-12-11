@@ -12,7 +12,8 @@ function [Mvec, SMvec]=calc_Mvec_full(top_dir, pt_grp, Nmax, ...
 %   + null_typ: 'zero' or 'const'
 %     - 'const': Crystal and GES and constant no-boundary condition
 %     - 'null':  Crystal and GES and null no-boundary condition
-%   + rots: gA and gB, orientations of the two crystals defining the GB
+%   + rots: gA and gB, orientations of the two crystals defining the GB.
+%     - For N rotations, the array of size `N X 3 X 6`
 % 
 % - Output:
 %   + Mvec: Full basis vectors

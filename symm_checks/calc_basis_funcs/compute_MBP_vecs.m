@@ -16,14 +16,15 @@ rots = s1.rot_mats;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-pt_grp = 'Oh'; Nmax = 10; coeffs_typ = 'aPLUSb_max';
+pt_grp = 'Oh'; Nmax = 16; coeffs_typ = 'aPLUSb_max'; null_typ = 'zero';
 
 tic;
-[Mvec, SMvec]=calc_Mvec_full(top_dir, pt_grp, Nmax, coeffs_typ, rots);
+[Mvec, SMvec]=calc_Mvec_full(top_dir, pt_grp, Nmax, coeffs_typ, null_typ, rots);
 toc;
 
 tic;
-SMvec1=calc_Mvec_symm(top_dir, pt_grp, Nmax, coeffs_typ, rots);
+s_angs = convert_gbrots(rots);
+SMvec1=calc_Mvec_symm(top_dir, pt_grp, Nmax, coeffs_typ, null_typ, s_angs);
 toc;
 
 display(max(max(abs(SMvec - SMvec1))));

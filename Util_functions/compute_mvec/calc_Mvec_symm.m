@@ -15,7 +15,7 @@ function SMvec=calc_Mvec_symm(top_dir, pt_grp, Nmax, ...
 %     - 'cryst': Only crystal point group symmetries
 %     - 'cryst_ges': Crystal and GES
 %     - 'const': Crystal and GES and constant no-boundary condition
-%     - 'null':  Crystal and GES and null no-boundary condition
+%     - 'zero':  Crystal and GES and null no-boundary condition
 %   + s_angs: struct of N(=nrots)-arrays (8 elements)
 %     - ((s.a1, s.lb1, s.q1, s.Q1), (s.a2, s.lb2, s.q2, s.Q2))
 % 
@@ -60,7 +60,7 @@ s1 = load(mat_name1); tot_Uprops = s1.tot_Uprops;
 tot_inds = mbp_inds_ab_array(symm_orders);
 vec_inds = tot_inds(unique(tot_Uprops(:,1)),:);
 nrots = size(s_angs.a1,1);
-% s = convert_gbrots(rots);
+
 num_rows = size(S,1);
 Mvec = compute_Mvec(s_angs, nrots, num_rows, vec_inds);
 SMvec = Mvec*S;
