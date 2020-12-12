@@ -66,7 +66,7 @@ if strcmp(constraint,'const')
     diff_vec = zeros(nsz,1);
     tct1 = 1;
     for ct1 = 1:num1-1
-        disp(ct1);
+        % disp(ct1);
         for ct2 = ct1+1:num1
             diff_vec(tct1) = norm(full(SMvec(ct1,:)-SMvec(ct2,:)));
             tct1 = tct1 + 1;
