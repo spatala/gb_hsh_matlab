@@ -2,7 +2,7 @@
 % Codes to illustrate the computation of MBP basis vectors
 % 1) Compute full basis vectors and symmetrized using mbp_basis
 % 2) Compute symmetrized basis vectors using compute_Mvec
-%
+% 
 clear all; clc;
 
 top_dir = get_top_dir();

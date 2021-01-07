@@ -6,7 +6,7 @@ function [] = symm_checks(pt_grp, Nmax, coeffs_typ, symm_typ)
 %    3) Compute MBP basis functions for all the symmetrically equivalent
 %       grain boundaries.
 %    4) Check that all the basis functions return the same vectors.
-%
+% 
 % Input:
 %    1) pt_grp
 %    2) Nmax

@@ -3,9 +3,11 @@ function [] = symm_checks_nullgb_constraint(pt_grp, Nmax, coeffs_typ, constraint
 % 1) Computes the full MBP basis function for a random GB parameter with
 % identity misorientation
 % 2) Computes the norm of the "constrained" basis-function
-% 3) Checks that the norm is equal to zero.
-%       Null boundary singularity where f(g,g) = 0;
-%
+% 3) If constraint is:
+%   +  'zero': Checks that the norm is equal to zero, i.e. f(g,g) = 0
+%   +  'const': Checks that the basis functions have the same value, i.e.
+%   f(g,g) = C
+% 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 top_dir = get_top_dir();

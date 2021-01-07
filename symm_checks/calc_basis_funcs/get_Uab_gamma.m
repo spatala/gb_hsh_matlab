@@ -5,7 +5,7 @@
 % U1 = rotation_wo_svd
 % U2 = rotation_mat
 % Checking that U1 == U2
-%
+% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all; clc;
 

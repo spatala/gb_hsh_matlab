@@ -43,8 +43,6 @@ for ct1 =1:num_a
     end
         mat_name = [du1,'Umat_',num2str(av),'_disc_',...
             num2str(num),'.mat'];
-%     mat_name = ['Umat_',num2str(av),'_disc_',...
-%         num2str(num),'.mat'];
     save(mat_name,'U_mat','-v7.3');
 end
 

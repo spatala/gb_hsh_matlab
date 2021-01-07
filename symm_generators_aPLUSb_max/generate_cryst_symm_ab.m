@@ -66,7 +66,7 @@ mat_name = [data_fname0,'Sarr_abc_combined_csymm_aPLUSb_max_',num2str(Nmax),'.ma
 save(mat_name, 'S','-v7.3');
 
 mat_name = [data_fname0,'symm_ab_',pt_grp,'_aPLUSb_max_',num2str(Nmax),'.mat'];
-save(mat_name,'symm_orders','-v7.3');
+save(mat_name,'symm_orders','TOL','-v7.3');
 
 end
 
