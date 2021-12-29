@@ -1,4 +1,4 @@
-# gb_hsh_matlab
+# gBasis
 
 ## Wrapper
 
